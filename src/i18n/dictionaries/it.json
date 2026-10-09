@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "title": "NextBosman — Svincolati e contratti in scadenza",
+    "description": "Ricerca mondiale veloce per agenti: giocatori senza club e contratti in scadenza."
+  },
+  "brand": {
+    "name": "NextBosman",
+    "mark": "NB"
+  },
+  "nav": {
+    "search": "Ricerca",
+    "free": "Svincolati",
+    "expiring": "In scadenza",
+    "support": "Supporto",
+    "lists": "Liste",
+    "parser": "WhatsApp",
+    "profile": "Profilo",
+    "signIn": "Accesso agente"
+  },
+  "footer": {
+    "free": "La scrivania resta gratis.",
+    "live": "I giocatori arrivano dal database live."
+  },
+  "support": {
+    "kicker": "Sostieni NextBosman",
+    "title": "Gratis per gli agenti.",
+    "lead": "Ricerca e matching restano aperti. Se la scrivania ti chiude una chiamata, puoi restituire. Il Pro arriva dopo — solo quando vale 15–20 € al mese.",
+    "freeTitle": "La scrivania",
+    "freeText": "Svincolati, contratti in scadenza, brief e statistiche. Niente ads, niente account.",
+    "donateTitle": "Donazione",
+    "donateText": "Facoltativa. Un caffè, o di più se un affare è partito da qui.",
+    "donateCta": "Dona",
+    "donateSoon": "Il pulsante compare appena c’è un link PayPal o Ko-fi.",
+    "proTitle": "Pro — più avanti",
+    "proPrice": "Circa 15–20 € / mese, quando è pronto",
+    "proText": "Non è ancora in vendita. Si paga solo con un extra chiaro: più fonti, dati più freschi, brief salvati.",
+    "proItems": [
+      "Più di una fonte dati",
+      "Contratti e presenze più aggiornati",
+      "Brief di club salvati"
+    ]
+  },
+  "home": {
+    "kicker": "Per agenti di calcio",
+    "slogan": "Il prossimo Bosman è già sul mercato.",
+    "pasteHeadline": "Incolla il WhatsApp. Escono i nomi.",
+    "lead": "Il tuo vantaggio è il timing. Contratto in scadenza, giocatore senza club, DS che vuole un nome stanotte: quella è la finestra.",
+    "stats": [
+      { "label": "13.000+ database giocatori" },
+      { "label": "Svincolati e fine contratto" },
+      { "label": "Filtro passaporto UE" }
+    ],
+    "how": [
+      { "title": "1. Incolla il brief", "text": "Inserisci la richiesta del club" },
+      { "title": "2. Match intelligente", "text": "Ricerca istantanea nel database" },
+      { "title": "3. Invialo al club", "text": "Genera il profilo WhatsApp" }
+    ],
+    "purpose": "NextBosman è la scrivania mondiale per svincolati e fine contratto. Incolla il brief del club e vedi chi è davvero disponibile per quella chiamata.",
+    "ctaFree": "Cerca svincolati",
+    "ctaFreeHint": "Senza contratto. Pronti a parlare.",
+    "ctaExpiring": "Contratti in scadenza",
+    "ctaExpiringHint": "Ancora in club. Il tempo scorre.",
+    "ctaMatch": "Abbina un brief",
+    "ctaMatchHint": "Incolla cosa ha chiesto il club.",
+    "points": [
+      {
+        "title": "Disponibili ora",
+        "text": "Prima senza club, poi i contratti in scadenza. La velocità è il prodotto."
+      },
+      {
+        "title": "Verrebbero?",
+        "text": "Il matching chiede se il giocatore accetterebbe davvero quel campionato e club — non solo se il ruolo coincide."
+      },
+      {
+        "title": "Statistiche al click",
+        "text": "Partite, gol, assist e minuti: abbastanza per capire se vale la chiamata."
+      }
+    ]
+  },
+  "search": {
+    "title": "La scrivania",
+    "subtitle": "Svincolati e contratti in scadenza, nel mondo. Abbina un brief a nomi del livello giusto."
+  },
+  "hero": {
+    "kicker": "Per agenti di calcio",
+    "title": "Chi è disponibile — nel mondo.",
+    "subtitle": "Cerca svincolati e fine contratto."
+  },
+  "status": {
+    "free": "Svincolati",
+    "expiring": "Contratto in scadenza",
+    "freeLabel": "Svincolato",
+    "until": "Fino al",
+    "ended": "Terminato"
+  },
+  "paste": {
+    "title": "Incolla WhatsApp veloce",
+    "hint": "Incolla il messaggio del club. Compiliamo ruolo, svincolato/in scadenza e UE, poi cerchiamo.",
+    "placeholder": "Incolla qui il testo WhatsApp (es. FCSB cerca ST, svincolato, passaporto UE)...",
+    "apply": "Analizza e filtra",
+    "position": "Ruolo",
+    "free": "Svincolato",
+    "expiring": "Contratto in scadenza",
+    "eu": "Passaporto UE",
+    "loan": "Prestito citato — non c’è ancora una lista a parte",
+    "empty": "Niente da applicare. Prova ruolo, svincolato/in scadenza o UE."
+  },
+  "filters": {
+    "position": "Ruolo",
+    "allPositions": "Tutti i ruoli",
+    "age": "Età",
+    "nationality": "Nazionalità",
+    "allNationalities": "Tutte le nazionalità",
+    "euPassport": "Passaporto UE",
+    "marketValue": "Valore di mercato fino a",
+    "anyValue": "Qualsiasi valore",
+    "country": "Paese / campionato",
+    "world": "Mondiale",
+    "open": "Filtri",
+    "done": "Fatto"
+  },
+  "table": {
+    "player": "Giocatore",
+    "age": "Età",
+    "position": "Ruolo",
+    "club": "Club",
+    "league": "Campionato",
+    "country": "Paese",
+    "contract": "Contratto",
+    "apps": "Partite",
+    "marketValue": "Valore di mercato",
+    "nationality": "Nazionalità",
+    "results": "{count} giocatori",
+    "empty": "Nessun giocatore corrisponde a questi filtri.",
+    "sampleNote": "Database live. Clicca un nome per partite, gol, assist e minuti da luglio 2025.",
+    "fit": "Fit",
+    "loadMore": "Carica altri"
+  },
+  "match": {
+    "title": "Brief del club",
+    "hint": "Incolla club, campionato e ruolo. Il matching tiene i nomi che farebbero davvero quel passo.",
+    "placeholder": "Bandırmaspor, TFF 1. Lig, Turkey\n- ST\n- Age 24-30",
+    "apply": "Abbina",
+    "clear": "Cancella",
+    "hideWeak": "Nascondi fit deboli",
+    "ideal": "Ideal match",
+    "strong": "Fit forte",
+    "possible": "Possibile",
+    "weak": "Fit debole",
+    "for": "Per {club}",
+    "cap": "{market} — chi andrebbe davvero",
+    "reasons": {
+      "position": "Ruolo corrispondente",
+      "positionClose": "Ruolo vicino",
+      "positionMiss": "Ruolo diverso da quello chiesto",
+      "level": "Un passaggio a questo livello è realistico",
+      "levelHigh": "Un gradino sotto, possibile se lo vogliono",
+      "levelUnrealistic": "Poco probabile che accettino questo campionato",
+      "age": "Età nel range",
+      "ageOff": "Età fuori dal brief",
+      "eu": "Passaporto UE richiesto",
+      "euMiss": "Niente passaporto UE",
+      "available": "Attualmente svincolato",
+      "expiring": "Ancora sotto contratto, in scadenza"
+    }
+  },
+  "profile": {
+    "close": "Chiudi",
+    "born": "Data di nascita",
+    "matches": "Partite",
+    "goals": "Gol",
+    "assists": "Assist",
+    "minutes": "Minuti",
+    "per90Goals": "Gol / 90",
+    "per90Assists": "Assist / 90",
+    "caps": "Presenze nazionali",
+    "season": "Partite di club da luglio 2025",
+    "nationality": "Nazionalità",
+    "club": "Club",
+    "contract": "Contratto",
+    "watchVideo": "Guarda video / Highlights",
+    "shareWhatsApp": "Invia su WhatsApp",
+    "copyShare": "Copia profilo",
+    "copied": "Copiato"
+  },
+  "positions": {
+    "GK": "Portiere",
+    "CB": "Difensore centrale",
+    "LB": "Terzino sinistro",
+    "RB": "Terzino destro",
+    "DM": "Mediano",
+    "CM": "Centrocampista",
+    "AM": "Trequartista / 10",
+    "LW": "Esterno sinistro",
+    "RW": "Esterno destro",
+    "ST": "Attaccante"
+  },
+  "account": {
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Accedi",
+    "signUp": "Crea account",
+    "signOut": "Esci",
+    "saveList": "Salva questa lista",
+    "saved": "Lista salvata",
+    "saving": "Salvataggio…",
+    "needAccount": "Accedi come agente per salvare la shortlist del club.",
+    "title": "Liste salvate",
+    "empty": "Ancora nessuna lista. Cerca, poi salva i nomi per quel club.",
+    "players": "{count} giocatori",
+    "error": "Salvataggio non riuscito. Accedi prima.",
+    "confirm": "Se la registrazione chiede conferma email, disattiva Confirm email in Supabase Auth (locale)."
+  }
+}

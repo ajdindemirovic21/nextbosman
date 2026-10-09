@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "title": "NextBosman — Slobodni igrači i isteci ugovora",
+    "description": "Brza svjetska pretraga za agente: igrači bez kluba i igrači koj ugovor ističe."
+  },
+  "brand": {
+    "name": "NextBosman",
+    "mark": "NB"
+  },
+  "nav": {
+    "search": "Pretraga",
+    "free": "Slobodni",
+    "expiring": "Isteći",
+    "support": "Podrška",
+    "lists": "Liste",
+    "signIn": "Prijava agenta",
+    "parser": "WhatsApp",
+    "profile": "Profil"
+  },
+  "footer": {
+    "free": "Sto ostaje besplatan.",
+    "live": "Igrači se učitavaju iz baze."
+  },
+  "support": {
+    "kicker": "Podrži NextBosman",
+    "title": "Besplatno za agente.",
+    "lead": "Pretraga i matching ostaju otvoreni. Ako ti sto pomogne da zatvoriš poziv, možeš vratiti. Plaćeni Pro dolazi kasnije — tek kad stvarno vrijedi 15–20 € mjesečno.",
+    "freeTitle": "Sto",
+    "freeText": "Slobodni igrači, isteci ugovora, klupski brifovi i statistika. Bez reklama, bez naloga.",
+    "donateTitle": "Donacija",
+    "donateText": "Po želji. Jedna kafa, ili više ako je deal krenuo ovdje. Nema dodatnih funkcija uz to.",
+    "donateCta": "Doniraj",
+    "donateSoon": "Dugme za donaciju se pojavi čim se stavi PayPal ili Ko-fi link.",
+    "proTitle": "Pro — kasnije",
+    "proPrice": "Oko 15–20 € / mjesec, kad bude spreman",
+    "proText": "Još se ne prodaje. Naplaćujemo tek kad ima jasan plus: više izvora, svježiji podaci, spremljeni brifovi. Do tada svi koriste isti sto.",
+    "proItems": [
+      "Više od jednog izvora podataka",
+      "Svježiji ugovori i nastupi",
+      "Spremljeni klupski brifovi"
+    ]
+  },
+  "home": {
+    "kicker": "Za fudbalske agente",
+    "slogan": "Sljedeći Bosman već je na tržištu.",
+    "pasteHeadline": "Zalijepi WhatsApp. Dobiješ imena.",
+    "lead": "Tvoja prednost je timing. Ugovor koji ističe, igrač bez kluba, sportski direktor koji treba ime večeras — to je prozor.",
+    "stats": [
+      { "label": "13,000+ baza igrača" },
+      { "label": "Free agents & istek ugovora" },
+      { "label": "EU pasoš filter" }
+    ],
+    "how": [
+      { "title": "1. Zalijepi upit", "text": "Ubaci brif kluba" },
+      { "title": "2. Pametni match", "text": "Instant pretraga baze" },
+      { "title": "3. Pošalji klubu", "text": "Generiši profil za WhatsApp" }
+    ],
+    "purpose": "NextBosman je svjetski stol za slobodne igrače i one koj ugovor ističe. Zalijepi klupski brif i vidi ko je stvarno dostupan za taj poziv.",
+    "ctaFree": "Pretraži slobodne",
+    "ctaFreeHint": "Bez ugovora. Spreman za razgovor.",
+    "ctaExpiring": "Ugovori ističu",
+    "ctaExpiringHint": "Još su u klubu. Sat otkucava.",
+    "ctaMatch": "Upari klupski brif",
+    "ctaMatchHint": "Zalijepi šta klub traži.",
+    "points": [
+      {
+        "title": "Dostupni sad",
+        "text": "Prvo igrači bez kluba, zatim oni pred istekom. Brzina je proizvod."
+      },
+      {
+        "title": "Da li bi došli?",
+        "text": "Matching pita bi li igrač stvarno uzeo tu ligu i klub — ne samo da li pozicija odgovara."
+      },
+      {
+        "title": "Statistika na klik",
+        "text": "Otvori igrača za utakmice, golove, asistencije i minute — dovoljno da znaš vredi li poziv."
+      }
+    ]
+  },
+  "search": {
+    "title": "Sto",
+    "subtitle": "Slobodni igrači i isteci ugovora, širom svijeta. Upari brif s imenima koja odgovaraju nivou."
+  },
+  "hero": {
+    "kicker": "Za fudbalske agente",
+    "title": "Ko je slobodan — u svijetu.",
+    "subtitle": "Pretraži slobodne igrače i one pred istekom ugovora."
+  },
+  "status": {
+    "free": "Slobodni igrači",
+    "expiring": "Ugovor ističe",
+    "freeLabel": "Slobodan",
+    "until": "Do",
+    "ended": "Završio"
+  },
+  "paste": {
+    "title": "Brzi WhatsApp unos",
+    "hint": "Zalijepi poruku kluba. Uparimo imena s brifom, ostavimo prave pozicije i označimo ideal match.",
+    "placeholder": "Zalijepi ovdje tekst upita s WhatsAppa (npr. FCSB traži ST, slobodan igrač, EU pasoš)...",
+    "apply": "Analiziraj i filtriraj",
+    "position": "Pozicija",
+    "free": "Slobodan igrač",
+    "expiring": "Ugovor ističe",
+    "eu": "EU pasoš",
+    "loan": "Spomenuta posudba — još nije posebna lista",
+    "empty": "Nema šta primijeniti. Probaj poziciju, slobodan/ističe ili EU."
+  },
+  "filters": {
+    "position": "Pozicija",
+    "allPositions": "Sve pozicije",
+    "age": "Godine",
+    "nationality": "Nacionalnost",
+    "allNationalities": "Sve nacionalnosti",
+    "euPassport": "EU pasoš",
+    "marketValue": "Tržišna do",
+    "anyValue": "Bilo koja vrijednost",
+    "country": "Zemlja / liga",
+    "world": "Cijeli svijet",
+    "open": "Filteri",
+    "done": "Gotovo"
+  },
+  "table": {
+    "player": "Igrač",
+    "age": "God.",
+    "position": "Poz",
+    "club": "Klub",
+    "league": "Liga",
+    "country": "Zemlja",
+    "contract": "Ugovor",
+    "apps": "Utakmice",
+    "marketValue": "Tržišna",
+    "nationality": "Nacionalnost",
+    "results": "{count} igrača",
+    "empty": "Nema igrača za ove filtere.",
+    "sampleNote": "Živa baza. Klikni ime za utakmice, golove, asistencije i minute od jula 2025.",
+    "fit": "Fit",
+    "loadMore": "Učitaj još"
+  },
+  "match": {
+    "title": "Klupski brif",
+    "hint": "Zalijepi klub, ligu i poziciju. Matching ostavlja imena koja bi stvarno ušla u taj transfer.",
+    "placeholder": "Bandırmaspor, TFF 1. Lig, Turkey\n- ST\n- Age 24-30",
+    "apply": "Upari",
+    "clear": "Poništi",
+    "hideWeak": "Sakrij slabe fitove",
+    "ideal": "Ideal match",
+    "strong": "Jak fit",
+    "possible": "Moguće",
+    "weak": "Slab fit",
+    "for": "Za {club}",
+    "cap": "{market} — ko bi stvarno došao",
+    "reasons": {
+      "position": "Pozicija odgovara brifu",
+      "positionClose": "Slična pozicija",
+      "positionMiss": "Druga pozicija od tražene",
+      "level": "Prelazak na ovaj nivo je realan",
+      "levelHigh": "Korak niže, ali moguće ako hoće taj potez",
+      "levelUnrealistic": "Malo vjerovatno da bi uzeo ovu ligu",
+      "age": "Godine odgovaraju",
+      "ageOff": "Godine su izvan brifa",
+      "eu": "EU pasoš kako je traženo",
+      "euMiss": "Nema EU pasoš",
+      "available": "Trenutno slobodan",
+      "expiring": "Još ima ugovor, ali ističe"
+    }
+  },
+  "profile": {
+    "close": "Zatvori",
+    "born": "Datum rođenja",
+    "matches": "Utakmice",
+    "goals": "Golovi",
+    "assists": "Asistencije",
+    "minutes": "Minute",
+    "per90Goals": "Golovi / 90",
+    "per90Assists": "Asistencije / 90",
+    "caps": "A reprezentacija",
+    "season": "Klupske utakmice od jula 2025.",
+    "nationality": "Nacionalnost",
+    "club": "Klub",
+    "contract": "Ugovor",
+    "watchVideo": "Gledaj Video / Highlights",
+    "shareWhatsApp": "Pošalji na WhatsApp",
+    "copyShare": "Kopiraj profil",
+    "copied": "Kopirano"
+  },
+  "positions": {
+    "GK": "Golman",
+    "CB": "Štoper",
+    "LB": "Lijevi bek",
+    "RB": "Desni bek",
+    "DM": "Zadnji vezni",
+    "CM": "Centralni vezni",
+    "AM": "Ofanzivni vezni / 10",
+    "LW": "Lijevo krilo",
+    "RW": "Desno krilo",
+    "ST": "Napadač"
+  },
+  "account": {
+    "email": "Email",
+    "password": "Lozinka",
+    "signIn": "Prijavi se",
+    "signUp": "Napravi nalog",
+    "signOut": "Odjavi se",
+    "saveList": "Sačuvaj ovu listu",
+    "saved": "Lista sačuvana",
+    "saving": "Spremam…",
+    "needAccount": "Prijavi se kao agent da sačuvaš shortlist za klub.",
+    "title": "Sačuvane liste",
+    "empty": "Još nema listi. Pretraži, pa sačuvaj imena za taj klub.",
+    "players": "{count} igrača",
+    "error": "Nisam mogao sačuvati. Prvo se prijavi.",
+    "confirm": "Ako signup traži potvrdu maila, u Supabase Auth isključi Confirm email (lokalno)."
+  }
+}

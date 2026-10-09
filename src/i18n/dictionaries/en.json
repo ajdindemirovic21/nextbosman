@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "title": "NextBosman — Free agents & expiring contracts",
+    "description": "A fast worldwide search for football agents: players without a club, and players whose contracts are ending."
+  },
+  "brand": {
+    "name": "NextBosman",
+    "mark": "NB"
+  },
+  "nav": {
+    "search": "Search",
+    "free": "Free agents",
+    "expiring": "Expiring",
+    "support": "Support",
+    "lists": "Saved lists",
+    "signIn": "Agent sign in",
+    "parser": "WhatsApp",
+    "profile": "Profile"
+  },
+  "footer": {
+    "free": "The desk stays free.",
+    "live": "Players are loaded from the live database."
+  },
+  "support": {
+    "kicker": "Support NextBosman",
+    "title": "Free to use. Built for agents.",
+    "lead": "Search and matching stay open. If the desk helps you close a call, you can throw something back. A paid Pro comes later — only when it is actually worth €15–20 a month.",
+    "freeTitle": "The desk",
+    "freeText": "Free agents, expiring contracts, club briefs and player stats. No ads, no account required.",
+    "donateTitle": "Donation",
+    "donateText": "Optional. One coffee, or more if a deal started here. No extra features attached.",
+    "donateCta": "Donate",
+    "donateSoon": "The donate button appears as soon as a PayPal or Ko-fi link is set.",
+    "proTitle": "Pro — later",
+    "proPrice": "Around €15–20 / month, when it is ready",
+    "proText": "Not for sale yet. We will only charge when there is a clear extra: more sources, fresher data, saved briefs. Until then everyone uses the same desk.",
+    "proItems": [
+      "More than one data source",
+      "Fresher contract and appearance data",
+      "Saved club briefs"
+    ]
+  },
+  "home": {
+    "kicker": "For football agents",
+    "slogan": "The next Bosman is already out there.",
+    "pasteHeadline": "Paste the WhatsApp. Get names.",
+    "lead": "Your edge is timing. A contract ending, a player without a club, a sporting director who needs a name tonight — that is the window.",
+    "stats": [
+      { "label": "13,000+ player database" },
+      { "label": "Free agents & expiring deals" },
+      { "label": "EU passport filter" }
+    ],
+    "how": [
+      { "title": "1. Paste the brief", "text": "Drop in the club request" },
+      { "title": "2. Smart match", "text": "Instant search of the database" },
+      { "title": "3. Send to the club", "text": "Generate a WhatsApp profile" }
+    ],
+    "purpose": "NextBosman is a worldwide desk for free agents and players whose contracts are running out. Paste a club brief and see who is actually available for that call.",
+    "ctaFree": "Search free agents",
+    "ctaFreeHint": "Out of contract. Ready to talk.",
+    "ctaExpiring": "Contracts ending",
+    "ctaExpiringHint": "Still at a club. The clock is on.",
+    "ctaMatch": "Match a club brief",
+    "ctaMatchHint": "Paste what the club asked for.",
+    "points": [
+      {
+        "title": "Available now",
+        "text": "Start with players who have no club, then those heading out of contract. Speed is the product."
+      },
+      {
+        "title": "Would they come?",
+        "text": "Matching asks if a player would actually take that league and club — not only if the position fits."
+      },
+      {
+        "title": "Stats on click",
+        "text": "Open a player for matches, goals, assists and minutes — enough to decide if the call is worth making."
+      }
+    ]
+  },
+  "search": {
+    "title": "The desk",
+    "subtitle": "Free agents and expiring contracts, worldwide. Match a brief to names that fit the level."
+  },
+  "hero": {
+    "kicker": "For football agents",
+    "title": "Who is available — worldwide.",
+    "subtitle": "Search free agents and players heading out of contract."
+  },
+  "status": {
+    "free": "Free agents",
+    "expiring": "Contract expiring",
+    "freeLabel": "Free",
+    "until": "Until",
+    "ended": "Ended"
+  },
+  "paste": {
+    "title": "Quick WhatsApp paste",
+    "hint": "Paste the club message. We match names to the brief, keep the right positions, and mark ideal matches.",
+    "placeholder": "Paste a WhatsApp enquiry here (e.g. FCSB looking for a ST, free agent, EU passport)...",
+    "apply": "Parse and filter",
+    "position": "Position",
+    "free": "Free agent",
+    "expiring": "Contract expiring",
+    "eu": "EU passport",
+    "loan": "Loan mentioned — not a separate list yet",
+    "empty": "Nothing to apply. Try a position, free/expiring, or EU."
+  },
+  "filters": {
+    "position": "Position",
+    "allPositions": "All positions",
+    "age": "Age",
+    "nationality": "Nationality",
+    "allNationalities": "All nationalities",
+    "euPassport": "EU passport",
+    "marketValue": "Market value up to",
+    "anyValue": "Any value",
+    "country": "Country / league",
+    "world": "Worldwide",
+    "open": "Filters",
+    "done": "Done"
+  },
+  "table": {
+    "player": "Player",
+    "age": "Age",
+    "position": "Pos",
+    "club": "Club",
+    "league": "League",
+    "country": "Country",
+    "contract": "Contract",
+    "apps": "Matches",
+    "marketValue": "Market value",
+    "nationality": "Nationality",
+    "results": "{count} players",
+    "empty": "No players match these filters.",
+    "sampleNote": "Live database. Click a name for matches, goals, assists and minutes since July 2025.",
+    "fit": "Fit",
+    "loadMore": "Load more"
+  },
+  "match": {
+    "title": "Club brief",
+    "hint": "Paste the club, league and position. Matching keeps names who would actually take that move.",
+    "placeholder": "Bandırmaspor, TFF 1. Lig, Turkey\n- ST\n- Age 24-30",
+    "apply": "Match",
+    "clear": "Clear",
+    "hideWeak": "Hide weak fits",
+    "ideal": "Ideal match",
+    "strong": "Strong fit",
+    "possible": "Possible",
+    "weak": "Weak fit",
+    "for": "For {club}",
+    "cap": "{market} — who would actually go",
+    "reasons": {
+      "position": "Position matches the brief",
+      "positionClose": "Related position",
+      "positionMiss": "Different position than requested",
+      "level": "A move to this level is realistic",
+      "levelHigh": "A step down, but possible if they want the move",
+      "levelUnrealistic": "Unlikely they would take this league",
+      "age": "Age fits the brief",
+      "ageOff": "Age is outside the brief",
+      "eu": "EU passport as requested",
+      "euMiss": "No EU passport",
+      "available": "Currently a free agent",
+      "expiring": "Still under contract, but it is ending"
+    }
+  },
+  "profile": {
+    "close": "Close",
+    "born": "Date of birth",
+    "matches": "Matches",
+    "goals": "Goals",
+    "assists": "Assists",
+    "minutes": "Minutes",
+    "per90Goals": "Goals / 90",
+    "per90Assists": "Assists / 90",
+    "caps": "Intl. caps",
+    "season": "Club games since July 2025",
+    "nationality": "Nationality",
+    "club": "Club",
+    "contract": "Contract",
+    "watchVideo": "Watch Video / Highlights",
+    "shareWhatsApp": "Send on WhatsApp",
+    "copyShare": "Copy profile",
+    "copied": "Copied"
+  },
+  "positions": {
+    "GK": "Goalkeeper",
+    "CB": "Centre-back",
+    "LB": "Left-back",
+    "RB": "Right-back",
+    "DM": "Defensive midfield",
+    "CM": "Central midfield",
+    "AM": "Attacking midfield / 10",
+    "LW": "Left winger",
+    "RW": "Right winger",
+    "ST": "Striker"
+  },
+  "account": {
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "signOut": "Sign out",
+    "saveList": "Save this list",
+    "saved": "List saved",
+    "saving": "Saving…",
+    "needAccount": "Sign in as an agent to save a club shortlist.",
+    "title": "Saved lists",
+    "empty": "No lists yet. Search, then save the names for that club.",
+    "players": "{count} players",
+    "error": "Could not save. Sign in first.",
+    "confirm": "If sign-up asks for email confirm, turn Confirm email off in Supabase Auth (local)."
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "title": "NextBosman — Serbest oyuncular ve biten sözleşmeler",
+    "description": "Menajerler için hızlı dünya araması: kulüpsüz oyuncular ve sözleşmesi bitmek üzere olanlar."
+  },
+  "brand": {
+    "name": "NextBosman",
+    "mark": "NB"
+  },
+  "nav": {
+    "search": "Arama",
+    "free": "Serbest",
+    "expiring": "Biten",
+    "support": "Destek",
+    "lists": "Listeler",
+    "signIn": "Ajan girişi",
+    "parser": "WhatsApp",
+    "profile": "Profil"
+  },
+  "footer": {
+    "free": "Masa ücretsiz kalır.",
+    "live": "Oyuncular canlı veritabanından gelir."
+  },
+  "support": {
+    "kicker": "NextBosman’ı destekle",
+    "title": "Menajerler için ücretsiz.",
+    "lead": "Arama ve eşleştirme açık kalır. Masa bir görüşmeyi kapattıysa geri verebilirsin. Ücretli Pro sonra gelir — ayda 15–20 € gerçekten hak edince.",
+    "freeTitle": "Masa",
+    "freeText": "Serbest oyuncular, biten sözleşmeler, kulüp brifleri ve istatistik. Reklam yok, hesap yok.",
+    "donateTitle": "Bağış",
+    "donateText": "İsteğe bağlı. Bir kahve, ya da buradan bir iş çıktıysa daha fazlası. Ek özellik yok.",
+    "donateCta": "Bağış yap",
+    "donateSoon": "PayPal veya Ko-fi linki eklenince bağış düğmesi görünür.",
+    "proTitle": "Pro — sonra",
+    "proPrice": "Hazır olunca ayda yaklaşık 15–20 €",
+    "proText": "Henüz satılmıyor. Ancak net bir artı olunca: daha fazla kaynak, taze veri, kayıtlı brifler.",
+    "proItems": [
+      "Birden fazla veri kaynağı",
+      "Daha taze sözleşme ve maç verisi",
+      "Kayıtlı kulüp brifleri"
+    ]
+  },
+  "home": {
+    "kicker": "Futbol menajerleri için",
+    "slogan": "Bir sonraki Bosman zaten piyasada.",
+    "pasteHeadline": "WhatsApp’ı yapıştır. İsimleri al.",
+    "lead": "Avantajın zamanlamadır. Biten sözleşme, kulüpsüz oyuncu, bu gece isim isteyen sportif direktör — pencere budur.",
+    "stats": [
+      { "label": "13.000+ oyuncu veritabanı" },
+      { "label": "Serbest oyuncular ve biten sözleşmeler" },
+      { "label": "AB pasaportu filtresi" }
+    ],
+    "how": [
+      { "title": "1. Brifi yapıştır", "text": "Kulüp talebini ekle" },
+      { "title": "2. Akıllı eşleşme", "text": "Veritabanında anında arama" },
+      { "title": "3. Kulübe gönder", "text": "WhatsApp profili oluştur" }
+    ],
+    "purpose": "NextBosman, serbest oyuncular ve sözleşmesi bitenler için dünya masasıdır. Kulüp brifini yapıştır ve o arama için kim gerçekten müsait bak.",
+    "ctaFree": "Serbest oyuncuları ara",
+    "ctaFreeHint": "Sözleşmesiz. Görüşmeye hazır.",
+    "ctaExpiring": "Biten sözleşmeler",
+    "ctaExpiringHint": "Hâlâ kulüpte. Saat işliyor.",
+    "ctaMatch": "Kulüp brifi eşleştir",
+    "ctaMatchHint": "Kulübün ne istediğini yapıştır.",
+    "points": [
+      {
+        "title": "Şimdi müsait",
+        "text": "Önce kulüpsüzler, sonra sözleşmesi bitenler. Ürün hızdır."
+      },
+      {
+        "title": "Gelirler mi?",
+        "text": "Matching, oyuncunun o ligi ve kulübü gerçekten kabul edip etmeyeceğine bakar — sadece mevki uyumuna değil."
+      },
+      {
+        "title": "Tıklayınca istatistik",
+        "text": "Maç, gol, asist, dakika — aramanın değip değmediğini anlamak için yeter."
+      }
+    ]
+  },
+  "search": {
+    "title": "Masa",
+    "subtitle": "Serbest oyuncular ve biten sözleşmeler, dünya çapında. Brifi seviyeye uyan isimlerle eşleştir."
+  },
+  "hero": {
+    "kicker": "Futbol menajerleri için",
+    "title": "Kim müsait — dünyada.",
+    "subtitle": "Serbest oyuncuları ve sözleşmesi bitenleri arayın."
+  },
+  "status": {
+    "free": "Serbest oyuncular",
+    "expiring": "Sözleşme bitiyor",
+    "freeLabel": "Serbest",
+    "until": "Kadar",
+    "ended": "Bitti"
+  },
+  "paste": {
+    "title": "Hızlı WhatsApp yapıştır",
+    "hint": "Kulüp mesajını yapıştır. Mevki, serbest/biten ve AB dolar, sonra ararız.",
+    "placeholder": "WhatsApp talebini buraya yapıştır (örn. FCSB ST arıyor, serbest oyuncu, AB pasaportu)...",
+    "apply": "Çözümle ve filtrele",
+    "position": "Mevki",
+    "free": "Serbest oyuncu",
+    "expiring": "Sözleşme bitiyor",
+    "eu": "AB pasaportu",
+    "loan": "Kiralık geçiyor — henüz ayrı liste yok",
+    "empty": "Uygulanacak bir şey yok. Mevki, serbest/biten veya AB dene."
+  },
+  "filters": {
+    "position": "Mevki",
+    "allPositions": "Tüm mevkiler",
+    "age": "Yaş",
+    "nationality": "Uyruk",
+    "allNationalities": "Tüm uyruklar",
+    "euPassport": "AB pasaportu",
+    "marketValue": "Piyasa değeri en fazla",
+    "anyValue": "Tüm değerler",
+    "country": "Ülke / lig",
+    "world": "Dünya",
+    "open": "Filtreler",
+    "done": "Tamam"
+  },
+  "table": {
+    "player": "Oyuncu",
+    "age": "Yaş",
+    "position": "Mev",
+    "club": "Kulüp",
+    "league": "Lig",
+    "country": "Ülke",
+    "contract": "Sözleşme",
+    "apps": "Maç",
+    "marketValue": "Piyasa değeri",
+    "nationality": "Uyruk",
+    "results": "{count} oyuncu",
+    "empty": "Bu filtrelere uyan oyuncu yok.",
+    "sampleNote": "Canlı veritabanı. İsme tıklayınca Temmuz 2025’ten beri maç, gol, asist ve dakika görünür.",
+    "fit": "Uyum",
+    "loadMore": "Daha fazla"
+  },
+  "match": {
+    "title": "Kulüp brifi",
+    "hint": "Kulüp, lig ve mevkiyi yapıştır. Matching o hamleyi gerçekten kabul edecek isimleri bırakır.",
+    "placeholder": "Bandırmaspor, TFF 1. Lig, Turkey\n- ST\n- Age 24-30",
+    "apply": "Eşleştir",
+    "clear": "Temizle",
+    "hideWeak": "Zayıf uyumları gizle",
+    "ideal": "Ideal match",
+    "strong": "Güçlü uyum",
+    "possible": "Olası",
+    "weak": "Zayıf uyum",
+    "for": "{club} için",
+    "cap": "{market} — kim gerçekten gider",
+    "reasons": {
+      "position": "Mevki uyuyor",
+      "positionClose": "Yakın mevki",
+      "positionMiss": "İstenen mevkiden farklı",
+      "level": "Bu seviyeye geçiş gerçekçi",
+      "levelHigh": "Bir basamak aşağı, ama isterlerse mümkün",
+      "levelUnrealistic": "Bu ligi kabul etmeleri düşük ihtimal",
+      "age": "Yaş uyuyor",
+      "ageOff": "Yaş brifin dışında",
+      "eu": "İstenen AB pasaportu",
+      "euMiss": "AB pasaportu yok",
+      "available": "Şu an serbest",
+      "expiring": "Hâlâ sözleşmeli, ama bitiyor"
+    }
+  },
+  "profile": {
+    "close": "Kapat",
+    "born": "Doğum tarihi",
+    "matches": "Maç",
+    "goals": "Gol",
+    "assists": "Asist",
+    "minutes": "Dakika",
+    "per90Goals": "Gol / 90",
+    "per90Assists": "Asist / 90",
+    "caps": "Milli maç",
+    "season": "Temmuz 2025’ten beri kulüp maçları",
+    "nationality": "Uyruk",
+    "club": "Kulüp",
+    "contract": "Sözleşme",
+    "watchVideo": "Video / Highlights izle",
+    "shareWhatsApp": "WhatsApp’tan gönder",
+    "copyShare": "Profili kopyala",
+    "copied": "Kopyalandı"
+  },
+  "positions": {
+    "GK": "Kaleci",
+    "CB": "Stoper",
+    "LB": "Sol bek",
+    "RB": "Sağ bek",
+    "DM": "Defansif orta saha",
+    "CM": "Merkez orta saha",
+    "AM": "Ofansif orta saha / 10",
+    "LW": "Sol kanat",
+    "RW": "Sağ kanat",
+    "ST": "Forvet"
+  },
+  "account": {
+    "email": "E-posta",
+    "password": "Şifre",
+    "signIn": "Giriş",
+    "signUp": "Hesap oluştur",
+    "signOut": "Çıkış",
+    "saveList": "Bu listeyi kaydet",
+    "saved": "Liste kaydedildi",
+    "saving": "Kaydediliyor…",
+    "needAccount": "Kulüp shortlist’i kaydetmek için ajan olarak giriş yapın.",
+    "title": "Kayıtlı listeler",
+    "empty": "Henüz liste yok. Arayın, sonra o kulüp için isimleri kaydedin.",
+    "players": "{count} oyuncu",
+    "error": "Kaydedilemedi. Önce giriş yapın.",
+    "confirm": "Kayıt e-posta onayı isterse Supabase Auth’ta Confirm email’i kapatın (yerel)."
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "title": "NextBosman — Vereinslose & auslaufende Verträge",
+    "description": "Schnelle weltweite Suche für Berater: Spieler ohne Verein und Spieler mit auslaufendem Vertrag."
+  },
+  "brand": {
+    "name": "NextBosman",
+    "mark": "NB"
+  },
+  "nav": {
+    "search": "Suche",
+    "free": "Vereinslos",
+    "expiring": "Auslaufend",
+    "support": "Support",
+    "lists": "Listen",
+    "signIn": "Agent-Login",
+    "parser": "WhatsApp",
+    "profile": "Profil"
+  },
+  "footer": {
+    "free": "Der Schreibtisch bleibt kostenlos.",
+    "live": "Spieler kommen aus der Live-Datenbank."
+  },
+  "support": {
+    "kicker": "NextBosman unterstützen",
+    "title": "Kostenlos für Berater.",
+    "lead": "Suche und Matching bleiben offen. Hilft der Schreibtisch bei einem Anruf, kannst du etwas zurückgeben. Pro kommt später — erst wenn es 15–20 € im Monat wert ist.",
+    "freeTitle": "Der Schreibtisch",
+    "freeText": "Vereinslose, auslaufende Verträge, Klub-Briefings und Stats. Keine Werbung, kein Konto.",
+    "donateTitle": "Spende",
+    "donateText": "Freiwillig. Ein Kaffee, oder mehr wenn hier ein Deal begann.",
+    "donateCta": "Spenden",
+    "donateSoon": "Der Spenden-Button erscheint, sobald PayPal oder Ko-fi hinterlegt ist.",
+    "proTitle": "Pro — später",
+    "proPrice": "Etwa 15–20 € / Monat, wenn es soweit ist",
+    "proText": "Noch nicht zu kaufen. Wir verlangen Geld erst bei klarem Mehrwert: mehr Quellen, frischere Daten, gespeicherte Briefings.",
+    "proItems": [
+      "Mehr als eine Datenquelle",
+      "Frischere Vertrags- und Einsatzdaten",
+      "Gespeicherte Klub-Briefings"
+    ]
+  },
+  "home": {
+    "kicker": "Für Fußballberater",
+    "slogan": "Der nächste Bosman ist schon auf dem Markt.",
+    "pasteHeadline": "WhatsApp einfügen. Namen bekommen.",
+    "lead": "Dein Vorteil ist Timing. Auslaufender Vertrag, Spieler ohne Klub, ein Sportchef der heute Nacht einen Namen braucht — das ist das Fenster.",
+    "stats": [
+      { "label": "13.000+ Spielerdatenbank" },
+      { "label": "Vereinslose & auslaufende Verträge" },
+      { "label": "EU-Pass Filter" }
+    ],
+    "how": [
+      { "title": "1. Briefing einfügen", "text": "Klub-Anfrage reinkopieren" },
+      { "title": "2. Smart Match", "text": "Sofortsuche in der Datenbank" },
+      { "title": "3. An den Klub senden", "text": "WhatsApp-Profil erzeugen" }
+    ],
+    "purpose": "NextBosman ist der weltweite Schreibtisch für vereinslose Spieler und auslaufende Verträge. Klub-Briefing einfügen und sehen, wer für diesen Anruf wirklich verfügbar ist.",
+    "ctaFree": "Vereinslose suchen",
+    "ctaFreeHint": "Ohne Vertrag. Gesprächsbereit.",
+    "ctaExpiring": "Verträge laufen aus",
+    "ctaExpiringHint": "Noch im Klub. Die Uhr läuft.",
+    "ctaMatch": "Klub-Briefing matchen",
+    "ctaMatchHint": "Einfügen, was der Klub will.",
+    "points": [
+      {
+        "title": "Jetzt verfügbar",
+        "text": "Zuerst vereinslos, dann auslaufende Verträge. Tempo ist das Produkt."
+      },
+      {
+        "title": "Würden sie kommen?",
+        "text": "Matching fragt, ob ein Spieler Liga und Klub wirklich annehmen würde — nicht nur, ob die Position passt."
+      },
+      {
+        "title": "Stats per Klick",
+        "text": "Spiele, Tore, Vorlagen, Minuten — genug, um zu wissen, ob der Anruf lohnt."
+      }
+    ]
+  },
+  "search": {
+    "title": "Der Schreibtisch",
+    "subtitle": "Vereinslose und auslaufende Verträge, weltweit. Briefe an Namen matchen, die zum Niveau passen."
+  },
+  "hero": {
+    "kicker": "Für Fußballberater",
+    "title": "Wer ist verfügbar — weltweit.",
+    "subtitle": "Suche vereinslose Spieler und auslaufende Verträge."
+  },
+  "status": {
+    "free": "Vereinslos",
+    "expiring": "Vertrag läuft aus",
+    "freeLabel": "Frei",
+    "until": "Bis",
+    "ended": "Endete"
+  },
+  "paste": {
+    "title": "Schneller WhatsApp-Paste",
+    "hint": "Klubnachricht einfügen. Position, frei/auslaufend und EU werden gesetzt, dann gesucht.",
+    "placeholder": "WhatsApp-Anfrage hier einfügen (z. B. FCSB sucht ST, vereinslos, EU-Pass)...",
+    "apply": "Analysieren und filtern",
+    "position": "Position",
+    "free": "Vereinslos",
+    "expiring": "Vertrag läuft aus",
+    "eu": "EU-Pass",
+    "loan": "Leihe erwähnt — noch keine eigene Liste",
+    "empty": "Nichts anzuwenden. Position, frei/auslaufend oder EU versuchen."
+  },
+  "filters": {
+    "position": "Position",
+    "allPositions": "Alle Positionen",
+    "age": "Alter",
+    "nationality": "Nationalität",
+    "allNationalities": "Alle Nationalitäten",
+    "euPassport": "EU-Pass",
+    "marketValue": "Marktwert bis",
+    "anyValue": "Jeder Wert",
+    "country": "Land / Liga",
+    "world": "Weltweit",
+    "open": "Filter",
+    "done": "Fertig"
+  },
+  "table": {
+    "player": "Spieler",
+    "age": "Alter",
+    "position": "Pos",
+    "club": "Verein",
+    "league": "Liga",
+    "country": "Land",
+    "contract": "Vertrag",
+    "apps": "Spiele",
+    "marketValue": "Marktwert",
+    "nationality": "Nationalität",
+    "results": "{count} Spieler",
+    "empty": "Keine Spieler passen zu diesen Filtern.",
+    "sampleNote": "Live-Datenbank. Klick auf einen Namen für Spiele, Tore, Vorlagen und Minuten seit Juli 2025.",
+    "fit": "Fit",
+    "loadMore": "Mehr laden"
+  },
+  "match": {
+    "title": "Klub-Briefing",
+    "hint": "Klub, Liga und Position einfügen. Matching behält Namen, die diesen Wechsel wirklich machen würden.",
+    "placeholder": "Bandırmaspor, TFF 1. Lig, Turkey\n- ST\n- Age 24-30",
+    "apply": "Matchen",
+    "clear": "Leeren",
+    "hideWeak": "Schwache Fits ausblenden",
+    "ideal": "Ideal match",
+    "strong": "Starker Fit",
+    "possible": "Möglich",
+    "weak": "Schwacher Fit",
+    "for": "Für {club}",
+    "cap": "{market} — wer wirklich gehen würde",
+    "reasons": {
+      "position": "Position passt",
+      "positionClose": "Ähnliche Position",
+      "positionMiss": "Andere Position als gesucht",
+      "level": "Ein Wechsel auf dieses Niveau ist realistisch",
+      "levelHigh": "Ein Schritt nach unten, aber möglich wenn sie wollen",
+      "levelUnrealistic": "Unwahrscheinlich, dass sie diese Liga annehmen",
+      "age": "Alter passt",
+      "ageOff": "Alter außerhalb des Briefings",
+      "eu": "EU-Pass wie gewünscht",
+      "euMiss": "Kein EU-Pass",
+      "available": "Derzeit vereinslos",
+      "expiring": "Noch unter Vertrag, läuft aber aus"
+    }
+  },
+  "profile": {
+    "close": "Schließen",
+    "born": "Geburtsdatum",
+    "matches": "Spiele",
+    "goals": "Tore",
+    "assists": "Vorlagen",
+    "minutes": "Minuten",
+    "per90Goals": "Tore / 90",
+    "per90Assists": "Vorlagen / 90",
+    "caps": "Länderspiele",
+    "season": "Vereinsspiele seit Juli 2025",
+    "nationality": "Nationalität",
+    "club": "Verein",
+    "contract": "Vertrag",
+    "watchVideo": "Video / Highlights ansehen",
+    "shareWhatsApp": "Per WhatsApp senden",
+    "copyShare": "Profil kopieren",
+    "copied": "Kopiert"
+  },
+  "positions": {
+    "GK": "Torwart",
+    "CB": "Innenverteidiger",
+    "LB": "Linker Verteidiger",
+    "RB": "Rechter Verteidiger",
+    "DM": "Sechser",
+    "CM": "Zentrales Mittelfeld",
+    "AM": "Zehn / offensives Mittelfeld",
+    "LW": "Linksaußen",
+    "RW": "Rechtsaußen",
+    "ST": "Stürmer"
+  },
+  "account": {
+    "email": "E-Mail",
+    "password": "Passwort",
+    "signIn": "Anmelden",
+    "signUp": "Konto erstellen",
+    "signOut": "Abmelden",
+    "saveList": "Liste speichern",
+    "saved": "Liste gespeichert",
+    "saving": "Speichern…",
+    "needAccount": "Als Agent anmelden, um eine Klub-Shortlist zu speichern.",
+    "title": "Gespeicherte Listen",
+    "empty": "Noch keine Listen. Suchen, dann Namen für den Klub speichern.",
+    "players": "{count} Spieler",
+    "error": "Speichern fehlgeschlagen. Bitte anmelden.",
+    "confirm": "Wenn die Registrierung eine Mail-Bestätigung will: Confirm email in Supabase Auth aus (lokal)."
+  }
+}
