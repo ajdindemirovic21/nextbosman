@@ -15,7 +15,7 @@ export function LanguageSwitcher({ current }: Props) {
     <label className="lang-switch">
       <span className="sr-only">Language</span>
       <select
-        className="max-w-[9.5rem] whitespace-nowrap rounded-lg border border-slate-800 bg-slate-950/80 px-3 py-1.5 text-sm text-slate-200 focus:border-emerald-500 focus:outline-none"
+        className="max-w-[7.25rem] whitespace-nowrap rounded-lg border border-slate-800 bg-slate-950/80 px-2 py-1 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none md:max-w-[9.5rem] md:px-3 md:py-1.5 md:text-sm"
         value={current}
         onChange={(event) => {
           const next = event.target.value as Locale;

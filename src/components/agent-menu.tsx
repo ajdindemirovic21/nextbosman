@@ -103,14 +103,14 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
         <>
           <button
             type="button"
-            className="shrink-0 whitespace-nowrap rounded-lg border border-emerald-500/60 bg-emerald-500/10 px-3 py-1.5 text-sm font-medium text-emerald-400 transition hover:bg-emerald-500/20"
+            className="shrink-0 whitespace-nowrap rounded-lg border border-emerald-500/60 bg-emerald-500/10 px-2 py-1 text-xs font-medium text-emerald-400 transition hover:bg-emerald-500/20 md:px-3 md:py-1.5 md:text-sm"
             onClick={() => (open ? setOpen(false) : openPanel())}
           >
             {dict.account.signIn}
           </button>
           <button
             type="button"
-            className="shrink-0 whitespace-nowrap rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-sm font-medium text-slate-100 transition hover:bg-slate-800"
+            className="hidden shrink-0 whitespace-nowrap rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-1.5 text-sm font-medium text-slate-100 transition hover:bg-slate-800 sm:inline-flex"
             onClick={() => (open ? setOpen(false) : openPanel())}
           >
             {dict.account.signUp}

@@ -106,7 +106,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
 }
 
 
@@ -756,6 +756,17 @@ tbody tr:hover {
 }
 
 @media (max-width: 767px) {
+  .mark-ball {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .topbar-end {
+    gap: 6px;
+  }
+
   .drawer {
     inset: 0;
     width: 100%;

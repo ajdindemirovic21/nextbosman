@@ -21,24 +21,22 @@ export function AppChrome({ lang, dict, children }: Props) {
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-lg">
-        <div className="topbar mx-auto flex max-w-[1180px] items-center justify-between px-4 py-3 md:px-6">
-          <Link href={`/${lang}`} className="brand">
+      <header className="sticky top-0 z-30 border-b border-slate-800/60 bg-slate-950/80 pt-[env(safe-area-inset-top)] backdrop-blur-lg">
+        <div className="topbar mx-auto flex max-w-[1180px] items-center justify-between gap-2 px-[max(0.75rem,env(safe-area-inset-left))] py-2 md:px-6 md:py-3">
+          <Link href={`/${lang}`} className="brand min-w-0 shrink">
             <LogoMark />
-            <span className="wordmark text-lg font-bold tracking-tight text-white">
+            <span className="wordmark hidden text-base font-bold tracking-tight text-white min-[380px]:inline md:text-lg">
               {dict.brand.name}
             </span>
           </Link>
-          <div className="topbar-end flex">
+          <div className="topbar-end flex shrink-0 items-center">
             <div className="!hidden md:!flex">
               <SiteNav lang={lang} dict={dict} />
             </div>
             <AgentMenu lang={lang} dict={dict} />
-            <div className="!hidden md:!flex">
-              <Suspense fallback={null}>
-                <LanguageSwitcher current={lang} />
-              </Suspense>
-            </div>
+            <Suspense fallback={null}>
+              <LanguageSwitcher current={lang} />
+            </Suspense>
           </div>
         </div>
       </header>
