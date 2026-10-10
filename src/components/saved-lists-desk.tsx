@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { QuickShare } from "@/components/quick-share";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import type { SavedList } from "@/lib/supabase/types";
@@ -59,6 +60,13 @@ export function SavedListsDesk({ lang, dict }: Props) {
             <Link href={`/${lang}/search?status=${list.filters.status ?? "free"}`}>
               {dict.nav.search}
             </Link>
+            <div className="mt-3">
+              <QuickShare
+                dict={dict}
+                path={`/${lang}/search?status=${list.filters.status ?? "free"}`}
+                text={list.title}
+              />
+            </div>
           </li>
         ))}
       </ul>

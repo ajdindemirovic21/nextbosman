@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IconWhatsApp } from "@/components/icons";
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { playerWhatsAppShare } from "@/lib/highlights";
@@ -28,7 +29,8 @@ export function WhatsAppShare({ player, dict, locale }: Props) {
 
   return (
     <div className="share-row">
-      <a className="wa-btn min-h-12" href={href} target="_blank" rel="noopener noreferrer">
+      <a className="wa-btn inline-flex min-h-12 items-center justify-center gap-2" href={href} target="_blank" rel="noopener noreferrer">
+        <IconWhatsApp className="h-4 w-4" />
         {dict.profile.shareWhatsApp}
       </a>
       <button type="button" className="btn-ghost share-copy" onClick={() => void copy()}>

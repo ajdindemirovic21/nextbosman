@@ -1,12 +1,13 @@
 "use client";
 
 import { HighlightsLink } from "@/components/highlights-link";
-import { WhatsAppShare } from "@/components/whatsapp-share";
+import { QuickShare } from "@/components/quick-share";
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { nationalityFlagSrc } from "@/lib/flags";
 import { formatDate, formatMarketValue } from "@/lib/format";
 import type { MatchResult } from "@/lib/match-brief";
+import { playerWhatsAppShare } from "@/lib/highlights";
 import { contractAccent } from "@/lib/player-ui";
 
 type Props = {
@@ -50,7 +51,11 @@ export function PlayerDrawer({ player, dict, locale, match, onClose }: Props) {
 
         <div className="drawer-media">
           <HighlightsLink playerName={player.name} dict={dict} />
-          <WhatsAppShare player={player} dict={dict} locale={locale} />
+          <QuickShare
+            dict={dict}
+            path={`/${locale}/search`}
+            text={playerWhatsAppShare(player, dict, locale)}
+          />
         </div>
 
         {match ? (

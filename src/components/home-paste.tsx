@@ -29,24 +29,27 @@ export function HomePaste({ lang, dict }: Props) {
 
   return (
     <section
-      className="home-paste w-full rounded-2xl border border-slate-800/80 bg-slate-900/70 p-4 shadow-xl backdrop-blur-md md:p-6"
+      className="home-paste box-border w-full min-w-0 max-w-full rounded-2xl border border-slate-800/80 bg-slate-900/70 p-4 shadow-xl backdrop-blur-md md:p-6"
       aria-labelledby="home-paste-title"
     >
       <p className="kicker text-xs font-semibold uppercase tracking-wider text-emerald-400">
         {dict.paste.title}
       </p>
-      <h2 id="home-paste-title" className="text-2xl font-bold tracking-tight text-white">
+      <h2
+        id="home-paste-title"
+        className="text-xl font-bold tracking-tight break-words text-white sm:text-2xl"
+      >
         {dict.home.pasteHeadline}
       </h2>
-      <p className="home-paste-lead">{dict.paste.hint}</p>
+      <p className="home-paste-lead break-words">{dict.paste.hint}</p>
       <textarea
-        className="w-full rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none"
+        className="box-border max-w-full min-w-0 w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-3 text-sm leading-6 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none sm:px-4"
         value={text}
         onChange={(event) => setText(event.target.value)}
         placeholder={dict.paste.placeholder}
         rows={6}
       />
-      <button type="button" className="btn-primary" onClick={run} disabled={!text.trim()}>
+      <button type="button" className="btn-primary max-w-full" onClick={run} disabled={!text.trim()}>
         {dict.paste.apply}
       </button>
     </section>

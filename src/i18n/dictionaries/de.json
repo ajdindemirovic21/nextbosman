@@ -183,6 +183,11 @@
     "copyShare": "Profil kopieren",
     "copied": "Kopiert"
   },
+  "share": {
+    "whatsapp": "Per WhatsApp teilen",
+    "copy": "Link kopieren",
+    "copied": "Kopiert"
+  },
   "positions": {
     "GK": "Torwart",
     "CB": "Innenverteidiger",
@@ -201,6 +206,8 @@
     "signIn": "Anmelden",
     "signUp": "Konto erstellen",
     "signOut": "Abmelden",
+    "google": "Google",
+    "googleContinue": "Mit Google fortfahren",
     "saveList": "Liste speichern",
     "saved": "Liste gespeichert",
     "saving": "Speichern…",

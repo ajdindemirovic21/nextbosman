@@ -183,6 +183,11 @@
     "copyShare": "Profili kopyala",
     "copied": "Kopyalandı"
   },
+  "share": {
+    "whatsapp": "WhatsApp ile paylaş",
+    "copy": "Bağlantıyı kopyala",
+    "copied": "Kopyalandı"
+  },
   "positions": {
     "GK": "Kaleci",
     "CB": "Stoper",
@@ -201,6 +206,8 @@
     "signIn": "Giriş",
     "signUp": "Hesap oluştur",
     "signOut": "Çıkış",
+    "google": "Google",
+    "googleContinue": "Google ile devam et",
     "saveList": "Bu listeyi kaydet",
     "saved": "Liste kaydedildi",
     "saving": "Kaydediliyor…",

@@ -1,5 +1,5 @@
 import type { Dictionary } from "@/i18n/get-dictionary";
-import { YoutubeIcon } from "@/components/youtube-icon";
+import { IconPlay } from "@/components/icons";
 import { playerHighlightsUrl } from "@/lib/highlights";
 
 type Props = {
@@ -16,7 +16,7 @@ export function HighlightsLink({ playerName, dict, compact }: Props) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <YoutubeIcon size={compact ? 15 : 18} />
+      <IconPlay className={compact ? "h-3.5 w-3.5" : "h-[18px] w-[18px]"} />
       <span>{dict.profile.watchVideo}</span>
     </a>
   );

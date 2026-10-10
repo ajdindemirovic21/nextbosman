@@ -183,6 +183,11 @@
     "copyShare": "Copia profilo",
     "copied": "Copiato"
   },
+  "share": {
+    "whatsapp": "Condividi su WhatsApp",
+    "copy": "Copia link",
+    "copied": "Copiato"
+  },
   "positions": {
     "GK": "Portiere",
     "CB": "Difensore centrale",
@@ -201,6 +206,8 @@
     "signIn": "Accedi",
     "signUp": "Crea account",
     "signOut": "Esci",
+    "google": "Google",
+    "googleContinue": "Continua con Google",
     "saveList": "Salva questa lista",
     "saved": "Lista salvata",
     "saving": "Salvataggio…",

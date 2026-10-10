@@ -74,7 +74,7 @@ body {
 
 .site-nav {
   display: flex;
-  gap: 14px;
+  gap: 2px;
 }
 
 .brand {
@@ -120,7 +120,9 @@ body {
 .agent-menu {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 6px;
 }
 
@@ -140,7 +142,7 @@ body {
   right: 0;
   top: calc(100% + 8px);
   z-index: 50;
-  width: min(280px, 70vw);
+  width: min(280px, calc(100vw - 1.5rem));
   display: grid;
   gap: 10px;
   padding: 14px;
@@ -258,7 +260,13 @@ body {
 }
 
 .page {
-  padding-top: 48px;
+  padding-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding-top: 48px;
+  }
 }
 
 .hero h1,
@@ -275,20 +283,28 @@ body {
 }
 
 .home-hero {
-  padding: 8vh 0 48px;
+  padding: 24px 0 40px;
   border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 768px) {
+  .home-hero {
+    padding: 8vh 0 48px;
+  }
 }
 
 .home-hero h1 {
   margin: 12px 0 24px;
-  max-width: 18ch;
+  max-width: none;
+  overflow-wrap: anywhere;
 }
 
 .home-lead {
   max-width: 46ch;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.5;
   margin: 0 0 20px;
+  overflow-wrap: anywhere;
 }
 
 .home-purpose {
@@ -297,17 +313,28 @@ body {
   font-size: 16px;
   line-height: 1.6;
   margin: 28px 0 0;
+  overflow-wrap: anywhere;
 }
 
 .home-paste {
-  margin-top: 8px;
-  padding: 24px;
-  max-width: 720px;
+  margin-top: 4px;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .home-paste {
+    max-width: 720px;
+  }
+}
+
+textarea {
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .home-paste h2 {
   margin: 8px 0 10px;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 .home-paste-lead {
@@ -339,7 +366,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 12px;
   min-height: 168px;
   padding: 22px;
   color: inherit;
@@ -347,7 +374,19 @@ body {
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
 
-.home-card:hover {
+.home-card-link {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.home-card:hover,
+.home-card:focus-within {
   border-color: var(--accent);
 }
 
@@ -372,7 +411,9 @@ body {
 .home-card strong {
   font-family: inherit;
   font-weight: 700;
-  font-size: 26px;
+  font-size: clamp(18px, 4vw, 26px);
+  overflow-wrap: anywhere;
+  line-height: 1.2;
 }
 
 .home-points {
@@ -414,7 +455,13 @@ body {
 .paste-panel {
   display: grid;
   gap: 12px;
-  padding: 20px 22px;
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .paste-panel {
+    padding: 20px 22px;
+  }
 }
 
 .paste-panel textarea {
@@ -450,19 +497,39 @@ body {
   color: var(--muted);
   font-size: 16px;
   line-height: 1.55;
-  margin: 0 0 40px;
+  margin: 0 0 24px;
+  overflow-wrap: anywhere;
 }
 
 .desk {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
+  min-width: 0;
+}
+
+#match,
+#paste {
+  scroll-margin-top: 7.5rem;
+}
+
+@media (min-width: 768px) {
+  #match,
+  #paste {
+    scroll-margin-top: 5.5rem;
+  }
 }
 
 .match-panel {
   display: grid;
   gap: 12px;
-  padding: 20px 22px;
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .match-panel {
+    padding: 20px 22px;
+  }
 }
 
 .match-copy h2 {
@@ -638,8 +705,15 @@ body {
 
 .note {
   max-width: 52ch;
-  text-align: right;
+  text-align: left;
   line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .note {
+    text-align: right;
+  }
 }
 
 .table-wrap {
@@ -702,7 +776,7 @@ tbody tr:hover {
   font-family: inherit;
   font-weight: 700;
   font-size: 17px;
-  white-space: nowrap;
+  white-space: normal;
   background: none;
   border: 0;
   padding: 0;
@@ -746,7 +820,7 @@ tbody tr:hover {
 .drawer-root {
   position: fixed;
   inset: 0;
-  z-index: 40;
+  z-index: 60;
 }
 
 .scrim {
@@ -834,10 +908,11 @@ tbody tr:hover {
 .drawer h2 {
   font-family: inherit;
   font-weight: 800;
-  font-size: 34px;
+  font-size: clamp(26px, 6vw, 34px);
   letter-spacing: -0.03em;
   margin: 8px 0 6px;
   line-height: 1.1;
+  overflow-wrap: anywhere;
 }
 
 .drawer-club {

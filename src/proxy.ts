@@ -36,7 +36,7 @@ export async function proxy(request: NextRequest) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   );
 
-  if (pathname.startsWith("/api/")) return sessionResponse;
+  if (pathname.startsWith("/api/") || pathname.startsWith("/auth/")) return sessionResponse;
   if (pathnameHasLocale) return sessionResponse;
 
   const locale = localeFromRequest(request);

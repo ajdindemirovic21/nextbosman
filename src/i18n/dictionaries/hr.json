@@ -183,6 +183,11 @@
     "copyShare": "Kopiraj profil",
     "copied": "Kopirano"
   },
+  "share": {
+    "whatsapp": "Podijeli na WhatsApp",
+    "copy": "Kopiraj poveznicu",
+    "copied": "Kopirano"
+  },
   "positions": {
     "GK": "Vratar",
     "CB": "Stoper",
@@ -201,6 +206,8 @@
     "signIn": "Prijavi se",
     "signUp": "Napravi račun",
     "signOut": "Odjavi se",
+    "google": "Google",
+    "googleContinue": "Nastavi s Googleom",
     "saveList": "Spremi ovu listu",
     "saved": "Lista spremljena",
     "saving": "Spremam…",

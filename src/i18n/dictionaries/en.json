@@ -183,6 +183,11 @@
     "copyShare": "Copy profile",
     "copied": "Copied"
   },
+  "share": {
+    "whatsapp": "Share via WhatsApp",
+    "copy": "Copy link",
+    "copied": "Copied"
+  },
   "positions": {
     "GK": "Goalkeeper",
     "CB": "Centre-back",
@@ -201,6 +206,8 @@
     "signIn": "Sign in",
     "signUp": "Create account",
     "signOut": "Sign out",
+    "google": "Google",
+    "googleContinue": "Continue with Google",
     "saveList": "Save this list",
     "saved": "List saved",
     "saving": "Saving…",

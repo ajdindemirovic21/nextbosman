@@ -4,12 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { HighlightsLink } from "@/components/highlights-link";
 import { PlayerDrawer } from "@/components/player-drawer";
+import { QuickShare } from "@/components/quick-share";
 import { positions, type Availability, type Player, type Position } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { formatDate, formatMarketValue } from "@/lib/format";
 import { positionLine } from "@/lib/player-ui";
 import { briefFromWhatsApp, isUnrealistic, parseBrief, scorePlayer, type ClubBrief, type MatchResult } from "@/lib/match-brief";
 import { PASTE_STORAGE_KEY, parseWhatsAppPaste, type PasteParse } from "@/lib/paste-parser";
+import { playerWhatsAppShare } from "@/lib/highlights";
 
 type Props = {
   dict: Dictionary;
@@ -188,15 +190,15 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   return (
     <section className="desk">
       <div
-        className="match-panel w-full rounded-2xl border border-slate-800/80 bg-slate-900/70 p-4 shadow-xl backdrop-blur-md md:p-5"
+        className="match-panel box-border w-full min-w-0 max-w-full rounded-2xl border border-slate-800/80 bg-slate-900/70 shadow-xl backdrop-blur-md"
         id="match"
       >
-        <div className="match-copy">
-          <h2>{dict.match.title}</h2>
-          <p>{dict.match.hint}</p>
+        <div className="match-copy min-w-0">
+          <h2 className="break-words">{dict.match.title}</h2>
+          <p className="break-words">{dict.match.hint}</p>
         </div>
         <textarea
-          className="w-full rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none"
+          className="box-border min-w-0 w-full max-w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-3 text-sm leading-6 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none sm:px-4"
           value={briefDraft}
           onChange={(event) => setBriefDraft(event.target.value)}
           placeholder={dict.match.placeholder}
@@ -225,15 +227,15 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
       </div>
 
       <div
-        className="paste-panel w-full rounded-2xl border border-slate-800/80 bg-slate-900/70 p-4 shadow-xl backdrop-blur-md md:p-5"
+        className="paste-panel box-border w-full min-w-0 max-w-full rounded-2xl border border-slate-800/80 bg-slate-900/70 shadow-xl backdrop-blur-md"
         id="paste"
       >
-        <div className="match-copy">
-          <h2>{dict.paste.title}</h2>
-          <p>{dict.paste.hint}</p>
+        <div className="match-copy min-w-0">
+          <h2 className="break-words">{dict.paste.title}</h2>
+          <p className="break-words">{dict.paste.hint}</p>
         </div>
         <textarea
-          className="w-full rounded-xl border border-slate-800 bg-slate-950/80 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none"
+          className="box-border min-w-0 w-full max-w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-3 text-sm leading-6 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none sm:px-4"
           value={pasteDraft}
           onChange={(event) => setPasteDraft(event.target.value)}
           placeholder={dict.paste.placeholder}
@@ -313,7 +315,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
       </div>
 
       {filtersOpen ? (
-        <div className="fixed inset-0 z-50 md:!hidden">
+        <div className="fixed inset-0 z-[60] md:!hidden">
           <button
             type="button"
             className="absolute inset-0 bg-slate-950/70"
@@ -677,18 +679,18 @@ function PlayerCard({
   onOpen: () => void;
 }) {
   return (
-    <li>
+    <li className="overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/70 shadow-lg">
       <button
         type="button"
-        className="flex min-h-16 w-full flex-col gap-1 rounded-2xl border border-slate-800/80 bg-slate-900/70 px-4 py-3 text-left shadow-lg"
+        className="flex min-h-16 w-full flex-col gap-1 px-4 py-3 text-left"
         onClick={onOpen}
       >
-        <span className="flex items-center gap-2">
-          <span className="font-bold text-white">{player.name}</span>
+        <span className="flex min-w-0 flex-wrap items-center gap-2">
+          <span className="min-w-0 break-words font-bold text-white">{player.name}</span>
           <span className={`pos-badge pos-${positionLine(player.position)}`}>{player.position}</span>
           {ideal ? <span className="ideal-tag">{dict.match.ideal}</span> : null}
         </span>
-        <span className="text-sm text-slate-400">
+        <span className="break-words text-sm text-slate-400">
           {player.club ?? player.lastClub} · {player.age} · {formatMarketValue(player.marketValueEur, locale)}
         </span>
         {showFit && match ? (
@@ -697,6 +699,13 @@ function PlayerCard({
           </span>
         ) : null}
       </button>
+      <div className="px-4 pb-3">
+        <QuickShare
+          dict={dict}
+          path={`/${locale}/search`}
+          text={playerWhatsAppShare(player, dict, locale)}
+        />
+      </div>
     </li>
   );
 }

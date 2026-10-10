@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
+import { GoogleSignIn } from "@/components/google-sign-in";
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import type { Dictionary } from "@/i18n/get-dictionary";
@@ -101,6 +102,7 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
     <div className={embedded ? "grid gap-3" : "agent-menu"}>
       {embedded ? null : (
         <>
+          <GoogleSignIn lang={lang} dict={dict} compact />
           <button
             type="button"
             className="min-h-10 shrink-0 whitespace-nowrap rounded-lg border border-emerald-500/60 bg-emerald-500/10 px-3 py-2 text-sm font-medium text-emerald-400 transition hover:bg-emerald-500/20"
@@ -129,6 +131,7 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
             void submit("in");
           }}
         >
+          <GoogleSignIn lang={lang} dict={dict} />
           <label>
             {dict.account.email}
             <input

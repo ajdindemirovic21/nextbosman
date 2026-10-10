@@ -183,6 +183,11 @@
     "copyShare": "Copiar perfil",
     "copied": "Copiado"
   },
+  "share": {
+    "whatsapp": "Partilhar no WhatsApp",
+    "copy": "Copiar ligação",
+    "copied": "Copiado"
+  },
   "positions": {
     "GK": "Guarda-redes",
     "CB": "Defesa central",
@@ -201,6 +206,8 @@
     "signIn": "Entrar",
     "signUp": "Criar conta",
     "signOut": "Sair",
+    "google": "Google",
+    "googleContinue": "Continuar com o Google",
     "saveList": "Guardar esta lista",
     "saved": "Lista guardada",
     "saving": "A guardar…",

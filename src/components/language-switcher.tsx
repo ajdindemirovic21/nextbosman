@@ -15,7 +15,7 @@ export function LanguageSwitcher({ current }: Props) {
     <label className="lang-switch relative inline-flex shrink-0">
       <span className="sr-only">Language</span>
       <select
-        className="min-h-10 min-w-[8.5rem] appearance-none rounded-lg border border-slate-500 bg-slate-800 py-2 pl-3 pr-8 text-sm font-medium text-white focus:border-emerald-500 focus:outline-none"
+        className="min-h-10 min-w-[7.5rem] max-w-full appearance-none rounded-lg border border-slate-500 bg-slate-800 py-2 pl-3 pr-8 text-sm font-medium text-white focus:border-emerald-500 focus:outline-none"
         value={current}
         onChange={(event) => {
           const next = event.target.value as Locale;
@@ -39,7 +39,7 @@ export function LanguageSwitcherFallback({ current }: Props) {
     <label className="lang-switch relative inline-flex shrink-0">
       <span className="sr-only">Language</span>
       <select
-        className="min-h-10 min-w-[8.5rem] appearance-none rounded-lg border border-slate-500 bg-slate-800 py-2 pl-3 pr-8 text-sm font-medium text-white"
+        className="min-h-10 min-w-[7.5rem] max-w-full appearance-none rounded-lg border border-slate-500 bg-slate-800 py-2 pl-3 pr-8 text-sm font-medium text-white"
         value={current}
         disabled
       >
