@@ -100,6 +100,21 @@ body {
 
 .lang-switch select {
   appearance: none;
+  -webkit-appearance: none;
+}
+
+.lang-switch::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #cbd5e1;
+  transform: translateY(-35%);
 }
 
 .agent-menu {
