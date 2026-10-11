@@ -49,6 +49,19 @@ export async function proxy(request: NextRequest) {
   ) {
     return sessionResponse;
   }
+
+  const oauthCode = request.nextUrl.searchParams.get("code");
+  if (oauthCode) {
+    const locale = pathnameHasLocale ? pathname.split("/")[1] : localeFromRequest(request);
+    const nextPath = pathnameHasLocale ? pathname : `/${locale}`;
+    const callbackUrl = request.nextUrl.clone();
+    callbackUrl.pathname = "/auth/callback";
+    callbackUrl.search = "";
+    callbackUrl.searchParams.set("code", oauthCode);
+    callbackUrl.searchParams.set("next", nextPath);
+    return copyCookies(sessionResponse, NextResponse.redirect(callbackUrl));
+  }
+
   if (pathnameHasLocale) return sessionResponse;
 
   const locale = localeFromRequest(request);

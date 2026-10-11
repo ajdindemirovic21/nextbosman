@@ -66,6 +66,11 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
   }
 
   if (user) {
+    const meta = user.user_metadata ?? {};
+    const name = String(meta.full_name || meta.name || user.email || "Agent");
+    const photo = String(meta.avatar_url || meta.picture || "");
+    const initial = name.slice(0, 1).toUpperCase();
+
     return (
       <div className={embedded ? "grid gap-3" : "agent-menu"}>
         <Link
@@ -78,13 +83,25 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
         >
           {dict.nav.lists}
         </Link>
-        {embedded ? (
-          <p className="truncate text-xs text-slate-400">{user.email}</p>
-        ) : (
-          <span className="hidden max-w-[9rem] truncate text-xs text-slate-400 sm:inline">
-            {user.email}
+        <span className="inline-flex min-w-0 max-w-[12rem] items-center gap-2">
+          {photo ? (
+            <img
+              src={photo}
+              alt=""
+              width={28}
+              height={28}
+              className="h-7 w-7 shrink-0 rounded-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-xs font-semibold text-emerald-300">
+              {initial}
+            </span>
+          )}
+          <span className="min-w-0 truncate text-xs text-slate-200" title={user.email ?? name}>
+            {name}
           </span>
-        )}
+        </span>
         <button
           type="button"
           className="shrink-0 whitespace-nowrap rounded-lg border border-emerald-500/60 bg-emerald-500/10 px-3 py-1.5 text-sm font-medium text-emerald-400 transition hover:bg-emerald-500/20"

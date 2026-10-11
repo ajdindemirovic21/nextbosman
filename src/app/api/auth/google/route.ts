@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { createServerSupabase } from "@/lib/supabase/server";
-import { requestOrigin, safeNextPath } from "@/lib/site-url";
+import { createRouteSupabase, withAuthCookies, type AuthCookie } from "@/lib/supabase/route";
+import { localeHomePath, requestOrigin } from "@/lib/site-url";
 
 export async function GET(request: NextRequest) {
   if (!isSupabaseConfigured()) {
@@ -9,8 +9,9 @@ export async function GET(request: NextRequest) {
   }
 
   const origin = requestOrigin(request);
-  const next = safeNextPath(request.nextUrl.searchParams.get("next"));
-  const supabase = await createServerSupabase();
+  const next = localeHomePath(request.nextUrl.searchParams.get("next"));
+  const jar: AuthCookie[] = [];
+  const supabase = createRouteSupabase(request, jar);
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
@@ -29,5 +30,5 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  return NextResponse.redirect(data.url);
+  return withAuthCookies(NextResponse.redirect(data.url), jar);
 }

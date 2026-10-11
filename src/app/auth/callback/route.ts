@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServerSupabase } from "@/lib/supabase/server";
-import { requestOrigin, safeNextPath } from "@/lib/site-url";
+import { localeHomePath, requestOrigin } from "@/lib/site-url";
+import { createRouteSupabase, withAuthCookies, type AuthCookie } from "@/lib/supabase/route";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
-  const next = safeNextPath(request.nextUrl.searchParams.get("next"));
   const origin = requestOrigin(request);
+  const next = localeHomePath(request.nextUrl.searchParams.get("next"));
+  const jar: AuthCookie[] = [];
 
   if (code) {
-    const supabase = await createServerSupabase();
+    const supabase = createRouteSupabase(request, jar);
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (error) {
-      return NextResponse.redirect(new URL(`${next}?auth=error`, origin));
+      return withAuthCookies(NextResponse.redirect(new URL(`${next}?auth=error`, origin)), jar);
     }
   }
 
-  return NextResponse.redirect(new URL(next, origin));
+  return withAuthCookies(NextResponse.redirect(new URL(next, origin)), jar);
 }
