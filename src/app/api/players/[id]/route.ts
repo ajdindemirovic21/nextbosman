@@ -1,9 +1,6 @@
 import { getPlayer } from "@/data/catalog";
+import { isPlayerId } from "@/lib/player-ids";
 import { NextRequest } from "next/server";
-
-function isPlayerId(id: string) {
-  return /^[a-zA-Z0-9_-]{1,32}$/.test(id);
-}
 
 export async function GET(
   _request: NextRequest,

@@ -233,8 +233,15 @@
     "needAccount": "Prijavi se kao agent da spremiš shortlist za klub.",
     "title": "Spremljene liste",
     "empty": "Još nema listi. Pretraži, pa spremi imena za taj klub.",
-    "players": "{count} igrača",
+    "players": "{count} spremljenih igrača",
     "error": "Nisam mogao spremiti. Prvo se prijavi.",
+    "saveFailed": "Lista se nije mogla spremiti. Pokušaj ponovo.",
+    "loadFailed": "Liste se nisu mogle učitati. Pokušaj ponovo.",
+    "snapshotAll": "Spremit će se {saved} igrača. Kasnije izmjene pretrage neće ažurirati listu.",
+    "snapshotPartial": "Spremit će se {saved} od {total} trenutnih rezultata. Kasnije izmjene pretrage neće ažurirati listu.",
+    "repeatSearch": "Ponovi pretragu",
+    "playerMissing": "Nije više u katalogu",
+    "emptyMembers": "Ova lista nema spremljenih igrača.",
     "confirm": "Ako signup traži potvrdu maila, u Supabase Auth isključi Confirm email (lokalno)."
   }
 }

@@ -1,3 +1,4 @@
+import { uniquePlayerIds } from "@/lib/player-ids";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { ensureAgentProfile, mapSavedList } from "@/lib/supabase/saved-lists";
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
       club_name: body.clubName?.trim() || null,
       query_text: body.queryText?.trim() || null,
       filters: body.filters ?? {},
-      player_ids: body.playerIds ?? [],
+      player_ids: uniquePlayerIds(body.playerIds ?? []),
     })
     .select("*")
     .single();

@@ -248,8 +248,15 @@
     "needAccount": "Kulüp shortlist’i kaydetmek için ajan olarak giriş yapın.",
     "title": "Kayıtlı listeler",
     "empty": "Henüz liste yok. Arayın, sonra o kulüp için isimleri kaydedin.",
-    "players": "{count} oyuncu",
+    "players": "{count} kayıtlı oyuncu",
     "error": "Kaydedilemedi. Önce giriş yapın.",
+    "saveFailed": "Liste kaydedilemedi. Yeniden deneyin.",
+    "loadFailed": "Kayıtlı listeler yüklenemedi. Yeniden deneyin.",
+    "snapshotAll": "{saved} oyuncu kaydedilecek. Sonraki arama değişiklikleri listeyi güncellemez.",
+    "snapshotPartial": "Güncel sonuçların {saved}/{total} tanesi kaydedilecek. Sonraki arama değişiklikleri listeyi güncellemez.",
+    "repeatSearch": "Aramayı tekrarla",
+    "playerMissing": "Artık katalogda yok",
+    "emptyMembers": "Bu listede kayıtlı oyuncu yok.",
     "confirm": "Kayıt e-posta onayı isterse Supabase Auth’ta Confirm email’i kapatın (yerel)."
   }
 }

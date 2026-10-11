@@ -248,8 +248,15 @@
     "needAccount": "Als Agent anmelden, um eine Klub-Shortlist zu speichern.",
     "title": "Gespeicherte Listen",
     "empty": "Noch keine Listen. Suchen, dann Namen für den Klub speichern.",
-    "players": "{count} Spieler",
+    "players": "{count} gespeicherte Spieler",
     "error": "Speichern fehlgeschlagen. Bitte anmelden.",
+    "saveFailed": "Liste konnte nicht gespeichert werden. Bitte erneut versuchen.",
+    "loadFailed": "Gespeicherte Listen konnten nicht geladen werden. Bitte erneut versuchen.",
+    "snapshotAll": "Es werden {saved} Spieler gespeichert. Spätere Suchänderungen aktualisieren die Liste nicht.",
+    "snapshotPartial": "Es werden {saved} von {total} aktuellen Treffern gespeichert. Spätere Suchänderungen aktualisieren die Liste nicht.",
+    "repeatSearch": "Suche wiederholen",
+    "playerMissing": "Nicht mehr im Katalog",
+    "emptyMembers": "Diese Liste hat keine gespeicherten Spieler.",
     "confirm": "Wenn die Registrierung eine Mail-Bestätigung will: Confirm email in Supabase Auth aus (lokal)."
   }
 }

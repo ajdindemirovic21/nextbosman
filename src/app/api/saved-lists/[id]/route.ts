@@ -1,3 +1,4 @@
+import { uniquePlayerIds } from "@/lib/player-ids";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { ensureAgentProfile, mapSavedList } from "@/lib/supabase/saved-lists";
@@ -38,7 +39,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   if ("clubName" in body) patch.club_name = body.clubName?.trim() || null;
   if ("queryText" in body) patch.query_text = body.queryText?.trim() || null;
   if (body.filters) patch.filters = body.filters;
-  if (body.playerIds) patch.player_ids = body.playerIds;
+  if (body.playerIds) patch.player_ids = uniquePlayerIds(body.playerIds);
 
   const { data, error } = await supabase
     .from("saved_lists")

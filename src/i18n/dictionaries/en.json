@@ -233,8 +233,15 @@
     "needAccount": "Sign in as an agent to save a club shortlist.",
     "title": "Saved lists",
     "empty": "No lists yet. Search, then save the names for that club.",
-    "players": "{count} players",
+    "players": "{count} saved players",
     "error": "Could not save. Sign in first.",
+    "saveFailed": "Could not save the list. Try again.",
+    "loadFailed": "Could not load saved lists. Try again.",
+    "snapshotAll": "This will save {saved} players. Later search changes will not update the list.",
+    "snapshotPartial": "This will save {saved} of {total} current results. Later search changes will not update the list.",
+    "repeatSearch": "Repeat search",
+    "playerMissing": "No longer in the catalog",
+    "emptyMembers": "This list has no saved players.",
     "confirm": "If sign-up asks for email confirm, turn Confirm email off in Supabase Auth (local)."
   }
 }

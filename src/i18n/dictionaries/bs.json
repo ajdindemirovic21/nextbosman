@@ -233,8 +233,15 @@
     "needAccount": "Prijavi se kao agent da sačuvaš shortlist za klub.",
     "title": "Sačuvane liste",
     "empty": "Još nema listi. Pretraži, pa sačuvaj imena za taj klub.",
-    "players": "{count} igrača",
+    "players": "{count} sačuvanih igrača",
     "error": "Nisam mogao sačuvati. Prvo se prijavi.",
+    "saveFailed": "Lista se nije mogla sačuvati. Pokušaj ponovo.",
+    "loadFailed": "Liste se nisu mogle učitati. Pokušaj ponovo.",
+    "snapshotAll": "Sačuvat će se {saved} igrača. Kasnije izmjene pretrage neće ažurirati listu.",
+    "snapshotPartial": "Sačuvat će se {saved} od {total} trenutnih rezultata. Kasnije izmjene pretrage neće ažurirati listu.",
+    "repeatSearch": "Ponovi pretragu",
+    "playerMissing": "Nije više u katalogu",
+    "emptyMembers": "Ova lista nema sačuvanih igrača.",
     "confirm": "Ako signup traži potvrdu maila, u Supabase Auth isključi Confirm email (lokalno)."
   }
 }

@@ -248,8 +248,15 @@
     "needAccount": "Entre como agente para guardar a shortlist do clube.",
     "title": "Listas guardadas",
     "empty": "Ainda sem listas. Pesquise e guarde os nomes para esse clube.",
-    "players": "{count} jogadores",
+    "players": "{count} jogadores guardados",
     "error": "Não foi possível guardar. Entre primeiro.",
+    "saveFailed": "Não foi possível guardar a lista. Tente novamente.",
+    "loadFailed": "Não foi possível carregar as listas. Tente novamente.",
+    "snapshotAll": "Serão guardados {saved} jogadores. Alterações posteriores na pesquisa não atualizam a lista.",
+    "snapshotPartial": "Serão guardados {saved} de {total} resultados atuais. Alterações posteriores na pesquisa não atualizam a lista.",
+    "repeatSearch": "Repetir pesquisa",
+    "playerMissing": "Já não está no catálogo",
+    "emptyMembers": "Esta lista não tem jogadores guardados.",
     "confirm": "Se o registo pedir confirmação de email, desligue Confirm email no Supabase Auth (local)."
   }
 }

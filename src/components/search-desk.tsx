@@ -13,6 +13,7 @@ import { positionLine } from "@/lib/player-ui";
 import { briefFromWhatsApp, isUnrealistic, parseBrief, scorePlayer, type ClubBrief, type MatchResult } from "@/lib/match-brief";
 import { PASTE_STORAGE_KEY, parseWhatsAppPaste, type PasteParse } from "@/lib/paste-parser";
 import { playerWhatsAppShare } from "@/lib/highlights";
+import { uniquePlayerIds } from "@/lib/player-ids";
 import { playerSearchPath, searchPathWithoutPlayer } from "@/lib/player-link";
 import { formatSeasonCount } from "@/lib/season-stats";
 
@@ -33,12 +34,18 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     urlPosition && (positions as readonly string[]).includes(urlPosition)
       ? (urlPosition as Position)
       : "all";
+  const urlAge = Number(searchParams.get("maxAge"));
+  const startAge =
+    Number.isFinite(urlAge) && urlAge >= 18 && urlAge <= 40 ? urlAge : 36;
+  const urlMv = searchParams.get("maxMv");
+  const startMv: number | "any" =
+    urlMv && urlMv !== "any" && Number.isFinite(Number(urlMv)) ? Number(urlMv) : "any";
   const [availability, setAvailability] = useState<Availability>(fromUrl);
   const [position, setPosition] = useState<Position | "all">(startPosition);
   const [euOnly, setEuOnly] = useState(searchParams.get("eu") === "1");
-  const [valueCap, setValueCap] = useState<number | "any">("any");
-  const [ageMax, setAgeMax] = useState<number>(36);
-  const [nationality, setNationality] = useState("all");
+  const [valueCap, setValueCap] = useState<number | "any">(startMv);
+  const [ageMax, setAgeMax] = useState<number>(startAge);
+  const [nationality, setNationality] = useState(searchParams.get("nationality") || "all");
   const [briefDraft, setBriefDraft] = useState("");
   const [brief, setBrief] = useState<ClubBrief | null>(null);
   const [pasteDraft, setPasteDraft] = useState("");
@@ -50,7 +57,9 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   const [nationalities, setNationalities] = useState<string[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "auth" | "error">(
+    "idle",
+  );
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(25);
 
@@ -60,10 +69,20 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
 
   useEffect(() => {
     const nextPosition = searchParams.get("position");
-    if (nextPosition && (positions as readonly string[]).includes(nextPosition)) {
+    if (nextPosition === "all") setPosition("all");
+    else if (nextPosition && (positions as readonly string[]).includes(nextPosition)) {
       setPosition(nextPosition as Position);
     }
-    if (searchParams.get("eu") === "1") setEuOnly(true);
+    const eu = searchParams.get("eu");
+    if (eu === "1") setEuOnly(true);
+    else if (eu === "0") setEuOnly(false);
+    const nextNationality = searchParams.get("nationality");
+    if (nextNationality) setNationality(nextNationality);
+    const nextAge = Number(searchParams.get("maxAge"));
+    if (Number.isFinite(nextAge) && nextAge >= 18 && nextAge <= 40) setAgeMax(nextAge);
+    const nextMv = searchParams.get("maxMv");
+    if (nextMv === "any") setValueCap("any");
+    else if (nextMv && Number.isFinite(Number(nextMv))) setValueCap(Number(nextMv));
   }, [searchParams]);
 
   const matchCap = brief?.stretchMv ?? brief?.maxMv;
@@ -129,6 +148,11 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
 
     return scored;
   }, [players, brief, hideWeak]);
+
+  const saveIds = useMemo(
+    () => uniquePlayerIds(rows.map(({ player }) => player.id)),
+    [rows],
+  );
 
   const playerParam = searchParams.get("player")?.trim() || null;
   const listed = playerParam
@@ -412,12 +436,22 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
             ? "…"
             : dict.table.results.replace("{count}", String(total > rows.length ? rows.length : total))}
         </p>
+        {loading || saveIds.length === 0 ? null : (
+          <p className="mb-2 max-w-xl text-sm text-slate-400" role="status">
+            {total > rows.length
+              ? dict.account.snapshotPartial
+                  .replace("{saved}", String(saveIds.length))
+                  .replace("{total}", String(total))
+              : dict.account.snapshotAll.replace("{saved}", String(saveIds.length))}
+          </p>
+        )}
         <button
           type="button"
           className="save-list"
           disabled={loading || rows.length === 0 || saveState === "saving"}
           onClick={async () => {
             setSaveState("saving");
+            const playerIds = saveIds;
             const title =
               brief?.club ||
               (pasteResult?.positions.length
@@ -438,10 +472,12 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                   maxAge: ageMax,
                   maxMv: valueCap,
                 },
-                playerIds: rows.map(({ player }) => player.id),
+                playerIds,
               }),
             });
-            setSaveState(res.ok ? "saved" : "error");
+            if (res.ok) setSaveState("saved");
+            else if (res.status === 401) setSaveState("auth");
+            else setSaveState("error");
           }}
         >
           {saveState === "saving"
@@ -450,8 +486,19 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
               ? dict.account.saved
               : dict.account.saveList}
         </button>
-        <p className="note">
-          {saveState === "error" ? dict.account.error : dict.table.sampleNote}
+        <p
+          className={
+            saveState === "auth" || saveState === "error"
+              ? "agent-msg"
+              : "mt-2 max-w-xl text-sm text-slate-500"
+          }
+          role={saveState === "auth" || saveState === "error" ? "alert" : undefined}
+        >
+          {saveState === "auth"
+            ? dict.account.needAccount
+            : saveState === "error"
+              ? dict.account.saveFailed
+              : dict.table.sampleNote}
         </p>
       </div>
 
@@ -691,6 +738,9 @@ function FilterFields({
           }}
         >
           <option value="any">{dict.filters.anyValue}</option>
+          {typeof valueCap === "number" && !(valueCaps as readonly number[]).includes(valueCap) ? (
+            <option value={valueCap}>{formatMarketValue(valueCap, locale)}</option>
+          ) : null}
           {valueCaps.map((cap) => (
             <option key={cap} value={cap}>
               {formatMarketValue(cap, locale)}

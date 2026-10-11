@@ -248,8 +248,15 @@
     "needAccount": "Accedi come agente per salvare la shortlist del club.",
     "title": "Liste salvate",
     "empty": "Ancora nessuna lista. Cerca, poi salva i nomi per quel club.",
-    "players": "{count} giocatori",
+    "players": "{count} giocatori salvati",
     "error": "Salvataggio non riuscito. Accedi prima.",
+    "saveFailed": "Impossibile salvare la lista. Riprova.",
+    "loadFailed": "Impossibile caricare le liste. Riprova.",
+    "snapshotAll": "Verranno salvati {saved} giocatori. Le ricerche successive non aggiorneranno la lista.",
+    "snapshotPartial": "Verranno salvati {saved} di {total} risultati attuali. Le ricerche successive non aggiorneranno la lista.",
+    "repeatSearch": "Ripeti ricerca",
+    "playerMissing": "Non più nel catalogo",
+    "emptyMembers": "Questa lista non ha giocatori salvati.",
     "confirm": "Se la registrazione chiede conferma email, disattiva Confirm email in Supabase Auth (locale)."
   }
 }

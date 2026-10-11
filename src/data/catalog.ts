@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { Availability, Player, Position } from "@/data/mock-players";
+import { uniquePlayerIds } from "@/lib/player-ids";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { mapPlayerRow } from "@/lib/supabase/map-player";
 import { createPublicSupabase } from "@/lib/supabase/public";
@@ -130,13 +131,33 @@ export async function queryPlayers(filters: PlayerQuery): Promise<PlayerQueryRes
 }
 
 export async function getPlayer(id: string): Promise<Player | null> {
+  const [player] = await getPlayersByIds([id]);
+  return player ?? null;
+}
+
+function orderPlayers(ids: string[], found: Player[]): Player[] {
+  const byId = new Map(found.map((player) => [player.id, player]));
+  return ids.flatMap((id) => {
+    const player = byId.get(id);
+    return player ? [player] : [];
+  });
+}
+
+export async function getPlayersByIds(ids: string[]): Promise<Player[]> {
+  const wanted = uniquePlayerIds(ids);
+  if (!wanted.length) return [];
+
   if (isSupabaseConfigured()) {
-    const { data, error } = await createPublicSupabase()
-      .from("players")
-      .select("*")
-      .eq("id", id)
-      .maybeSingle();
-    if (!error && data) return withLocalSeasonStats(mapPlayerRow(data as PlayerRow), data as PlayerRow);
+    const { data, error } = await createPublicSupabase().from("players").select("*").in("id", wanted);
+    if (!error && data) {
+      const mapped = (data as PlayerRow[]).map((row) => withLocalSeasonStats(mapPlayerRow(row), row));
+      return orderPlayers(wanted, mapped);
+    }
   }
-  return loadCatalog().find((player) => player.id === id) ?? null;
+
+  const catalog = loadCatalog();
+  return orderPlayers(
+    wanted,
+    catalog.filter((player) => wanted.includes(player.id)),
+  );
 }
