@@ -191,7 +191,8 @@
     "watchVideo": "Video / Highlights ansehen",
     "shareWhatsApp": "Per WhatsApp senden",
     "copyShare": "Profil kopieren",
-    "copied": "Kopiert"
+    "copied": "Kopiert",
+    "notFound": "Spieler nicht gefunden. Der Link ist möglicherweise veraltet."
   },
   "share": {
     "whatsapp": "Per WhatsApp teilen",

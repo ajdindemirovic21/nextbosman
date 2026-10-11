@@ -191,7 +191,8 @@
     "watchVideo": "Watch Video / Highlights",
     "shareWhatsApp": "Send on WhatsApp",
     "copyShare": "Copy profile",
-    "copied": "Copied"
+    "copied": "Copied",
+    "notFound": "That player could not be found. The link may be out of date."
   },
   "share": {
     "whatsapp": "Share via WhatsApp",

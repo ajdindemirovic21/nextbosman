@@ -191,7 +191,8 @@
     "watchVideo": "Ver vídeo / Highlights",
     "shareWhatsApp": "Enviar por WhatsApp",
     "copyShare": "Copiar perfil",
-    "copied": "Copiado"
+    "copied": "Copiado",
+    "notFound": "No se encontró al jugador. El enlace puede estar desactualizado."
   },
   "share": {
     "whatsapp": "Compartir por WhatsApp",

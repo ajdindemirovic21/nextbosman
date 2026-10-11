@@ -15,6 +15,7 @@ type Props = {
   dict: Dictionary;
   locale: string;
   match: MatchResult | null;
+  sharePath: string;
   onClose: () => void;
 };
 
@@ -23,7 +24,7 @@ function per90(count: number, minutes: number) {
   return ((count / minutes) * 90).toFixed(2);
 }
 
-export function PlayerDrawer({ player, dict, locale, match, onClose }: Props) {
+export function PlayerDrawer({ player, dict, locale, match, sharePath, onClose }: Props) {
   const club = player.club ?? player.lastClub;
   const accent = contractAccent(player);
   const flagSrc = nationalityFlagSrc(player.nationality);
@@ -53,7 +54,7 @@ export function PlayerDrawer({ player, dict, locale, match, onClose }: Props) {
           <HighlightsLink playerName={player.name} dict={dict} />
           <QuickShare
             dict={dict}
-            path={`/${locale}/search`}
+            path={sharePath}
             text={playerWhatsAppShare(player, dict, locale)}
           />
         </div>

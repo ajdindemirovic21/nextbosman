@@ -191,7 +191,8 @@
     "watchVideo": "Video / Highlights izle",
     "shareWhatsApp": "WhatsApp’tan gönder",
     "copyShare": "Profili kopyala",
-    "copied": "Kopyalandı"
+    "copied": "Kopyalandı",
+    "notFound": "Oyuncu bulunamadı. Bağlantı güncel olmayabilir."
   },
   "share": {
     "whatsapp": "WhatsApp ile paylaş",

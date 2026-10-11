@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { HighlightsLink } from "@/components/highlights-link";
 import { PlayerDrawer } from "@/components/player-drawer";
 import { QuickShare } from "@/components/quick-share";
@@ -12,6 +12,7 @@ import { positionLine } from "@/lib/player-ui";
 import { briefFromWhatsApp, isUnrealistic, parseBrief, scorePlayer, type ClubBrief, type MatchResult } from "@/lib/match-brief";
 import { PASTE_STORAGE_KEY, parseWhatsAppPaste, type PasteParse } from "@/lib/paste-parser";
 import { playerWhatsAppShare } from "@/lib/highlights";
+import { playerSearchPath, searchPathWithoutPlayer } from "@/lib/player-link";
 
 type Props = {
   dict: Dictionary;
@@ -22,6 +23,7 @@ type Props = {
 const valueCaps = [500_000, 1_000_000, 2_000_000, 5_000_000] as const;
 
 export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const fromUrl = searchParams.get("status") === "expiring" ? "expiring" : initialAvailability;
   const urlPosition = searchParams.get("position");
@@ -40,7 +42,8 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   const [pasteDraft, setPasteDraft] = useState("");
   const [pasteResult, setPasteResult] = useState<PasteParse | null>(null);
   const [hideWeak, setHideWeak] = useState(true);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [spotlight, setSpotlight] = useState<Player | null>(null);
+  const [playerError, setPlayerError] = useState<string | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);
   const [nationalities, setNationalities] = useState<string[]>([]);
   const [total, setTotal] = useState(0);
@@ -125,22 +128,66 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     return scored;
   }, [players, brief, hideWeak]);
 
-  const selected = players.find((player) => player.id === selectedId) ?? null;
+  const playerParam = searchParams.get("player")?.trim() || null;
+  const listed = playerParam
+    ? players.find((player) => player.id === playerParam) ?? null
+    : null;
+  const selected =
+    listed ?? (spotlight && spotlight.id === playerParam ? spotlight : null);
   const selectedMatch = selected && brief ? scorePlayer(selected, brief) : null;
   const visibleRows = rows.slice(0, visibleCount);
+  const queryString = searchParams.toString();
+
+  function openPlayer(id: string) {
+    router.replace(playerSearchPath(locale, id, queryString), { scroll: false });
+  }
+
+  function closePlayer() {
+    router.replace(searchPathWithoutPlayer(locale, queryString), { scroll: false });
+    setSpotlight(null);
+    setPlayerError(null);
+  }
 
   useEffect(() => {
     setVisibleCount(25);
   }, [rows]);
 
   useEffect(() => {
-    if (!selectedId) return;
+    if (!playerParam || listed) return;
+
+    let cancelled = false;
+    fetch(`/api/players/${encodeURIComponent(playerParam)}`)
+      .then(async (response) => {
+        if (!response.ok) throw new Error("missing");
+        return response.json() as Promise<{ player: Player }>;
+      })
+      .then((data) => {
+        if (cancelled) return;
+        setSpotlight(data.player);
+        setPlayerError(null);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setSpotlight(null);
+        setPlayerError(dict.profile.notFound);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [playerParam, listed, dict.profile.notFound]);
+
+  useEffect(() => {
+    if (!playerParam) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedId(null);
+      if (event.key !== "Escape") return;
+      router.replace(searchPathWithoutPlayer(locale, queryString), { scroll: false });
+      setSpotlight(null);
+      setPlayerError(null);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [selectedId]);
+  }, [playerParam, locale, queryString, router]);
 
   function runMatch() {
     setBrief(parseBrief(briefDraft));
@@ -403,6 +450,12 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         </p>
       </div>
 
+      {playerParam && playerError ? (
+        <p className="note" role="status">
+          {playerError}
+        </p>
+      ) : null}
+
       <ul className="grid gap-2 md:!hidden">
         {visibleRows.length === 0 ? (
           <li className="empty rounded-2xl border border-slate-800 px-4 py-8">{dict.table.empty}</li>
@@ -415,10 +468,11 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
               dict={dict}
               locale={locale}
               showFit={Boolean(brief)}
+              sharePath={playerSearchPath(locale, player.id, queryString)}
               ideal={Boolean(
                 match && match.fit === "strong" && match.reasons.includes("position"),
               )}
-              onOpen={() => setSelectedId(player.id)}
+              onOpen={() => openPlayer(player.id)}
             />
           ))
         )}
@@ -471,7 +525,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                       match.fit === "strong" &&
                       match.reasons.includes("position"),
                   )}
-                  onOpen={() => setSelectedId(player.id)}
+                  onOpen={() => openPlayer(player.id)}
                 />
               ))
             )}
@@ -485,7 +539,8 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           dict={dict}
           locale={locale}
           match={selectedMatch}
-          onClose={() => setSelectedId(null)}
+          sharePath={playerSearchPath(locale, selected.id, queryString)}
+          onClose={closePlayer}
         />
       ) : null}
     </section>
@@ -668,6 +723,7 @@ function PlayerCard({
   locale,
   showFit,
   ideal,
+  sharePath,
   onOpen,
 }: {
   player: Player;
@@ -676,6 +732,7 @@ function PlayerCard({
   locale: string;
   showFit: boolean;
   ideal: boolean;
+  sharePath: string;
   onOpen: () => void;
 }) {
   return (
@@ -702,7 +759,7 @@ function PlayerCard({
       <div className="px-4 pb-3">
         <QuickShare
           dict={dict}
-          path={`/${locale}/search`}
+          path={sharePath}
           text={playerWhatsAppShare(player, dict, locale)}
         />
       </div>

@@ -191,7 +191,8 @@
     "watchVideo": "Voir la vidéo / Highlights",
     "shareWhatsApp": "Envoyer sur WhatsApp",
     "copyShare": "Copier le profil",
-    "copied": "Copié"
+    "copied": "Copié",
+    "notFound": "Joueur introuvable. Le lien est peut-être périmé."
   },
   "share": {
     "whatsapp": "Partager sur WhatsApp",

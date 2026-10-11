@@ -191,7 +191,8 @@
     "watchVideo": "Gledaj Video / Highlights",
     "shareWhatsApp": "Pošalji na WhatsApp",
     "copyShare": "Kopiraj profil",
-    "copied": "Kopirano"
+    "copied": "Kopirano",
+    "notFound": "Igrač nije pronađen. Link možda više nije važeći."
   },
   "share": {
     "whatsapp": "Podijeli na WhatsApp",
