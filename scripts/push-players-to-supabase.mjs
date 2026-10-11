@@ -55,6 +55,7 @@ const rows = players.map((player) => ({
   availability: player.availability,
   contract_until: player.contractUntil,
   free_since: player.freeSince,
+  has_season_stats: player.hasSeasonStats === true,
   appearances: player.appearances,
   goals: player.goals,
   assists: player.assists,

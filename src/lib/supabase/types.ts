@@ -47,6 +47,7 @@ export type PlayerRow = {
   availability: Availability;
   contract_until: string | null;
   free_since: string | null;
+  has_season_stats?: boolean;
   appearances: number;
   goals: number;
   assists: number;

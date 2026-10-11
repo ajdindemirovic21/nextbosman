@@ -33,6 +33,7 @@ create table if not exists public.players (
   availability text not null check (availability in ('free', 'expiring')),
   contract_until date,
   free_since date,
+  has_season_stats boolean not null default false,
   appearances integer not null default 0,
   goals integer not null default 0,
   assists integer not null default 0,

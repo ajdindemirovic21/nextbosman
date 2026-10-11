@@ -13,6 +13,7 @@ import { briefFromWhatsApp, isUnrealistic, parseBrief, scorePlayer, type ClubBri
 import { PASTE_STORAGE_KEY, parseWhatsAppPaste, type PasteParse } from "@/lib/paste-parser";
 import { playerWhatsAppShare } from "@/lib/highlights";
 import { playerSearchPath, searchPathWithoutPlayer } from "@/lib/player-link";
+import { formatSeasonCount } from "@/lib/season-stats";
 
 type Props = {
   dict: Dictionary;
@@ -609,7 +610,7 @@ function PlayerRow({
           </span>
         )}
       </td>
-      <td className="num">{player.appearances}</td>
+      <td className="num">{formatSeasonCount(player, player.appearances)}</td>
       <td className="num">{formatMarketValue(player.marketValueEur, locale)}</td>
       <td>
         {player.nationality}

@@ -29,13 +29,28 @@ export type PlayerQueryResult = {
 };
 
 let cache: Player[] | null = null;
+let cacheMtime = 0;
 
 export function loadCatalog(): Player[] {
-  if (cache) return cache;
   const file = path.join(process.cwd(), "data", "derived", "players.json");
   if (!fs.existsSync(file)) return [];
-  cache = JSON.parse(fs.readFileSync(file, "utf8")) as Player[];
+  const mtime = fs.statSync(file).mtimeMs;
+  if (cache && cacheMtime === mtime) return cache;
+  const parsed = JSON.parse(fs.readFileSync(file, "utf8")) as Player[];
+  cache = parsed.map((player) => ({
+    ...player,
+    hasSeasonStats: player.hasSeasonStats === true,
+  }));
+  cacheMtime = mtime;
   return cache;
+}
+
+function withLocalSeasonStats(player: Player, row: PlayerRow): Player {
+  if (typeof row.has_season_stats === "boolean") {
+    return { ...player, hasSeasonStats: row.has_season_stats };
+  }
+  const local = loadCatalog().find((item) => item.id === player.id);
+  return { ...player, hasSeasonStats: local?.hasSeasonStats === true };
 }
 
 function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
@@ -98,7 +113,7 @@ async function queryPlayersFromSupabase(filters: PlayerQuery): Promise<PlayerQue
   const nationalities = Array.isArray(nations.data) ? (nations.data as string[]) : [];
 
   return {
-    players: ((data ?? []) as PlayerRow[]).map(mapPlayerRow),
+    players: ((data ?? []) as PlayerRow[]).map((row) => withLocalSeasonStats(mapPlayerRow(row), row)),
     total: count ?? 0,
     nationalities,
   };
@@ -121,7 +136,7 @@ export async function getPlayer(id: string): Promise<Player | null> {
       .select("*")
       .eq("id", id)
       .maybeSingle();
-    if (!error && data) return mapPlayerRow(data as PlayerRow);
+    if (!error && data) return withLocalSeasonStats(mapPlayerRow(data as PlayerRow), data as PlayerRow);
   }
   return loadCatalog().find((player) => player.id === id) ?? null;
 }

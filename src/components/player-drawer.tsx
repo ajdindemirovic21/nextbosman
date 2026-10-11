@@ -9,6 +9,7 @@ import { formatDate, formatMarketValue } from "@/lib/format";
 import type { MatchResult } from "@/lib/match-brief";
 import { playerWhatsAppShare } from "@/lib/highlights";
 import { contractAccent } from "@/lib/player-ui";
+import { formatSeasonCount, hasSeasonStats } from "@/lib/season-stats";
 
 type Props = {
   player: Player;
@@ -19,9 +20,9 @@ type Props = {
   onClose: () => void;
 };
 
-function per90(count: number, minutes: number) {
-  if (minutes < 90) return "—";
-  return ((count / minutes) * 90).toFixed(2);
+function per90(player: Player, count: number) {
+  if (!hasSeasonStats(player) || player.minutesPlayed < 90) return "—";
+  return ((count / player.minutesPlayed) * 90).toFixed(2);
 }
 
 export function PlayerDrawer({ player, dict, locale, match, sharePath, onClose }: Props) {
@@ -66,30 +67,35 @@ export function PlayerDrawer({ player, dict, locale, match, sharePath, onClose }
         ) : null}
 
         <p className="drawer-season">{dict.profile.season}</p>
+        {hasSeasonStats(player) ? null : (
+          <p className="drawer-stats-unavailable" role="status">
+            {dict.profile.statsUnavailable}
+          </p>
+        )}
         <dl className="stat-grid">
           <div>
             <dt>{dict.profile.matches}</dt>
-            <dd>{player.appearances}</dd>
+            <dd>{formatSeasonCount(player, player.appearances)}</dd>
           </div>
           <div>
             <dt>{dict.profile.goals}</dt>
-            <dd>{player.goals}</dd>
+            <dd>{formatSeasonCount(player, player.goals)}</dd>
           </div>
           <div>
             <dt>{dict.profile.assists}</dt>
-            <dd>{player.assists}</dd>
+            <dd>{formatSeasonCount(player, player.assists)}</dd>
           </div>
           <div>
             <dt>{dict.profile.minutes}</dt>
-            <dd>{player.minutesPlayed.toLocaleString(locale)}</dd>
+            <dd>{formatSeasonCount(player, player.minutesPlayed, locale)}</dd>
           </div>
           <div>
             <dt>{dict.profile.per90Goals}</dt>
-            <dd>{per90(player.goals, player.minutesPlayed)}</dd>
+            <dd>{per90(player, player.goals)}</dd>
           </div>
           <div>
             <dt>{dict.profile.per90Assists}</dt>
-            <dd>{per90(player.assists, player.minutesPlayed)}</dd>
+            <dd>{per90(player, player.assists)}</dd>
           </div>
           <div>
             <dt>{dict.profile.born}</dt>

@@ -1007,6 +1007,13 @@ tbody tr:hover {
   color: var(--muted);
 }
 
+.drawer-stats-unavailable {
+  margin: 0 0 4px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
 .stat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

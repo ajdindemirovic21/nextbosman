@@ -173,6 +173,7 @@ function loadPlayers(competitions) {
       availability,
       contractUntil,
       freeSince,
+      hasSeasonStats: false,
       appearances: 0,
       goals: 0,
       assists: 0,
@@ -218,6 +219,7 @@ async function addAppearanceStats(players, wanted) {
     if (date < STATS_FROM) continue;
     const player = byId.get(id);
     if (!player) continue;
+    player.hasSeasonStats = true;
     player.appearances += 1;
     player.goals += Number(row[col.goals] || 0) || 0;
     player.assists += Number(row[col.assists] || 0) || 0;
