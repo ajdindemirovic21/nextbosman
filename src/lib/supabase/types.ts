@@ -28,6 +28,7 @@ export type SavedList = {
   queryText: string | null;
   filters: SavedListFilters;
   playerIds: string[];
+  shareToken: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -65,6 +66,14 @@ export type SavedListRow = {
   query_text: string | null;
   filters: SavedListFilters;
   player_ids: string[];
+  share_token: string | null;
   created_at: string;
   updated_at: string;
+};
+
+export type SharedListPublic = {
+  title: string;
+  clubName: string | null;
+  playerIds: string[];
+  updatedAt: string;
 };

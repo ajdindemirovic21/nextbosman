@@ -11,7 +11,9 @@
     "supportTitle": "Podrži NextBosman",
     "supportDescription": "Stol ostaje besplatan za agente. Donacija po želji ako pomogne da zatvoriš poziv. Pro kasnije.",
     "listsTitle": "Spremljene liste",
-    "listsDescription": "Prijavi se kao agent da vidiš i dijeliš spremljene klupske kratke liste."
+    "listsDescription": "Prijavi se kao agent da vidiš i dijeliš spremljene klupske kratke liste.",
+    "sharedListTitle": "Podijeljeni shortlist",
+    "sharedListDescription": "Klupski shortlist koji je podijelio agent. Trenutačna dostupnost nije potvrđena."
   },
   "brand": {
     "name": "NextBosman",
@@ -259,6 +261,14 @@
     "deletedList": "Lista je obrisana",
     "updateFailed": "Lista se nije mogla ažurirati. Pokušaj ponovo.",
     "deleteFailed": "Lista se nije mogla obrisati. Pokušaj ponovo.",
+    "shareOn": "Uključi dijeljenje",
+    "shareOff": "Isključi dijeljenje",
+    "sharing": "Ažuriram…",
+    "shareEnabled": "Dijeljenje je uključeno. Svatko tko ima poveznicu može otvoriti ovu listu.",
+    "shareDisabled": "Dijeljenje je isključeno. Stara poveznica više ne radi.",
+    "shareWarning": "Naslov liste, naziv kluba i spremljeni igrači postaju dostupni svakome s poveznicom. Brief i račun ostaju privatni.",
+    "shareAnyone": "Svatko tko ima ovu poveznicu može otvoriti listu.",
+    "shareFailed": "Dijeljenje se nije moglo ažurirati. Pokušaj ponovo.",
     "confirm": "Ako signup traži potvrdu maila, u Supabase Auth isključi Confirm email (lokalno)."
   }
 }

@@ -9,6 +9,7 @@ export function mapSavedList(row: SavedListRow): SavedList {
     queryText: row.query_text,
     filters: (row.filters ?? {}) as SavedListFilters,
     playerIds: row.player_ids ?? [],
+    shareToken: row.share_token ?? null,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };

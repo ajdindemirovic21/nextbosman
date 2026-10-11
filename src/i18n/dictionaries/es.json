@@ -11,7 +11,9 @@
     "supportTitle": "Apoya NextBosman",
     "supportDescription": "El escritorio sigue gratis para agentes. Donación opcional si te ayuda a cerrar una llamada. Pro después.",
     "listsTitle": "Listas guardadas",
-    "listsDescription": "Inicia sesión como agente para ver y compartir listas cortas de club."
+    "listsDescription": "Inicia sesión como agente para ver y compartir listas cortas de club.",
+    "sharedListTitle": "Lista compartida",
+    "sharedListDescription": "Una shortlist de club compartida por un agente. La disponibilidad actual no está confirmada."
   },
   "brand": {
     "name": "NextBosman",
@@ -274,6 +276,14 @@
     "deletedList": "Lista eliminada",
     "updateFailed": "No se pudo actualizar la lista. Inténtalo de nuevo.",
     "deleteFailed": "No se pudo eliminar la lista. Inténtalo de nuevo.",
+    "shareOn": "Activar el enlace",
+    "shareOff": "Desactivar el enlace",
+    "sharing": "Actualizando…",
+    "shareEnabled": "El enlace está activo. Cualquiera con el enlace puede abrir esta lista.",
+    "shareDisabled": "El enlace está desactivado. El enlace anterior ya no funciona.",
+    "shareWarning": "El título, el nombre del club y los jugadores guardados quedan visibles para cualquiera con el enlace. El brief y la cuenta siguen privados.",
+    "shareAnyone": "Cualquiera con este enlace puede abrir la lista.",
+    "shareFailed": "No se pudo actualizar el enlace. Inténtalo de nuevo.",
     "confirm": "Si el alta pide confirmar email, desactiva Confirm email en Supabase Auth (local)."
   }
 }

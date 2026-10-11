@@ -11,7 +11,9 @@
     "supportTitle": "Soutenir NextBosman",
     "supportDescription": "Le bureau reste gratuit pour les agents. Don optionnel s’il t’aide à closer. Le Pro vient plus tard.",
     "listsTitle": "Listes enregistrées",
-    "listsDescription": "Connecte-toi en agent pour voir et partager les listes courtes de club."
+    "listsDescription": "Connecte-toi en agent pour voir et partager les listes courtes de club.",
+    "sharedListTitle": "Liste partagée",
+    "sharedListDescription": "Une shortlist club partagée par un agent. La disponibilité actuelle n’est pas confirmée."
   },
   "brand": {
     "name": "NextBosman",
@@ -274,6 +276,14 @@
     "deletedList": "Liste supprimée",
     "updateFailed": "Impossible de mettre à jour la liste. Réessayez.",
     "deleteFailed": "Impossible de supprimer la liste. Réessayez.",
+    "shareOn": "Activer le partage",
+    "shareOff": "Désactiver le partage",
+    "sharing": "Mise à jour…",
+    "shareEnabled": "Le partage est activé. Toute personne avec le lien peut ouvrir cette liste.",
+    "shareDisabled": "Le partage est désactivé. L’ancien lien ne fonctionne plus.",
+    "shareWarning": "Le titre, le nom du club et les joueurs enregistrés deviennent visibles pour toute personne avec le lien. Le brief et le compte restent privés.",
+    "shareAnyone": "Toute personne avec ce lien peut ouvrir la liste.",
+    "shareFailed": "Impossible de mettre à jour le partage. Réessayez.",
     "confirm": "Si l’inscription demande un mail, désactivez Confirm email dans Supabase Auth (local)."
   }
 }

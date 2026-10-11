@@ -11,7 +11,9 @@
     "supportTitle": "Support NextBosman",
     "supportDescription": "The desk stays free for agents. Optional donation if it helps you close a call. Pro comes later.",
     "listsTitle": "Saved lists",
-    "listsDescription": "Sign in as an agent to view and share saved club shortlists."
+    "listsDescription": "Sign in as an agent to view and share saved club shortlists.",
+    "sharedListTitle": "Shared shortlist",
+    "sharedListDescription": "A club shortlist shared by an agent. Current availability is not confirmed."
   },
   "brand": {
     "name": "NextBosman",
@@ -259,6 +261,14 @@
     "deletedList": "List deleted",
     "updateFailed": "Could not update the list. Try again.",
     "deleteFailed": "Could not delete the list. Try again.",
+    "shareOn": "Turn on sharing",
+    "shareOff": "Turn off sharing",
+    "sharing": "Updating…",
+    "shareEnabled": "Sharing is on. Anyone with the link can open this list.",
+    "shareDisabled": "Sharing is off. The old link no longer works.",
+    "shareWarning": "The list title, club name, and saved players become available to anyone with the link. Your brief and account stay private.",
+    "shareAnyone": "Anyone with this link can open this list.",
+    "shareFailed": "Could not update sharing. Try again.",
     "confirm": "If sign-up asks for email confirm, turn Confirm email off in Supabase Auth (local)."
   }
 }

@@ -63,12 +63,17 @@ create table if not exists public.saved_lists (
   query_text text,
   filters jsonb not null default '{}'::jsonb,
   player_ids text[] not null default '{}',
+  share_token text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
 create index if not exists saved_lists_user_idx
   on public.saved_lists (user_id, created_at desc);
+
+create unique index if not exists saved_lists_share_token_idx
+  on public.saved_lists (share_token)
+  where share_token is not null;
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -175,3 +180,30 @@ grant select on public.players to anon, authenticated;
 grant select, insert, update on public.users to authenticated;
 grant select, insert, update, delete on public.saved_lists to authenticated;
 grant execute on function public.player_nationalities() to anon, authenticated;
+
+-- Public shared-list lookup: token in, never user_id / brief / filters / token out.
+create or replace function public.get_shared_list(p_token text)
+returns table (
+  title text,
+  club_name text,
+  player_ids text[],
+  updated_at timestamptz
+)
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select
+    lists.title,
+    lists.club_name,
+    lists.player_ids,
+    lists.updated_at
+  from public.saved_lists as lists
+  where p_token is not null
+    and char_length(p_token) >= 20
+    and lists.share_token = p_token;
+$$;
+
+revoke all on function public.get_shared_list(text) from public;
+grant execute on function public.get_shared_list(text) to anon, authenticated;

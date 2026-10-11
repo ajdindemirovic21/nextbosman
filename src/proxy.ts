@@ -65,7 +65,12 @@ export async function proxy(request: NextRequest) {
     return copyCookies(sessionResponse, NextResponse.redirect(callbackUrl));
   }
 
-  if (pathnameHasLocale) return sessionResponse;
+  if (pathnameHasLocale) {
+    if (/^\/(en|es|de|fr|pt|tr|it|bs|hr)\/l\//.test(pathname)) {
+      sessionResponse.headers.set("Cache-Control", "private, no-store, max-age=0, must-revalidate");
+    }
+    return sessionResponse;
+  }
 
   const locale = localeFromRequest(request);
   request.nextUrl.pathname = `/${locale}${pathname}`;

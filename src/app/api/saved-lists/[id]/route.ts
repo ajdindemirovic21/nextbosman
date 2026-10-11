@@ -1,4 +1,5 @@
 import { isPlayerId, uniquePlayerIds } from "@/lib/player-ids";
+import { createShareToken } from "@/lib/share-token-server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { ensureAgentProfile, mapSavedList } from "@/lib/supabase/saved-lists";
@@ -42,10 +43,12 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     playerIds?: string[];
     addPlayerId?: string;
     removePlayerId?: string;
+    share?: boolean;
   };
 
   const addPlayerId = typeof body.addPlayerId === "string" ? body.addPlayerId.trim() : "";
   const removePlayerId = typeof body.removePlayerId === "string" ? body.removePlayerId.trim() : "";
+  const wantsShare = typeof body.share === "boolean";
   if (addPlayerId && !isPlayerId(addPlayerId)) {
     return Response.json({ error: "Invalid player id" }, { status: 400 });
   }
@@ -59,13 +62,23 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   if ("queryText" in body) patch.query_text = body.queryText?.trim() || null;
   if (body.filters) patch.filters = body.filters;
 
-  if (addPlayerId || removePlayerId) {
-    const { data: current, error: loadError } = await loadOwnList(supabase, user.id, id);
+  let current: SavedListRow | null = null;
+  if (addPlayerId || removePlayerId || wantsShare) {
+    const { data, error: loadError } = await loadOwnList(supabase, user.id, id);
     if (loadError) return Response.json({ error: loadError.message }, { status: 500 });
-    if (!current) return Response.json({ error: "List not found" }, { status: 404 });
+    if (!data) return Response.json({ error: "List not found" }, { status: 404 });
+    current = data as SavedListRow;
+  }
 
-    const currentIds = uniquePlayerIds((current as SavedListRow).player_ids ?? []);
-    if (addPlayerId && currentIds.includes(addPlayerId) && !removePlayerId && Object.keys(patch).length === 0) {
+  if (addPlayerId || removePlayerId) {
+    const currentIds = uniquePlayerIds(current?.player_ids ?? []);
+    if (
+      addPlayerId &&
+      currentIds.includes(addPlayerId) &&
+      !removePlayerId &&
+      !wantsShare &&
+      Object.keys(patch).length === 0
+    ) {
       return Response.json({ list: mapSavedList(current as SavedListRow), alreadyMember: true });
     }
 
@@ -77,17 +90,27 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     patch.player_ids = uniquePlayerIds(body.playerIds);
   }
 
+  if (wantsShare && current) {
+    if (body.share) {
+      if (!current.share_token) patch.share_token = createShareToken();
+    } else if (current.share_token) {
+      patch.share_token = null;
+    }
+  }
+
   if (Object.keys(patch).length === 0) {
+    if (wantsShare && current) return Response.json({ list: mapSavedList(current) });
     return Response.json({ error: "Nothing to update" }, { status: 400 });
   }
 
-  const { data, error } = await supabase
-    .from("saved_lists")
-    .update(patch)
-    .eq("id", id)
-    .eq("user_id", user.id)
-    .select("*")
-    .maybeSingle();
+  const apply = (nextPatch: Record<string, unknown>) =>
+    supabase.from("saved_lists").update(nextPatch).eq("id", id).eq("user_id", user.id).select("*").maybeSingle();
+
+  let { data, error } = await apply(patch);
+  if (error && error.code === "23505" && typeof patch.share_token === "string") {
+    patch.share_token = createShareToken();
+    ({ data, error } = await apply(patch));
+  }
 
   if (error) return Response.json({ error: error.message }, { status: 500 });
   if (!data) return Response.json({ error: "List not found" }, { status: 404 });

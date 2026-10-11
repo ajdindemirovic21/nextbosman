@@ -11,7 +11,9 @@
     "supportTitle": "Sostieni NextBosman",
     "supportDescription": "La scrivania resta gratis per gli agenti. Donazione opzionale se ti aiuta a chiudere una chiamata. Il Pro arriva dopo.",
     "listsTitle": "Liste salvate",
-    "listsDescription": "Accedi come agente per vedere e condividere le liste corte del club."
+    "listsDescription": "Accedi come agente per vedere e condividere le liste corte del club.",
+    "sharedListTitle": "Lista condivisa",
+    "sharedListDescription": "Una shortlist di club condivisa da un agente. La disponibilità attuale non è confermata."
   },
   "brand": {
     "name": "NextBosman",
@@ -274,6 +276,14 @@
     "deletedList": "Lista eliminata",
     "updateFailed": "Impossibile aggiornare la lista. Riprova.",
     "deleteFailed": "Impossibile eliminare la lista. Riprova.",
+    "shareOn": "Attiva la condivisione",
+    "shareOff": "Disattiva la condivisione",
+    "sharing": "Aggiornamento…",
+    "shareEnabled": "La condivisione è attiva. Chiunque abbia il link può aprire questa lista.",
+    "shareDisabled": "La condivisione è disattivata. Il vecchio link non funziona più.",
+    "shareWarning": "Titolo, nome del club e giocatori salvati diventano visibili a chiunque abbia il link. Il brief e l’account restano privati.",
+    "shareAnyone": "Chiunque abbia questo link può aprire la lista.",
+    "shareFailed": "Impossibile aggiornare la condivisione. Riprova.",
     "confirm": "Se la registrazione chiede conferma email, disattiva Confirm email in Supabase Auth (locale)."
   }
 }

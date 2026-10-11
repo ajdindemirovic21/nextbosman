@@ -11,7 +11,9 @@
     "supportTitle": "NextBosman unterstützen",
     "supportDescription": "Der Schreibtisch bleibt für Berater kostenlos. Spende optional, wenn er hilft. Pro kommt später.",
     "listsTitle": "Gespeicherte Listen",
-    "listsDescription": "Als Berater anmelden, um gespeicherte Klub-Listen zu sehen und zu teilen."
+    "listsDescription": "Als Berater anmelden, um gespeicherte Klub-Listen zu sehen und zu teilen.",
+    "sharedListTitle": "Geteilte Shortlist",
+    "sharedListDescription": "Eine vom Berater geteilte Klub-Shortlist. Die aktuelle Verfügbarkeit ist nicht bestätigt."
   },
   "brand": {
     "name": "NextBosman",
@@ -274,6 +276,14 @@
     "deletedList": "Liste gelöscht",
     "updateFailed": "Liste konnte nicht aktualisiert werden. Bitte erneut versuchen.",
     "deleteFailed": "Liste konnte nicht gelöscht werden. Bitte erneut versuchen.",
+    "shareOn": "Teilen einschalten",
+    "shareOff": "Teilen ausschalten",
+    "sharing": "Wird aktualisiert…",
+    "shareEnabled": "Teilen ist an. Jeder mit dem Link kann diese Liste öffnen.",
+    "shareDisabled": "Teilen ist aus. Der alte Link funktioniert nicht mehr.",
+    "shareWarning": "Titel, Klubname und gespeicherte Spieler sind für jeden mit dem Link sichtbar. Briefing und Konto bleiben privat.",
+    "shareAnyone": "Jeder mit diesem Link kann die Liste öffnen.",
+    "shareFailed": "Teilen konnte nicht aktualisiert werden. Bitte erneut versuchen.",
     "confirm": "Wenn die Registrierung eine Mail-Bestätigung will: Confirm email in Supabase Auth aus (lokal)."
   }
 }

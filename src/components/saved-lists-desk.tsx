@@ -5,9 +5,11 @@ import Link from "next/link";
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
+import { QuickShare } from "@/components/quick-share";
 import { searchPathFromFilters } from "@/lib/list-search";
 import { playerSearchPath } from "@/lib/player-link";
 import { uniquePlayerIds } from "@/lib/player-ids";
+import { sharedListPath } from "@/lib/share-token";
 import type { SavedList } from "@/lib/supabase/types";
 
 type Props = {
@@ -92,10 +94,12 @@ export function SavedListsDesk({ lang, dict }: Props) {
             playersById={playersById}
             lang={lang}
             dict={dict}
-            onUpdated={(next) => {
+            onUpdated={(next, message) => {
               setLists((current) => current.map((item) => (item.id === next.id ? next : item)));
-              setNotice(dict.account.removedPlayer);
-              setNoticeError(false);
+              if (message) {
+                setNotice(message);
+                setNoticeError(false);
+              }
             }}
             onDeleted={() => {
               setLists((current) => current.filter((item) => item.id !== list.id));
@@ -126,7 +130,7 @@ function SavedListCard({
   playersById: Record<string, Player>;
   lang: Locale;
   dict: Dictionary;
-  onUpdated: (list: SavedList) => void;
+  onUpdated: (list: SavedList, message?: string) => void;
   onDeleted: () => void;
   onError: (message: string) => void;
 }) {
@@ -154,9 +158,35 @@ function SavedListCard({
         return;
       }
       const body = (await res.json()) as { list?: SavedList };
-      if (body.list) onUpdated(body.list);
+      if (body.list) onUpdated(body.list, dict.account.removedPlayer);
     } catch {
       onError(dict.account.updateFailed);
+    } finally {
+      setBusyId(null);
+    }
+  }
+
+  async function setSharing(share: boolean) {
+    if (busy) return;
+    setBusyId("share");
+    try {
+      const res = await fetch(`/api/saved-lists/${encodeURIComponent(list.id)}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ share }),
+      });
+      if (res.status === 401) {
+        onError(dict.account.needAccount);
+        return;
+      }
+      if (!res.ok) {
+        onError(dict.account.shareFailed);
+        return;
+      }
+      const body = (await res.json()) as { list?: SavedList };
+      if (body.list) onUpdated(body.list, share ? dict.account.shareEnabled : dict.account.shareDisabled);
+    } catch {
+      onError(dict.account.shareFailed);
     } finally {
       setBusyId(null);
     }
@@ -191,6 +221,15 @@ function SavedListCard({
         {dict.account.players.replace("{count}", String(ids.length))}
       </p>
       {list.queryText ? <p className="break-words text-sm text-slate-500">{list.queryText}</p> : null}
+      <p className="mt-3 text-sm text-slate-400">{dict.account.shareWarning}</p>
+      {list.shareToken ? (
+        <>
+          <p className="text-sm text-amber-200/90">{dict.account.shareAnyone}</p>
+          <div className="mt-2 max-w-md">
+            <QuickShare dict={dict} path={sharedListPath(lang, list.shareToken)} text={list.title} />
+          </div>
+        </>
+      ) : null}
       <ul className="mt-3 grid list-none gap-2 p-0">
         {ids.length === 0 ? (
           <li className="text-sm text-slate-500">{dict.account.emptyMembers}</li>
@@ -231,6 +270,18 @@ function SavedListCard({
         <Link className="text-sm font-semibold text-emerald-400 no-underline" href={repeatHref}>
           {dict.account.repeatSearch}
         </Link>
+        <button
+          type="button"
+          className="save-list"
+          disabled={busy}
+          onClick={() => void setSharing(!list.shareToken)}
+        >
+          {busyId === "share"
+            ? dict.account.sharing
+            : list.shareToken
+              ? dict.account.shareOff
+              : dict.account.shareOn}
+        </button>
         {confirmDelete ? (
           <>
             <span className="text-sm text-slate-300">

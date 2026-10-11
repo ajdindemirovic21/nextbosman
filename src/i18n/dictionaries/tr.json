@@ -11,7 +11,9 @@
     "supportTitle": "NextBosman’ı destekle",
     "supportDescription": "Masa menajerler için ücretsiz kalır. Yardımcı olduysa isteğe bağlı bağış. Pro sonra gelir.",
     "listsTitle": "Kayıtlı listeler",
-    "listsDescription": "Kayıtlı kulüp kısa listelerini görmek ve paylaşmak için menajer olarak giriş yap."
+    "listsDescription": "Kayıtlı kulüp kısa listelerini görmek ve paylaşmak için menajer olarak giriş yap.",
+    "sharedListTitle": "Paylaşılan kısa liste",
+    "sharedListDescription": "Bir menajerin paylaştığı kulüp kısa listesi. Güncel müsaitlik doğrulanmamıştır."
   },
   "brand": {
     "name": "NextBosman",
@@ -274,6 +276,14 @@
     "deletedList": "Liste silindi",
     "updateFailed": "Liste güncellenemedi. Yeniden deneyin.",
     "deleteFailed": "Liste silinemedi. Yeniden deneyin.",
+    "shareOn": "Paylaşımı aç",
+    "shareOff": "Paylaşımı kapat",
+    "sharing": "Güncelleniyor…",
+    "shareEnabled": "Paylaşım açık. Bağlantıya sahip herkes bu listeyi açabilir.",
+    "shareDisabled": "Paylaşım kapalı. Eski bağlantı artık çalışmaz.",
+    "shareWarning": "Liste başlığı, kulüp adı ve kayıtlı oyuncular bağlantıya sahip herkese görünür. Brief ve hesap gizli kalır.",
+    "shareAnyone": "Bu bağlantıya sahip herkes listeyi açabilir.",
+    "shareFailed": "Paylaşım güncellenemedi. Yeniden deneyin.",
     "confirm": "Kayıt e-posta onayı isterse Supabase Auth’ta Confirm email’i kapatın (yerel)."
   }
 }
