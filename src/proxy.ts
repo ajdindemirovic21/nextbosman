@@ -36,7 +36,19 @@ export async function proxy(request: NextRequest) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   );
 
-  if (pathname.startsWith("/api/") || pathname.startsWith("/auth/")) return sessionResponse;
+  if (
+    pathname.startsWith("/api/") ||
+    pathname.startsWith("/auth/") ||
+    pathname.startsWith("/icon") ||
+    pathname.startsWith("/apple-icon") ||
+    pathname.startsWith("/opengraph-image") ||
+    pathname.startsWith("/twitter-image") ||
+    pathname === "/sitemap.xml" ||
+    pathname === "/robots.txt" ||
+    pathname === "/manifest.webmanifest"
+  ) {
+    return sessionResponse;
+  }
   if (pathnameHasLocale) return sessionResponse;
 
   const locale = localeFromRequest(request);

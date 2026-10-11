@@ -1,7 +1,17 @@
 {
   "meta": {
     "title": "NextBosman — Slobodni igrači i isteci ugovora",
-    "description": "Brza svjetska pretraga za agente: igrači bez kluba i igrači koj ugovor ističe."
+    "description": "Brza svjetska pretraga za agente: igrači bez kluba i igrači koj ugovor ističe.",
+    "searchTitle": "Pretraga slobodnih igrača i isteka ugovora",
+    "searchDescription": "Slobodni igrači i isteci ugovora, diljem svijeta. Upari brif s imenima koja odgovaraju razini.",
+    "searchFreeTitle": "Pretraga slobodnih igrača",
+    "searchFreeDescription": "Bez ugovora i spremni za razgovor. Svjetska pretraga slobodnih igrača za agente.",
+    "searchExpiringTitle": "Isteći ugovori",
+    "searchExpiringDescription": "Igrači još u klubu koj ugovor ističe. Prednost je timing.",
+    "supportTitle": "Podrži NextBosman",
+    "supportDescription": "Stol ostaje besplatan za agente. Donacija po želji ako pomogne da zatvoriš poziv. Pro kasnije.",
+    "listsTitle": "Spremljene liste",
+    "listsDescription": "Prijavi se kao agent da vidiš i dijeliš spremljene klupske kratke liste."
   },
   "brand": {
     "name": "NextBosman",

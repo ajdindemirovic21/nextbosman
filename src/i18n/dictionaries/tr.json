@@ -1,7 +1,17 @@
 {
   "meta": {
     "title": "NextBosman — Serbest oyuncular ve biten sözleşmeler",
-    "description": "Menajerler için hızlı dünya araması: kulüpsüz oyuncular ve sözleşmesi bitmek üzere olanlar."
+    "description": "Menajerler için hızlı dünya araması: kulüpsüz oyuncular ve sözleşmesi bitmek üzere olanlar.",
+    "searchTitle": "Serbest oyuncu ve biten sözleşme ara",
+    "searchDescription": "Serbest oyuncular ve biten sözleşmeler, dünya çapında. Brifi seviyeye uyan isimlerle eşleştir.",
+    "searchFreeTitle": "Serbest oyuncu ara",
+    "searchFreeDescription": "Sözleşmesiz ve görüşmeye hazır. Menajerler için dünya çapında serbest oyuncu araması.",
+    "searchExpiringTitle": "Biten sözleşmeler",
+    "searchExpiringDescription": "Hâlâ kulüpte olan ve sözleşmesi bitmek üzere oyuncular. Avantaj zamanlama.",
+    "supportTitle": "NextBosman’ı destekle",
+    "supportDescription": "Masa menajerler için ücretsiz kalır. Yardımcı olduysa isteğe bağlı bağış. Pro sonra gelir.",
+    "listsTitle": "Kayıtlı listeler",
+    "listsDescription": "Kayıtlı kulüp kısa listelerini görmek ve paylaşmak için menajer olarak giriş yap."
   },
   "brand": {
     "name": "NextBosman",

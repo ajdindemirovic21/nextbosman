@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { HomePaste } from "@/components/home-paste";
 import { QuickShare } from "@/components/quick-share";
@@ -11,7 +12,23 @@ import {
 } from "@/components/icons";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { buildPageMetadata } from "@/lib/site-metadata";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    ...buildPageMetadata(lang, {
+      title: dict.meta.title,
+      description: dict.meta.description,
+    }),
+    title: { absolute: dict.meta.title },
+  };
+}
 
 const STAT_ICONS = [IconPlayers, IconContract, IconPassport];
 const HOW_ICONS = [IconPaste, IconMatch, IconSend];

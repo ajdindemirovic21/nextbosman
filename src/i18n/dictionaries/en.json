@@ -1,7 +1,17 @@
 {
   "meta": {
     "title": "NextBosman — Free agents & expiring contracts",
-    "description": "A fast worldwide search for football agents: players without a club, and players whose contracts are ending."
+    "description": "A fast worldwide search for football agents: players without a club, and players whose contracts are ending.",
+    "searchTitle": "Search free agents and expiring contracts",
+    "searchDescription": "Free agents and expiring contracts, worldwide. Match a club brief to names that fit the level.",
+    "searchFreeTitle": "Search free agents",
+    "searchFreeDescription": "Out of contract and ready to talk. Worldwide free-agent search for football agents.",
+    "searchExpiringTitle": "Contracts ending",
+    "searchExpiringDescription": "Players still at a club whose contracts are running out. Timing is the product.",
+    "supportTitle": "Support NextBosman",
+    "supportDescription": "The desk stays free for agents. Optional donation if it helps you close a call. Pro comes later.",
+    "listsTitle": "Saved lists",
+    "listsDescription": "Sign in as an agent to view and share saved club shortlists."
   },
   "brand": {
     "name": "NextBosman",

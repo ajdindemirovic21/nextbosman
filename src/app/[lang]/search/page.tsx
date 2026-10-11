@@ -1,8 +1,23 @@
+import type { Metadata } from "next";
 import { SearchDesk } from "@/components/search-desk";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { buildPageMetadata } from "@/lib/site-metadata";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/search">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return buildPageMetadata(lang, {
+    title: dict.meta.searchTitle,
+    description: dict.meta.searchDescription,
+    path: "/search",
+  });
+}
 
 export default async function SearchPage({ params }: PageProps<"/[lang]/search">) {
   const { lang } = await params;

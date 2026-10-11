@@ -1,7 +1,17 @@
 {
   "meta": {
     "title": "NextBosman — Vereinslose & auslaufende Verträge",
-    "description": "Schnelle weltweite Suche für Berater: Spieler ohne Verein und Spieler mit auslaufendem Vertrag."
+    "description": "Schnelle weltweite Suche für Berater: Spieler ohne Verein und Spieler mit auslaufendem Vertrag.",
+    "searchTitle": "Vereinslose und auslaufende Verträge suchen",
+    "searchDescription": "Vereinslose und auslaufende Verträge, weltweit. Briefe an Namen matchen, die zum Niveau passen.",
+    "searchFreeTitle": "Vereinslose Spieler suchen",
+    "searchFreeDescription": "Ohne Vertrag und gesprächsbereit. Weltweite Suche nach vereinslosen Spielern.",
+    "searchExpiringTitle": "Auslaufende Verträge",
+    "searchExpiringDescription": "Spieler noch im Verein, deren Vertrag ausläuft. Timing ist der Vorteil.",
+    "supportTitle": "NextBosman unterstützen",
+    "supportDescription": "Der Schreibtisch bleibt für Berater kostenlos. Spende optional, wenn er hilft. Pro kommt später.",
+    "listsTitle": "Gespeicherte Listen",
+    "listsDescription": "Als Berater anmelden, um gespeicherte Klub-Listen zu sehen und zu teilen."
   },
   "brand": {
     "name": "NextBosman",

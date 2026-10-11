@@ -1,7 +1,17 @@
 {
   "meta": {
     "title": "NextBosman — Livres e contratos a terminar",
-    "description": "Pesquisa mundial rápida para agentes: jogadores sem clube e jogadores no fim do contrato."
+    "description": "Pesquisa mundial rápida para agentes: jogadores sem clube e jogadores no fim do contrato.",
+    "searchTitle": "Pesquisar livres e contratos a terminar",
+    "searchDescription": "Livres e contratos a terminar, no mundo. Emparelha um brief com nomes do nível certo.",
+    "searchFreeTitle": "Pesquisar jogadores livres",
+    "searchFreeDescription": "Sem contrato e prontos para falar. Pesquisa mundial de livres para agentes.",
+    "searchExpiringTitle": "Contratos a terminar",
+    "searchExpiringDescription": "Jogadores ainda no clube cujo contrato acaba. A vantagem é o timing.",
+    "supportTitle": "Apoia o NextBosman",
+    "supportDescription": "A secretária fica grátis para agentes. Doação opcional se ajudar a fechar uma chamada. O Pro vem depois.",
+    "listsTitle": "Listas guardadas",
+    "listsDescription": "Inicia sessão como agente para ver e partilhar listas curtas de clube."
   },
   "brand": {
     "name": "NextBosman",

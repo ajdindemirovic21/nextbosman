@@ -1,7 +1,25 @@
+import type { Metadata } from "next";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { buildPageMetadata } from "@/lib/site-metadata";
 import { getDonationUrl } from "@/lib/support";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/support">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    ...buildPageMetadata(lang, {
+      title: dict.meta.supportTitle,
+      description: dict.meta.supportDescription,
+      path: "/support",
+    }),
+    title: { absolute: dict.meta.supportTitle },
+  };
+}
 
 export default async function SupportPage({ params }: PageProps<"/[lang]/support">) {
   const { lang } = await params;

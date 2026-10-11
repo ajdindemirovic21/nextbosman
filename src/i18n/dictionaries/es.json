@@ -1,7 +1,17 @@
 {
   "meta": {
     "title": "NextBosman — Agentes libres y contratos que vencen",
-    "description": "Búsqueda mundial rápida para agentes: jugadores sin club y jugadores cuyo contrato termina."
+    "description": "Búsqueda mundial rápida para agentes: jugadores sin club y jugadores cuyo contrato termina.",
+    "searchTitle": "Buscar libres y contratos que vencen",
+    "searchDescription": "Libres y contratos que vencen, en todo el mundo. Empareja un brief con nombres del nivel correcto.",
+    "searchFreeTitle": "Buscar agentes libres",
+    "searchFreeDescription": "Sin contrato y listos para hablar. Búsqueda mundial de jugadores libres para agentes.",
+    "searchExpiringTitle": "Contratos que vencen",
+    "searchExpiringDescription": "Jugadores aún en un club cuyo contrato termina. La ventaja es el timing.",
+    "supportTitle": "Apoya NextBosman",
+    "supportDescription": "El escritorio sigue gratis para agentes. Donación opcional si te ayuda a cerrar una llamada. Pro después.",
+    "listsTitle": "Listas guardadas",
+    "listsDescription": "Inicia sesión como agente para ver y compartir listas cortas de club."
   },
   "brand": {
     "name": "NextBosman",

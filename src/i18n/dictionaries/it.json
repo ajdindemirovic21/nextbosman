@@ -1,7 +1,17 @@
 {
   "meta": {
     "title": "NextBosman — Svincolati e contratti in scadenza",
-    "description": "Ricerca mondiale veloce per agenti: giocatori senza club e contratti in scadenza."
+    "description": "Ricerca mondiale veloce per agenti: giocatori senza club e contratti in scadenza.",
+    "searchTitle": "Cerca svincolati e contratti in scadenza",
+    "searchDescription": "Svincolati e contratti in scadenza, nel mondo. Abbina un brief a nomi del livello giusto.",
+    "searchFreeTitle": "Cerca svincolati",
+    "searchFreeDescription": "Senza contratto e pronti a parlare. Ricerca mondiale di svincolati per agenti.",
+    "searchExpiringTitle": "Contratti in scadenza",
+    "searchExpiringDescription": "Giocatori ancora in club con contratto in scadenza. Il vantaggio è il timing.",
+    "supportTitle": "Sostieni NextBosman",
+    "supportDescription": "La scrivania resta gratis per gli agenti. Donazione opzionale se ti aiuta a chiudere una chiamata. Il Pro arriva dopo.",
+    "listsTitle": "Liste salvate",
+    "listsDescription": "Accedi come agente per vedere e condividere le liste corte del club."
   },
   "brand": {
     "name": "NextBosman",

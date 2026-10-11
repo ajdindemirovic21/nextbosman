@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { AppChrome } from "@/components/app-chrome";
 import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { buildPageMetadata } from "@/lib/site-metadata";
+import { getConfiguredSiteUrl } from "@/lib/site-url";
 import "../globals.css";
 
 const sans = Plus_Jakarta_Sans({
@@ -29,8 +31,7 @@ export async function generateMetadata({
   if (!isLocale(lang)) return {};
   const dict = await getDictionary(lang);
   return {
-    title: dict.meta.title,
-    description: dict.meta.description,
+    metadataBase: new URL(getConfiguredSiteUrl()),
     applicationName: dict.brand.name,
     appleWebApp: {
       capable: true,
@@ -38,6 +39,14 @@ export async function generateMetadata({
       statusBarStyle: "black-translucent",
     },
     formatDetection: { telephone: false },
+    ...buildPageMetadata(lang, {
+      title: dict.meta.title,
+      description: dict.meta.description,
+    }),
+    title: {
+      default: dict.meta.title,
+      template: `%s · ${dict.brand.name}`,
+    },
   };
 }
 
