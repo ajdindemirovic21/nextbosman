@@ -242,6 +242,23 @@
     "repeatSearch": "Repeat search",
     "playerMissing": "No longer in the catalog",
     "emptyMembers": "This list has no saved players.",
+    "addToList": "Add to list",
+    "addingToList": "Adding…",
+    "addedToList": "Added to {list}",
+    "alreadyInList": "Already in the list",
+    "noListsYet": "Save a list first, then add players here.",
+    "selectList": "Choose a list",
+    "removePlayer": "Remove",
+    "removing": "Removing…",
+    "removedPlayer": "Removed from the list",
+    "deleteList": "Delete list",
+    "deleteConfirm": "Delete “{title}”? This cannot be undone.",
+    "confirmDelete": "Delete",
+    "cancel": "Cancel",
+    "deleting": "Deleting…",
+    "deletedList": "List deleted",
+    "updateFailed": "Could not update the list. Try again.",
+    "deleteFailed": "Could not delete the list. Try again.",
     "confirm": "If sign-up asks for email confirm, turn Confirm email off in Supabase Auth (local)."
   }
 }

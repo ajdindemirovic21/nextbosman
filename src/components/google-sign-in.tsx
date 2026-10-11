@@ -13,28 +13,37 @@ type Props = {
 
 export function GoogleSignIn({ lang, dict, compact }: Props) {
   const pathname = usePathname() || `/${lang}`;
-  const href = `/api/auth/google?next=${encodeURIComponent(pathname)}`;
+
+  function startGoogle() {
+    const params = new URLSearchParams({
+      next: pathname,
+      origin: window.location.origin,
+    });
+    window.location.assign(`/api/auth/google?${params.toString()}`);
+  }
 
   if (compact) {
     return (
-      <a
-        href={href}
+      <button
+        type="button"
+        onClick={startGoogle}
         className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-slate-500 bg-white px-2.5 py-2 text-sm font-medium text-slate-900 no-underline hover:bg-slate-100"
         aria-label={dict.account.googleContinue}
       >
         <IconGoogle className="h-4 w-4" />
         <span className="hidden sm:inline">{dict.account.google}</span>
-      </a>
+      </button>
     );
   }
 
   return (
-    <a
-      href={href}
+    <button
+      type="button"
+      onClick={startGoogle}
       className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-lg border border-slate-500 bg-white px-3 py-2 text-sm font-medium text-slate-900 no-underline hover:bg-slate-100"
     >
       <IconGoogle className="h-4 w-4" />
       {dict.account.googleContinue}
-    </a>
+    </button>
   );
 }

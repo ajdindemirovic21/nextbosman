@@ -242,6 +242,23 @@
     "repeatSearch": "Ponovi pretragu",
     "playerMissing": "Nije više u katalogu",
     "emptyMembers": "Ova lista nema spremljenih igrača.",
+    "addToList": "Dodaj u listu",
+    "addingToList": "Dodajem…",
+    "addedToList": "Dodano u {list}",
+    "alreadyInList": "Već je u listi",
+    "noListsYet": "Prvo spremi listu, pa ovdje dodaj igrače.",
+    "selectList": "Odaberi listu",
+    "removePlayer": "Ukloni",
+    "removing": "Uklanjam…",
+    "removedPlayer": "Uklonjeno s liste",
+    "deleteList": "Obriši listu",
+    "deleteConfirm": "Obrisati „{title}“? Ovo se ne može poništiti.",
+    "confirmDelete": "Obriši",
+    "cancel": "Odustani",
+    "deleting": "Brišem…",
+    "deletedList": "Lista je obrisana",
+    "updateFailed": "Lista se nije mogla ažurirati. Pokušaj ponovo.",
+    "deleteFailed": "Lista se nije mogla obrisati. Pokušaj ponovo.",
     "confirm": "Ako signup traži potvrdu maila, u Supabase Auth isključi Confirm email (lokalno)."
   }
 }

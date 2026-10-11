@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { AddToSavedList } from "@/components/add-to-saved-list";
 import { HighlightsLink } from "@/components/highlights-link";
 import { QuickShare } from "@/components/quick-share";
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
+import type { SavedList } from "@/lib/supabase/types";
 import { nationalityFlagSrc } from "@/lib/flags";
 import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
 import { formatDate, formatMarketValue } from "@/lib/format";
@@ -18,7 +21,12 @@ type Props = {
   locale: string;
   match: MatchResult | null;
   sharePath: string;
+  lists: SavedList[];
+  listId: string;
+  onListIdChange: (id: string) => void;
+  signedOut: boolean;
   onClose: () => void;
+  onListUpdated: (list: SavedList) => void;
 };
 
 function per90(player: Player, count: number) {
@@ -26,7 +34,20 @@ function per90(player: Player, count: number) {
   return ((count / player.minutesPlayed) * 90).toFixed(2);
 }
 
-export function PlayerDrawer({ player, dict, locale, match, sharePath, onClose }: Props) {
+export function PlayerDrawer({
+  player,
+  dict,
+  locale,
+  match,
+  sharePath,
+  lists,
+  listId,
+  onListIdChange,
+  signedOut,
+  onClose,
+  onListUpdated,
+}: Props) {
+  const bodyRef = useRef<HTMLDivElement>(null);
   const club = formatListedClub(player, dict);
   const accent = contractAccent(player);
   const flagSrc = nationalityFlagSrc(player.nationality);
@@ -35,13 +56,18 @@ export function PlayerDrawer({ player, dict, locale, match, sharePath, onClose }
   const accentClass =
     accent === "soon" ? "stat-accent-soon" : accent === "free" ? "stat-accent-free" : undefined;
 
+  useEffect(() => {
+    if (bodyRef.current) bodyRef.current.scrollTop = 0;
+  }, [player.id]);
+
   return (
     <div className="drawer-root">
       <button type="button" className="scrim" aria-label={dict.profile.close} onClick={onClose} />
       <aside className="drawer" role="dialog" aria-labelledby="player-drawer-title">
-        <button type="button" className="drawer-close min-h-11 w-full md:w-auto" onClick={onClose}>
+        <button type="button" className="drawer-close" onClick={onClose}>
           {dict.profile.close}
         </button>
+        <div className="drawer-body" ref={bodyRef}>
         <p className="drawer-kicker">
           {dict.positions[player.position]} · {player.age}
         </p>
@@ -137,6 +163,20 @@ export function PlayerDrawer({ player, dict, locale, match, sharePath, onClose }
             ))}
           </ul>
         ) : null}
+        </div>
+        <div className="drawer-add">
+          <AddToSavedList
+            key={player.id}
+            playerId={player.id}
+            lists={lists}
+            listId={listId}
+            onListIdChange={onListIdChange}
+            signedOut={signedOut}
+            dict={dict}
+            onListUpdated={onListUpdated}
+            showPicker
+          />
+        </div>
       </aside>
     </div>
   );

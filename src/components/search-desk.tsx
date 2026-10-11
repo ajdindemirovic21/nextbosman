@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { AddToSavedList } from "@/components/add-to-saved-list";
 import { HighlightsLink } from "@/components/highlights-link";
 import { PlayerDrawer } from "@/components/player-drawer";
 import { QuickShare } from "@/components/quick-share";
@@ -16,6 +17,7 @@ import { playerWhatsAppShare } from "@/lib/highlights";
 import { uniquePlayerIds } from "@/lib/player-ids";
 import { playerSearchPath, searchPathWithoutPlayer } from "@/lib/player-link";
 import { formatSeasonCount } from "@/lib/season-stats";
+import type { SavedList } from "@/lib/supabase/types";
 
 type Props = {
   dict: Dictionary;
@@ -62,6 +64,48 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   );
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(25);
+  const [savedLists, setSavedLists] = useState<SavedList[]>([]);
+  const [targetListId, setTargetListId] = useState("");
+  const [listsSignedOut, setListsSignedOut] = useState(false);
+
+  function rememberList(next: SavedList) {
+    setSavedLists((current) => {
+      const index = current.findIndex((list) => list.id === next.id);
+      if (index === -1) return [next, ...current];
+      const copy = [...current];
+      copy[index] = next;
+      return copy;
+    });
+    setListsSignedOut(false);
+    setTargetListId((current) => current || next.id);
+  }
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/saved-lists")
+      .then(async (res) => {
+        if (cancelled) return;
+        if (res.status === 401) {
+          setListsSignedOut(true);
+          setSavedLists([]);
+          return;
+        }
+        if (!res.ok) return;
+        const body = (await res.json()) as { lists?: SavedList[] };
+        setListsSignedOut(false);
+        const nextLists = body.lists ?? [];
+        setSavedLists(nextLists);
+        setTargetListId((current) =>
+          current && nextLists.some((list) => list.id === current) ? current : (nextLists[0]?.id ?? ""),
+        );
+      })
+      .catch(() => {
+        if (!cancelled) setSavedLists([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     setAvailability(fromUrl);
@@ -445,6 +489,22 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
               : dict.account.snapshotAll.replace("{saved}", String(saveIds.length))}
           </p>
         )}
+        {savedLists.length > 0 ? (
+          <label className="mb-2 grid max-w-xl gap-1 text-xs text-slate-400">
+            <span>{dict.account.selectList}</span>
+            <select
+              className="min-h-11 rounded-lg border border-slate-800 bg-slate-950 px-3 text-sm text-white"
+              value={targetListId}
+              onChange={(event) => setTargetListId(event.target.value)}
+            >
+              {savedLists.map((list) => (
+                <option key={list.id} value={list.id}>
+                  {list.title}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
         <button
           type="button"
           className="save-list"
@@ -475,8 +535,11 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                 playerIds,
               }),
             });
-            if (res.ok) setSaveState("saved");
-            else if (res.status === 401) setSaveState("auth");
+            if (res.ok) {
+              const body = (await res.json()) as { list?: SavedList };
+              if (body.list) rememberList(body.list);
+              setSaveState("saved");
+            } else if (res.status === 401) setSaveState("auth");
             else setSaveState("error");
           }}
         >
@@ -525,6 +588,11 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                 match && match.fit === "strong" && match.reasons.includes("position"),
               )}
               onOpen={() => openPlayer(player.id)}
+              lists={savedLists}
+              listId={targetListId}
+              onListIdChange={setTargetListId}
+              signedOut={listsSignedOut}
+              onListUpdated={rememberList}
             />
           ))
         )}
@@ -578,6 +646,11 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                       match.reasons.includes("position"),
                   )}
                   onOpen={() => openPlayer(player.id)}
+                  lists={savedLists}
+                  listId={targetListId}
+                  onListIdChange={setTargetListId}
+                  signedOut={listsSignedOut}
+                  onListUpdated={rememberList}
                 />
               ))
             )}
@@ -592,7 +665,12 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           locale={locale}
           match={selectedMatch}
           sharePath={playerSearchPath(locale, selected.id, queryString)}
+          lists={savedLists}
+          listId={targetListId}
+          onListIdChange={setTargetListId}
+          signedOut={listsSignedOut}
           onClose={closePlayer}
+          onListUpdated={rememberList}
         />
       ) : null}
     </section>
@@ -607,6 +685,11 @@ function PlayerRow({
   showFit,
   ideal,
   onOpen,
+  lists,
+  listId,
+  onListIdChange,
+  signedOut,
+  onListUpdated,
 }: {
   player: Player;
   match: MatchResult | null;
@@ -615,6 +698,11 @@ function PlayerRow({
   showFit: boolean;
   ideal: boolean;
   onOpen: () => void;
+  lists: SavedList[];
+  listId: string;
+  onListIdChange: (id: string) => void;
+  signedOut: boolean;
+  onListUpdated: (list: SavedList) => void;
 }) {
   return (
     <tr>
@@ -627,7 +715,7 @@ function PlayerRow({
       ) : showFit ? (
         <td>—</td>
       ) : null}
-      <td>
+      <td className="player-col">
         <span className="player-cell">
           <button type="button" className="player-name" onClick={onOpen}>
             {player.name}
@@ -636,6 +724,18 @@ function PlayerRow({
           {ideal ? <span className="ideal-tag">{dict.match.ideal}</span> : null}
           <HighlightsLink playerName={player.name} dict={dict} compact />
         </span>
+        <div className="mt-2">
+          <AddToSavedList
+            playerId={player.id}
+            lists={lists}
+            listId={listId}
+            onListIdChange={onListIdChange}
+            signedOut={signedOut}
+            dict={dict}
+            onListUpdated={onListUpdated}
+            compact
+          />
+        </div>
       </td>
       <td>{player.age}</td>
       <td>
@@ -769,6 +869,11 @@ function PlayerCard({
   ideal,
   sharePath,
   onOpen,
+  lists,
+  listId,
+  onListIdChange,
+  signedOut,
+  onListUpdated,
 }: {
   player: Player;
   match: MatchResult | null;
@@ -778,9 +883,14 @@ function PlayerCard({
   ideal: boolean;
   sharePath: string;
   onOpen: () => void;
+  lists: SavedList[];
+  listId: string;
+  onListIdChange: (id: string) => void;
+  signedOut: boolean;
+  onListUpdated: (list: SavedList) => void;
 }) {
   return (
-    <li className="overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/70 shadow-lg">
+    <li className="overflow-visible rounded-2xl border border-slate-800/80 bg-slate-900/70 shadow-lg">
       <button
         type="button"
         className="flex min-h-16 w-full flex-col gap-1 px-4 py-3 text-left"
@@ -805,6 +915,16 @@ function PlayerCard({
           dict={dict}
           path={sharePath}
           text={playerWhatsAppShare(player, dict, locale)}
+        />
+        <AddToSavedList
+          playerId={player.id}
+          lists={lists}
+          listId={listId}
+          onListIdChange={onListIdChange}
+          signedOut={signedOut}
+          dict={dict}
+          onListUpdated={onListUpdated}
+          showPicker
         />
       </div>
     </li>

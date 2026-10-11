@@ -231,7 +231,7 @@ body {
   gap: 16px;
 }
 
-.saved-lists li {
+.saved-lists > li {
   padding: 18px 20px;
   background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(30, 41, 59, 0.8);
@@ -754,8 +754,12 @@ tbody tr:hover {
   background: var(--bg-row);
 }
 
+td.player-col {
+  white-space: normal;
+}
+
 .player-cell {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
@@ -836,11 +840,13 @@ tbody tr:hover {
   top: 0;
   right: 0;
   bottom: 0;
+  display: flex;
+  flex-direction: column;
   width: min(420px, 100%);
   background: rgba(11, 15, 23, 0.92);
   border-left: 1px solid rgba(30, 41, 59, 0.8);
-  padding: 28px 28px 40px;
-  overflow: auto;
+  padding: 20px 20px 16px;
+  overflow: hidden;
   backdrop-filter: blur(16px);
 }
 
@@ -860,14 +866,11 @@ tbody tr:hover {
     inset: 0;
     width: 100%;
     border-left: 0;
-    padding: 16px 16px calc(28px + env(safe-area-inset-bottom));
+    padding: 16px 16px calc(12px + env(safe-area-inset-bottom));
   }
 
   .drawer-close {
-    float: none;
-    display: block;
     width: 100%;
-    margin-bottom: 12px;
   }
 
   .drawer-media,
@@ -886,19 +889,39 @@ tbody tr:hover {
 }
 
 .drawer-close {
-  float: right;
+  flex-shrink: 0;
+  align-self: flex-end;
   background: none;
   border: 1px solid var(--line);
   border-radius: 0.75rem;
   color: var(--text);
   font: inherit;
   font-size: 13px;
+  min-height: 44px;
   padding: 6px 10px;
+  margin-bottom: 12px;
   cursor: pointer;
 }
 
+.drawer-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.drawer-add {
+  flex-shrink: 0;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(30, 41, 59, 0.9);
+}
+
+.drawer-add .save-list {
+  width: 100%;
+}
+
 .drawer-kicker {
-  margin: 36px 0 0;
+  margin: 0;
   color: var(--accent);
   font-size: 11px;
   letter-spacing: 0.14em;

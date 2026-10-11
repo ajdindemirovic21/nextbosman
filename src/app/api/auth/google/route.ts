@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createRouteSupabase, withAuthCookies, type AuthCookie } from "@/lib/supabase/route";
-import { localeHomePath, requestOrigin } from "@/lib/site-url";
+import { authRedirectOrigin, localeHomePath } from "@/lib/site-url";
 
 export async function GET(request: NextRequest) {
   if (!isSupabaseConfigured()) {
     return NextResponse.json({ error: "Auth is not configured" }, { status: 503 });
   }
 
-  const origin = requestOrigin(request);
+  const origin = authRedirectOrigin(request, request.nextUrl.searchParams.get("origin"));
   const next = localeHomePath(request.nextUrl.searchParams.get("next"));
   const jar: AuthCookie[] = [];
   const supabase = createRouteSupabase(request, jar);
@@ -30,5 +30,12 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  return withAuthCookies(NextResponse.redirect(data.url), jar);
+  const response = withAuthCookies(NextResponse.redirect(data.url), jar);
+  response.cookies.set("nb-auth-origin", origin, {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 10,
+  });
+  return response;
 }

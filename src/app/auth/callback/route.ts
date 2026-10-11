@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { localeHomePath, requestOrigin } from "@/lib/site-url";
+import { localeHomePath, requestOrigin, resumeLocalAuthUrl } from "@/lib/site-url";
 import { createRouteSupabase, withAuthCookies, type AuthCookie } from "@/lib/supabase/route";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
-  const origin = requestOrigin(request);
   const next = localeHomePath(request.nextUrl.searchParams.get("next"));
+  const origin = requestOrigin(request);
+
+  if (code) {
+    const resume = resumeLocalAuthUrl(request, code, next);
+    if (resume) return NextResponse.redirect(resume);
+  }
+
   const jar: AuthCookie[] = [];
 
   if (code) {

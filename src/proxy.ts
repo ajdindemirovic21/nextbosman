@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { localeHomePath, resumeLocalAuthUrl } from "@/lib/site-url";
 import { copyCookies, withSupabaseSession } from "@/lib/supabase/middleware";
 
 const locales = ["en", "es", "de", "fr", "pt", "tr", "it", "bs", "hr"] as const;
@@ -54,6 +55,8 @@ export async function proxy(request: NextRequest) {
   if (oauthCode) {
     const locale = pathnameHasLocale ? pathname.split("/")[1] : localeFromRequest(request);
     const nextPath = pathnameHasLocale ? pathname : `/${locale}`;
+    const resume = resumeLocalAuthUrl(request, oauthCode, localeHomePath(nextPath));
+    if (resume) return copyCookies(sessionResponse, NextResponse.redirect(resume));
     const callbackUrl = request.nextUrl.clone();
     callbackUrl.pathname = "/auth/callback";
     callbackUrl.search = "";

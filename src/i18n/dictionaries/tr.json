@@ -257,6 +257,23 @@
     "repeatSearch": "Aramayı tekrarla",
     "playerMissing": "Artık katalogda yok",
     "emptyMembers": "Bu listede kayıtlı oyuncu yok.",
+    "addToList": "Listeye ekle",
+    "addingToList": "Ekleniyor…",
+    "addedToList": "{list} listesine eklendi",
+    "alreadyInList": "Zaten listede",
+    "noListsYet": "Önce bir liste kaydedin, sonra oyuncuları buradan ekleyin.",
+    "selectList": "Liste seçin",
+    "removePlayer": "Kaldır",
+    "removing": "Kaldırılıyor…",
+    "removedPlayer": "Listeden kaldırıldı",
+    "deleteList": "Listeyi sil",
+    "deleteConfirm": "“{title}” silinsin mi? Bu geri alınamaz.",
+    "confirmDelete": "Sil",
+    "cancel": "İptal",
+    "deleting": "Siliniyor…",
+    "deletedList": "Liste silindi",
+    "updateFailed": "Liste güncellenemedi. Yeniden deneyin.",
+    "deleteFailed": "Liste silinemedi. Yeniden deneyin.",
     "confirm": "Kayıt e-posta onayı isterse Supabase Auth’ta Confirm email’i kapatın (yerel)."
   }
 }

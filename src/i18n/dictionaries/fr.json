@@ -257,6 +257,23 @@
     "repeatSearch": "Relancer la recherche",
     "playerMissing": "Plus dans le catalogue",
     "emptyMembers": "Cette liste n’a pas de joueurs enregistrés.",
+    "addToList": "Ajouter à la liste",
+    "addingToList": "Ajout…",
+    "addedToList": "Ajouté à {list}",
+    "alreadyInList": "Déjà dans la liste",
+    "noListsYet": "Enregistrez d’abord une liste, puis ajoutez des joueurs ici.",
+    "selectList": "Choisir une liste",
+    "removePlayer": "Retirer",
+    "removing": "Retrait…",
+    "removedPlayer": "Retiré de la liste",
+    "deleteList": "Supprimer la liste",
+    "deleteConfirm": "Supprimer « {title} » ? Cette action est définitive.",
+    "confirmDelete": "Supprimer",
+    "cancel": "Annuler",
+    "deleting": "Suppression…",
+    "deletedList": "Liste supprimée",
+    "updateFailed": "Impossible de mettre à jour la liste. Réessayez.",
+    "deleteFailed": "Impossible de supprimer la liste. Réessayez.",
     "confirm": "Si l’inscription demande un mail, désactivez Confirm email dans Supabase Auth (local)."
   }
 }

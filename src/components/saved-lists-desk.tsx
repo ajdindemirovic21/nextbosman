@@ -21,6 +21,8 @@ export function SavedListsDesk({ lang, dict }: Props) {
   const [lists, setLists] = useState<SavedList[]>([]);
   const [playersById, setPlayersById] = useState<Record<string, Player>>({});
   const [state, setState] = useState<LoadState>("loading");
+  const [notice, setNotice] = useState<string | null>(null);
+  const [noticeError, setNoticeError] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -75,6 +77,11 @@ export function SavedListsDesk({ lang, dict }: Props) {
           </p>
         ) : null}
         {empty ? <p className="lede">{dict.account.empty}</p> : null}
+        {notice ? (
+          <p className={noticeError ? "agent-msg" : "text-sm text-emerald-400"} role={noticeError ? "alert" : "status"}>
+            {notice}
+          </p>
+        ) : null}
       </section>
       {state === "loading" ? <p className="text-sm text-slate-400">…</p> : null}
       <ul className="saved-lists">
@@ -85,6 +92,20 @@ export function SavedListsDesk({ lang, dict }: Props) {
             playersById={playersById}
             lang={lang}
             dict={dict}
+            onUpdated={(next) => {
+              setLists((current) => current.map((item) => (item.id === next.id ? next : item)));
+              setNotice(dict.account.removedPlayer);
+              setNoticeError(false);
+            }}
+            onDeleted={() => {
+              setLists((current) => current.filter((item) => item.id !== list.id));
+              setNotice(dict.account.deletedList);
+              setNoticeError(false);
+            }}
+            onError={(message) => {
+              setNotice(message);
+              setNoticeError(true);
+            }}
           />
         ))}
       </ul>
@@ -97,14 +118,70 @@ function SavedListCard({
   playersById,
   lang,
   dict,
+  onUpdated,
+  onDeleted,
+  onError,
 }: {
   list: SavedList;
   playersById: Record<string, Player>;
   lang: Locale;
   dict: Dictionary;
+  onUpdated: (list: SavedList) => void;
+  onDeleted: () => void;
+  onError: (message: string) => void;
 }) {
   const ids = useMemo(() => uniquePlayerIds(list.playerIds), [list.playerIds]);
   const repeatHref = searchPathFromFilters(lang, list.filters);
+  const [busyId, setBusyId] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const busy = busyId !== null;
+
+  async function removePlayer(playerId: string) {
+    if (busy) return;
+    setBusyId(playerId);
+    try {
+      const res = await fetch(`/api/saved-lists/${encodeURIComponent(list.id)}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ removePlayerId: playerId }),
+      });
+      if (res.status === 401) {
+        onError(dict.account.needAccount);
+        return;
+      }
+      if (!res.ok) {
+        onError(dict.account.updateFailed);
+        return;
+      }
+      const body = (await res.json()) as { list?: SavedList };
+      if (body.list) onUpdated(body.list);
+    } catch {
+      onError(dict.account.updateFailed);
+    } finally {
+      setBusyId(null);
+    }
+  }
+
+  async function deleteList() {
+    if (busy) return;
+    setBusyId("delete");
+    try {
+      const res = await fetch(`/api/saved-lists/${encodeURIComponent(list.id)}`, { method: "DELETE" });
+      if (res.status === 401) {
+        onError(dict.account.needAccount);
+        return;
+      }
+      if (!res.ok) {
+        onError(dict.account.deleteFailed);
+        return;
+      }
+      onDeleted();
+    } catch {
+      onError(dict.account.deleteFailed);
+    } finally {
+      setBusyId(null);
+    }
+  }
 
   return (
     <li>
@@ -120,31 +197,57 @@ function SavedListCard({
         ) : (
           ids.map((id) => {
             const player = playersById[id];
-            if (!player) {
-              return (
-                <li key={id} className="text-sm text-slate-400">
-                  {dict.account.playerMissing}
-                </li>
-              );
-            }
             return (
-              <li key={id}>
-                <Link
-                  className="text-sm font-semibold text-emerald-400 no-underline"
-                  href={playerSearchPath(lang, player.id)}
+              <li key={id} className="flex flex-wrap items-center justify-between gap-2">
+                <span>
+                  {player ? (
+                    <>
+                      <Link
+                        className="text-sm font-semibold text-emerald-400 no-underline"
+                        href={playerSearchPath(lang, player.id)}
+                      >
+                        {player.name}
+                      </Link>
+                      <span className="ml-2 text-xs text-slate-500">{player.position}</span>
+                    </>
+                  ) : (
+                    <span className="text-sm text-slate-400">{dict.account.playerMissing}</span>
+                  )}
+                </span>
+                <button
+                  type="button"
+                  className="save-list"
+                  disabled={busy}
+                  onClick={() => void removePlayer(id)}
                 >
-                  {player.name}
-                </Link>
-                <span className="ml-2 text-xs text-slate-500">{player.position}</span>
+                  {busyId === id ? dict.account.removing : dict.account.removePlayer}
+                </button>
               </li>
             );
           })
         )}
       </ul>
-      <p className="mt-4">
+      <p className="mt-4 flex flex-wrap items-center gap-3">
         <Link className="text-sm font-semibold text-emerald-400 no-underline" href={repeatHref}>
           {dict.account.repeatSearch}
         </Link>
+        {confirmDelete ? (
+          <>
+            <span className="text-sm text-slate-300">
+              {dict.account.deleteConfirm.replace("{title}", list.title)}
+            </span>
+            <button type="button" className="save-list" disabled={busy} onClick={() => setConfirmDelete(false)}>
+              {dict.account.cancel}
+            </button>
+            <button type="button" className="save-list" disabled={busy} onClick={() => void deleteList()}>
+              {busyId === "delete" ? dict.account.deleting : dict.account.confirmDelete}
+            </button>
+          </>
+        ) : (
+          <button type="button" className="save-list" disabled={busy} onClick={() => setConfirmDelete(true)}>
+            {dict.account.deleteList}
+          </button>
+        )}
       </p>
     </li>
   );

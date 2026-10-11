@@ -257,6 +257,23 @@
     "repeatSearch": "Ripeti ricerca",
     "playerMissing": "Non più nel catalogo",
     "emptyMembers": "Questa lista non ha giocatori salvati.",
+    "addToList": "Aggiungi alla lista",
+    "addingToList": "Aggiunta…",
+    "addedToList": "Aggiunto a {list}",
+    "alreadyInList": "Già in lista",
+    "noListsYet": "Salva prima una lista, poi aggiungi i giocatori qui.",
+    "selectList": "Scegli una lista",
+    "removePlayer": "Rimuovi",
+    "removing": "Rimozione…",
+    "removedPlayer": "Rimosso dalla lista",
+    "deleteList": "Elimina lista",
+    "deleteConfirm": "Eliminare “{title}”? L’azione non si può annullare.",
+    "confirmDelete": "Elimina",
+    "cancel": "Annulla",
+    "deleting": "Eliminazione…",
+    "deletedList": "Lista eliminata",
+    "updateFailed": "Impossibile aggiornare la lista. Riprova.",
+    "deleteFailed": "Impossibile eliminare la lista. Riprova.",
     "confirm": "Se la registrazione chiede conferma email, disattiva Confirm email in Supabase Auth (locale)."
   }
 }
