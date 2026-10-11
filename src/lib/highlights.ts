@@ -1,6 +1,7 @@
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import { formatDate, formatMarketValue } from "@/lib/format";
+import { contractShareLine, formatListedClub } from "@/lib/contract-display";
+import { formatMarketValue } from "@/lib/format";
 import { formatSeasonCount, hasSeasonStats } from "@/lib/season-stats";
 
 export function playerHighlightsUrl(playerName: string): string {
@@ -10,13 +11,8 @@ export function playerHighlightsUrl(playerName: string): string {
 }
 
 export function playerWhatsAppShare(player: Player, dict: Dictionary, locale: string): string {
-  const club = player.club ?? player.lastClub;
-  const contract =
-    player.availability === "free" && player.freeSince
-      ? `${dict.status.ended} ${formatDate(player.freeSince, locale)}`
-      : player.contractUntil
-        ? `${dict.status.until} ${formatDate(player.contractUntil, locale)}`
-        : "—";
+  const club = formatListedClub(player, dict);
+  const contract = contractShareLine(player, dict, locale);
   const eu = player.euPassport ? " · EU" : "";
 
   return [

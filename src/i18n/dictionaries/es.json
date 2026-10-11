@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "NextBosman — Agentes libres y contratos que vencen",
-    "description": "Búsqueda mundial rápida para agentes: jugadores sin club y jugadores cuyo contrato termina.",
-    "searchTitle": "Buscar libres y contratos que vencen",
-    "searchDescription": "Libres y contratos que vencen, en todo el mundo. Empareja un brief con nombres del nivel correcto.",
-    "searchFreeTitle": "Buscar agentes libres",
-    "searchFreeDescription": "Sin contrato y listos para hablar. Búsqueda mundial de jugadores libres para agentes.",
-    "searchExpiringTitle": "Contratos que vencen",
-    "searchExpiringDescription": "Jugadores aún en un club cuyo contrato termina. La ventaja es el timing.",
+    "title": "NextBosman — Fechas de contrato listadas para agentes",
+    "description": "Búsqueda mundial de fechas de contrato listadas. La disponibilidad actual no está confirmada.",
+    "searchTitle": "Buscar fechas de contrato listadas",
+    "searchDescription": "Contratos vencidos o desconocidos y vencimientos futuros listados, en todo el mundo. La disponibilidad actual no está confirmada.",
+    "searchFreeTitle": "Contratos vencidos / desconocidos",
+    "searchFreeDescription": "Jugadores con un vencimiento pasado listado o sin fecha de contrato en la fuente. La disponibilidad actual no está confirmada.",
+    "searchExpiringTitle": "Vencimiento futuro listado",
+    "searchExpiringDescription": "Jugadores con una fecha de contrato futura en la fuente. No es una confirmación en vivo del estado actual.",
     "supportTitle": "Apoya NextBosman",
     "supportDescription": "El escritorio sigue gratis para agentes. Donación opcional si te ayuda a cerrar una llamada. Pro después.",
     "listsTitle": "Listas guardadas",
@@ -19,8 +19,8 @@
   },
   "nav": {
     "search": "Búsqueda",
-    "free": "Libres",
-    "expiring": "Por vencer",
+    "free": "Vencidos / desconocidos",
+    "expiring": "Fecha listada",
     "support": "Apoyo",
     "lists": "Listas",
     "parser": "WhatsApp",
@@ -36,7 +36,7 @@
     "title": "Gratis para agentes.",
     "lead": "La búsqueda y el matching siguen abiertos. Si el escritorio te cierra una llamada, puedes devolver. Pro llega después, solo cuando valga 15–20 € al mes.",
     "freeTitle": "El escritorio",
-    "freeText": "Libres, contratos que vencen, briefs y estadísticas. Sin anuncios, sin cuenta.",
+    "freeText": "Fechas de contrato listadas, briefs y estadísticas. La disponibilidad actual no está confirmada. Sin anuncios, sin cuenta.",
     "donateTitle": "Donación",
     "donateText": "Opcional. Un café, o más si un trato empezó aquí.",
     "donateCta": "Donar",
@@ -54,28 +54,43 @@
     "kicker": "Para agentes de fútbol",
     "slogan": "El próximo Bosman ya está en el mercado.",
     "pasteHeadline": "Pega el WhatsApp. Salen los nombres.",
-    "lead": "Tu ventaja es el timing. Un contrato que acaba, un jugador sin club, un director deportivo que necesita un nombre esta noche: esa es la ventana.",
+    "lead": "Tu ventaja es el timing. Una fecha de contrato listada, un brief de club, un director deportivo que necesita un nombre esta noche: esa es la ventana.",
     "stats": [
-      { "label": "13.000+ base de jugadores" },
-      { "label": "Agentes libres y fin de contrato" },
-      { "label": "Filtro pasaporte UE" }
+      {
+        "label": "13.000+ base de jugadores"
+      },
+      {
+        "label": "Fechas de contrato listadas"
+      },
+      {
+        "label": "Filtro pasaporte UE"
+      }
     ],
     "how": [
-      { "title": "1. Pega el brief", "text": "Mete la petición del club" },
-      { "title": "2. Match inteligente", "text": "Búsqueda instantánea en la base" },
-      { "title": "3. Envíalo al club", "text": "Genera el perfil de WhatsApp" }
+      {
+        "title": "1. Pega el brief",
+        "text": "Mete la petición del club"
+      },
+      {
+        "title": "2. Match inteligente",
+        "text": "Búsqueda instantánea en la base"
+      },
+      {
+        "title": "3. Envíalo al club",
+        "text": "Genera el perfil de WhatsApp"
+      }
     ],
-    "purpose": "NextBosman es el escritorio mundial de agentes libres y contratos que vencen. Pega el brief del club y mira quién está realmente disponible para esa llamada.",
-    "ctaFree": "Buscar agentes libres",
-    "ctaFreeHint": "Sin contrato. Listos para hablar.",
-    "ctaExpiring": "Contratos que vencen",
-    "ctaExpiringHint": "Aún en un club. Corre el reloj.",
+    "purpose": "NextBosman es el escritorio mundial de fechas de contrato listadas. Pega el brief del club y empareja nombres. La disponibilidad actual no está confirmada.",
+    "ctaFree": "Contratos vencidos / desconocidos",
+    "ctaFreeHint": "Vencimiento pasado listado o datos de contrato ausentes. La disponibilidad actual no está confirmada.",
+    "ctaExpiring": "Vencimiento futuro listado",
+    "ctaExpiringHint": "La fuente indica una fecha futura. No es una confirmación en vivo.",
     "ctaMatch": "Emparejar un brief",
     "ctaMatchHint": "Pega lo que pidió el club.",
     "points": [
       {
-        "title": "Disponibles ahora",
-        "text": "Primero sin club, luego fin de contrato. La velocidad es el producto."
+        "title": "Primero las fechas listadas",
+        "text": "Empieza por contratos vencidos o desconocidos, luego vencimientos futuros listados. Las fechas vienen de la fuente, no de una comprobación en vivo."
       },
       {
         "title": "¿Vendrían?",
@@ -89,19 +104,26 @@
   },
   "search": {
     "title": "El escritorio",
-    "subtitle": "Libres y contratos que vencen, en todo el mundo. Empareja un brief con nombres del nivel correcto."
+    "subtitle": "Contratos vencidos o desconocidos y vencimientos futuros listados, en todo el mundo. La disponibilidad actual no está confirmada."
   },
   "hero": {
     "kicker": "Para agentes de fútbol",
-    "title": "Quién está disponible — en todo el mundo.",
-    "subtitle": "Busca agentes libres y jugadores al final de contrato."
+    "title": "Fechas de contrato listadas — en todo el mundo.",
+    "subtitle": "Busca contratos vencidos o desconocidos y vencimientos futuros listados."
   },
   "status": {
-    "free": "Agentes libres",
-    "expiring": "Contrato por vencer",
-    "freeLabel": "Libre",
+    "free": "Contratos vencidos / desconocidos",
+    "expiring": "Vencimiento futuro listado",
+    "freeLabel": "Sin confirmar",
     "until": "Hasta",
-    "ended": "Terminó"
+    "ended": "Terminó",
+    "freeNote": "Estos jugadores tienen un vencimiento listado en el pasado o no tienen fecha de contrato en la fuente. La disponibilidad actual no está confirmada. Un club ausente no prueba que el jugador esté libre.",
+    "expiringNote": "La fuente indica una fecha de contrato futura. No es una confirmación en vivo del estado actual.",
+    "listedExpiry": "Vencimiento listado: {date}",
+    "statusUnconfirmed": "Estado actual no confirmado",
+    "contractUnknown": "Datos de contrato no disponibles",
+    "listedUntil": "Contrato listado hasta {date}",
+    "listedClub": "Club listado en la fuente"
   },
   "paste": {
     "title": "Pegado rápido de WhatsApp",
@@ -109,11 +131,11 @@
     "placeholder": "Pega aquí el texto de WhatsApp (p. ej. FCSB busca ST, agente libre, pasaporte UE)...",
     "apply": "Analizar y filtrar",
     "position": "Posición",
-    "free": "Agente libre",
-    "expiring": "Contrato por vencer",
+    "free": "Contratos vencidos / desconocidos",
+    "expiring": "Vencimiento futuro listado",
     "eu": "Pasaporte UE",
     "loan": "Cesión mencionada — aún no hay lista aparte",
-    "empty": "Nada que aplicar. Prueba posición, libre/vence o UE."
+    "empty": "Nada que aplicar. Prueba una posición, filtro de contrato o UE."
   },
   "filters": {
     "position": "Posición",
@@ -170,8 +192,8 @@
       "ageOff": "Edad fuera del brief",
       "eu": "Pasaporte UE pedido",
       "euMiss": "Sin pasaporte UE",
-      "available": "Agente libre ahora",
-      "expiring": "Aún con contrato, pero vence"
+      "available": "Vencimiento listado o datos de contrato ausentes; estado actual no confirmado",
+      "expiring": "La fuente indica una fecha de contrato futura"
     }
   },
   "profile": {

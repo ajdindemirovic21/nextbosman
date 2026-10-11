@@ -299,10 +299,7 @@ export function scorePlayer(player: Player, brief: ClubBrief): MatchResult {
     }
   }
 
-  if (player.availability === "free") {
-    score += 8;
-    reasons.push("available");
-  } else {
+  if (player.availability === "expiring") {
     reasons.push("expiring");
   }
 

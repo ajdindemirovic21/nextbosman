@@ -5,6 +5,7 @@ import { QuickShare } from "@/components/quick-share";
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { nationalityFlagSrc } from "@/lib/flags";
+import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
 import { formatDate, formatMarketValue } from "@/lib/format";
 import type { MatchResult } from "@/lib/match-brief";
 import { playerWhatsAppShare } from "@/lib/highlights";
@@ -26,15 +27,11 @@ function per90(player: Player, count: number) {
 }
 
 export function PlayerDrawer({ player, dict, locale, match, sharePath, onClose }: Props) {
-  const club = player.club ?? player.lastClub;
+  const club = formatListedClub(player, dict);
   const accent = contractAccent(player);
   const flagSrc = nationalityFlagSrc(player.nationality);
-  const contract =
-    player.availability === "free" && player.freeSince
-      ? `${dict.status.ended} ${formatDate(player.freeSince, locale)}`
-      : player.contractUntil
-        ? `${dict.status.until} ${formatDate(player.contractUntil, locale)}`
-        : "—";
+  const contract = contractPrimary(player, dict, locale);
+  const contractExtra = contractNote(player, dict);
   const accentClass =
     accent === "soon" ? "stat-accent-soon" : accent === "free" ? "stat-accent-free" : undefined;
 
@@ -126,7 +123,10 @@ export function PlayerDrawer({ player, dict, locale, match, sharePath, onClose }
           </div>
           <div>
             <dt>{dict.profile.contract}</dt>
-            <dd className={accentClass}>{contract}</dd>
+            <dd className={accentClass}>
+              <span>{contract}</span>
+              {contractExtra ? <span className="block text-xs font-medium text-slate-400">{contractExtra}</span> : null}
+            </dd>
           </div>
         </dl>
 

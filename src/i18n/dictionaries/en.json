@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "NextBosman — Free agents & expiring contracts",
-    "description": "A fast worldwide search for football agents: players without a club, and players whose contracts are ending.",
-    "searchTitle": "Search free agents and expiring contracts",
-    "searchDescription": "Free agents and expiring contracts, worldwide. Match a club brief to names that fit the level.",
-    "searchFreeTitle": "Search free agents",
-    "searchFreeDescription": "Out of contract and ready to talk. Worldwide free-agent search for football agents.",
-    "searchExpiringTitle": "Contracts ending",
-    "searchExpiringDescription": "Players still at a club whose contracts are running out. Timing is the product.",
+    "title": "NextBosman — Listed contract dates for agents",
+    "description": "A worldwide search of listed contract dates for football agents. Current availability is not confirmed.",
+    "searchTitle": "Search listed contract dates",
+    "searchDescription": "Expired or unknown contracts, and listed future expiry dates, worldwide. Current availability is not confirmed.",
+    "searchFreeTitle": "Search expired or unknown contracts",
+    "searchFreeDescription": "Players with a listed past expiry or no contract date in the source. Current availability is not confirmed.",
+    "searchExpiringTitle": "Listed future expiry",
+    "searchExpiringDescription": "Players with a future contract date listed in the source. That is not a live confirmation of the current deal.",
     "supportTitle": "Support NextBosman",
     "supportDescription": "The desk stays free for agents. Optional donation if it helps you close a call. Pro comes later.",
     "listsTitle": "Saved lists",
@@ -19,8 +19,8 @@
   },
   "nav": {
     "search": "Search",
-    "free": "Free agents",
-    "expiring": "Expiring",
+    "free": "Expired / unknown",
+    "expiring": "Listed expiry",
     "support": "Support",
     "lists": "Saved lists",
     "signIn": "Agent sign in",
@@ -36,7 +36,7 @@
     "title": "Free to use. Built for agents.",
     "lead": "Search and matching stay open. If the desk helps you close a call, you can throw something back. A paid Pro comes later — only when it is actually worth €15–20 a month.",
     "freeTitle": "The desk",
-    "freeText": "Free agents, expiring contracts, club briefs and player stats. No ads, no account required.",
+    "freeText": "Listed contract dates, club briefs and player stats. Current availability is not confirmed. No ads, no account required.",
     "donateTitle": "Donation",
     "donateText": "Optional. One coffee, or more if a deal started here. No extra features attached.",
     "donateCta": "Donate",
@@ -54,10 +54,10 @@
     "kicker": "For football agents",
     "slogan": "The next Bosman is already out there.",
     "pasteHeadline": "Paste the WhatsApp. Get names.",
-    "lead": "Your edge is timing. A contract ending, a player without a club, a sporting director who needs a name tonight — that is the window.",
+    "lead": "Your edge is timing. A listed contract date, a club brief, a sporting director who needs a name tonight — that is the window.",
     "stats": [
       { "label": "13,000+ player database" },
-      { "label": "Free agents & expiring deals" },
+      { "label": "Listed contract dates" },
       { "label": "EU passport filter" }
     ],
     "how": [
@@ -65,17 +65,17 @@
       { "title": "2. Smart match", "text": "Instant search of the database" },
       { "title": "3. Send to the club", "text": "Generate a WhatsApp profile" }
     ],
-    "purpose": "NextBosman is a worldwide desk for free agents and players whose contracts are running out. Paste a club brief and see who is actually available for that call.",
-    "ctaFree": "Search free agents",
-    "ctaFreeHint": "Out of contract. Ready to talk.",
-    "ctaExpiring": "Contracts ending",
-    "ctaExpiringHint": "Still at a club. The clock is on.",
+    "purpose": "NextBosman is a worldwide desk for listed contract dates. Paste a club brief and match names to the request. Current availability is not confirmed.",
+    "ctaFree": "Expired / unknown contracts",
+    "ctaFreeHint": "Listed past expiry or missing contract data. Current availability is not confirmed.",
+    "ctaExpiring": "Listed future expiry",
+    "ctaExpiringHint": "A future date is listed in the source. Not a live confirmation.",
     "ctaMatch": "Match a club brief",
     "ctaMatchHint": "Paste what the club asked for.",
     "points": [
       {
-        "title": "Available now",
-        "text": "Start with players who have no club, then those heading out of contract. Speed is the product."
+        "title": "Listed dates first",
+        "text": "Start with expired or unknown contracts, then listed future expiry. Dates come from the source, not a live status check."
       },
       {
         "title": "Would they come?",
@@ -89,17 +89,24 @@
   },
   "search": {
     "title": "The desk",
-    "subtitle": "Free agents and expiring contracts, worldwide. Match a brief to names that fit the level."
+    "subtitle": "Expired or unknown contracts, and listed future expiry dates, worldwide. Current availability is not confirmed."
   },
   "hero": {
     "kicker": "For football agents",
-    "title": "Who is available — worldwide.",
-    "subtitle": "Search free agents and players heading out of contract."
+    "title": "Listed contract dates — worldwide.",
+    "subtitle": "Search expired or unknown contracts, and listed future expiry dates."
   },
   "status": {
-    "free": "Free agents",
-    "expiring": "Contract expiring",
-    "freeLabel": "Free",
+    "free": "Expired / unknown contracts",
+    "freeNote": "These players have a listed contract end in the past, or no contract date in the source. Current availability is not confirmed. A missing club is not proof that the player is free.",
+    "expiring": "Listed future expiry",
+    "expiringNote": "The source lists a future contract date. That is not a live confirmation of the current deal.",
+    "freeLabel": "Unconfirmed",
+    "listedExpiry": "Listed expiry: {date}",
+    "statusUnconfirmed": "Current status unconfirmed",
+    "contractUnknown": "Contract data not available",
+    "listedUntil": "Contract listed until {date}",
+    "listedClub": "Club listed in source",
     "until": "Until",
     "ended": "Ended"
   },
@@ -109,11 +116,11 @@
     "placeholder": "Paste a WhatsApp enquiry here (e.g. FCSB looking for a ST, free agent, EU passport)...",
     "apply": "Parse and filter",
     "position": "Position",
-    "free": "Free agent",
-    "expiring": "Contract expiring",
+    "free": "Expired / unknown contracts",
+    "expiring": "Listed future expiry",
     "eu": "EU passport",
     "loan": "Loan mentioned — not a separate list yet",
-    "empty": "Nothing to apply. Try a position, free/expiring, or EU."
+    "empty": "Nothing to apply. Try a position, contract filter, or EU."
   },
   "filters": {
     "position": "Position",
@@ -170,8 +177,8 @@
       "ageOff": "Age is outside the brief",
       "eu": "EU passport as requested",
       "euMiss": "No EU passport",
-      "available": "Currently a free agent",
-      "expiring": "Still under contract, but it is ending"
+      "available": "Listed expiry or missing contract data; current status unconfirmed",
+      "expiring": "Source lists a future contract date"
     }
   },
   "profile": {

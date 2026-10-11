@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "NextBosman",
     short_name: "NextBosman",
-    description: "Free agents and expiring contracts for football agents.",
+    description: "Listed contract dates for football agents. Current availability is not confirmed.",
     start_url: "/",
     scope: "/",
     display: "standalone",

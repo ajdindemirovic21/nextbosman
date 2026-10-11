@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "NextBosman — Agents libres et fins de contrat",
-    "description": "Recherche mondiale rapide pour agents : joueurs sans club et joueurs en fin de contrat.",
-    "searchTitle": "Chercher libres et fins de contrat",
-    "searchDescription": "Libres et fins de contrat, dans le monde. Matcher un brief avec des noms du bon niveau.",
-    "searchFreeTitle": "Chercher des agents libres",
-    "searchFreeDescription": "Sans contrat et prêts à parler. Recherche mondiale de joueurs libres pour agents.",
-    "searchExpiringTitle": "Fins de contrat",
-    "searchExpiringDescription": "Joueurs encore en club dont le contrat se termine. L’avantage, c’est le timing.",
+    "title": "NextBosman — Dates de contrat listées pour agents",
+    "description": "Recherche mondiale de dates de contrat listées. La disponibilité actuelle n’est pas confirmée.",
+    "searchTitle": "Chercher des dates de contrat listées",
+    "searchDescription": "Contrats expirés ou inconnus et échéances futures listées, dans le monde. La disponibilité actuelle n’est pas confirmée.",
+    "searchFreeTitle": "Contrats expirés / inconnus",
+    "searchFreeDescription": "Joueurs avec une échéance passée listée ou sans date de contrat dans la source. La disponibilité actuelle n’est pas confirmée.",
+    "searchExpiringTitle": "Échéance future listée",
+    "searchExpiringDescription": "Joueurs avec une date de contrat future dans la source. Ce n’est pas une confirmation en direct du statut actuel.",
     "supportTitle": "Soutenir NextBosman",
     "supportDescription": "Le bureau reste gratuit pour les agents. Don optionnel s’il t’aide à closer. Le Pro vient plus tard.",
     "listsTitle": "Listes enregistrées",
@@ -19,8 +19,8 @@
   },
   "nav": {
     "search": "Recherche",
-    "free": "Libres",
-    "expiring": "Fins de contrat",
+    "free": "Expirés / inconnus",
+    "expiring": "Date listée",
     "support": "Soutien",
     "lists": "Listes",
     "parser": "WhatsApp",
@@ -36,7 +36,7 @@
     "title": "Gratuit pour les agents.",
     "lead": "Recherche et matching restent ouverts. Si le bureau t’aide à closer un appel, tu peux rendre. Le Pro vient plus tard — seulement quand ça vaut 15–20 € par mois.",
     "freeTitle": "Le bureau",
-    "freeText": "Libres, fins de contrat, briefs et stats. Pas de pub, pas de compte.",
+    "freeText": "Dates de contrat listées, briefs et stats. La disponibilité actuelle n’est pas confirmée. Pas de pub, pas de compte.",
     "donateTitle": "Don",
     "donateText": "Optionnel. Un café, ou plus si un deal a démarré ici.",
     "donateCta": "Donner",
@@ -54,28 +54,43 @@
     "kicker": "Pour les agents de football",
     "slogan": "Le prochain Bosman est déjà sur le marché.",
     "pasteHeadline": "Colle le WhatsApp. Récupère les noms.",
-    "lead": "Ton avantage, c’est le timing. Un contrat qui finit, un joueur sans club, un DS qui veut un nom ce soir — voilà la fenêtre.",
+    "lead": "Ton avantage, c’est le timing. Une date de contrat listée, un brief de club, un DS qui veut un nom ce soir — voilà la fenêtre.",
     "stats": [
-      { "label": "13 000+ base joueurs" },
-      { "label": "Libres & fins de contrat" },
-      { "label": "Filtre passeport UE" }
+      {
+        "label": "13 000+ base joueurs"
+      },
+      {
+        "label": "Dates de contrat listées"
+      },
+      {
+        "label": "Filtre passeport UE"
+      }
     ],
     "how": [
-      { "title": "1. Colle le brief", "text": "Dépose la demande du club" },
-      { "title": "2. Match intelligent", "text": "Recherche instantanée dans la base" },
-      { "title": "3. Envoie au club", "text": "Génère le profil WhatsApp" }
+      {
+        "title": "1. Colle le brief",
+        "text": "Dépose la demande du club"
+      },
+      {
+        "title": "2. Match intelligent",
+        "text": "Recherche instantanée dans la base"
+      },
+      {
+        "title": "3. Envoie au club",
+        "text": "Génère le profil WhatsApp"
+      }
     ],
-    "purpose": "NextBosman est le bureau mondial des agents libres et des fins de contrat. Colle le brief du club et vois qui est vraiment dispo pour cet appel.",
-    "ctaFree": "Chercher les libres",
-    "ctaFreeHint": "Sans contrat. Prêts à parler.",
-    "ctaExpiring": "Contrats qui finissent",
-    "ctaExpiringHint": "Encore en club. Le chrono tourne.",
+    "purpose": "NextBosman est le bureau mondial des dates de contrat listées. Colle le brief du club et associe des noms. La disponibilité actuelle n’est pas confirmée.",
+    "ctaFree": "Contrats expirés / inconnus",
+    "ctaFreeHint": "Échéance passée listée ou données de contrat manquantes. La disponibilité actuelle n’est pas confirmée.",
+    "ctaExpiring": "Échéance future listée",
+    "ctaExpiringHint": "La source indique une date future. Ce n’est pas une confirmation en direct.",
     "ctaMatch": "Matcher un brief",
     "ctaMatchHint": "Colle ce que le club a demandé.",
     "points": [
       {
-        "title": "Dispo maintenant",
-        "text": "D’abord sans club, puis fins de contrat. La vitesse est le produit."
+        "title": "D’abord les dates listées",
+        "text": "D’abord les contrats expirés ou inconnus, puis les échéances futures listées. Les dates viennent de la source, pas d’un contrôle en direct."
       },
       {
         "title": "Est-ce qu’ils viendraient ?",
@@ -89,19 +104,26 @@
   },
   "search": {
     "title": "Le bureau",
-    "subtitle": "Libres et fins de contrat, dans le monde. Matcher un brief avec des noms du bon niveau."
+    "subtitle": "Contrats expirés ou inconnus et échéances futures listées, dans le monde. La disponibilité actuelle n’est pas confirmée."
   },
   "hero": {
     "kicker": "Pour les agents de football",
-    "title": "Qui est disponible — dans le monde.",
-    "subtitle": "Cherchez les agents libres et les fins de contrat."
+    "title": "Dates de contrat listées — dans le monde.",
+    "subtitle": "Cherchez des contrats expirés ou inconnus et des échéances futures listées."
   },
   "status": {
-    "free": "Agents libres",
-    "expiring": "Fin de contrat",
-    "freeLabel": "Libre",
+    "free": "Contrats expirés / inconnus",
+    "expiring": "Échéance future listée",
+    "freeLabel": "Non confirmé",
     "until": "Jusqu’au",
-    "ended": "Terminé"
+    "ended": "Terminé",
+    "freeNote": "Ces joueurs ont une échéance listée dans le passé, ou aucune date de contrat dans la source. La disponibilité actuelle n’est pas confirmée. Un club manquant ne prouve pas que le joueur est libre.",
+    "expiringNote": "La source indique une date de contrat future. Ce n’est pas une confirmation en direct du statut actuel.",
+    "listedExpiry": "Échéance listée : {date}",
+    "statusUnconfirmed": "Statut actuel non confirmé",
+    "contractUnknown": "Données de contrat indisponibles",
+    "listedUntil": "Contrat listé jusqu’au {date}",
+    "listedClub": "Club listé dans la source"
   },
   "paste": {
     "title": "Collage WhatsApp rapide",
@@ -109,11 +131,11 @@
     "placeholder": "Colle ici le texte WhatsApp (ex. FCSB cherche un ST, agent libre, passeport UE)...",
     "apply": "Analyser et filtrer",
     "position": "Poste",
-    "free": "Agent libre",
-    "expiring": "Fin de contrat",
+    "free": "Contrats expirés / inconnus",
+    "expiring": "Échéance future listée",
     "eu": "Passeport UE",
     "loan": "Prêt mentionné — pas encore de liste à part",
-    "empty": "Rien à appliquer. Essaie poste, libre/fin de contrat ou UE."
+    "empty": "Rien à appliquer. Essayer un poste, un filtre contrat ou UE."
   },
   "filters": {
     "position": "Poste",
@@ -170,8 +192,8 @@
       "ageOff": "Âge hors brief",
       "eu": "Passeport UE demandé",
       "euMiss": "Pas de passeport UE",
-      "available": "Actuellement libre",
-      "expiring": "Encore sous contrat, bientôt fini"
+      "available": "Échéance listée ou données de contrat manquantes ; statut actuel non confirmé",
+      "expiring": "La source indique une date de contrat future"
     }
   },
   "profile": {

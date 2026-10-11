@@ -7,7 +7,8 @@ import { PlayerDrawer } from "@/components/player-drawer";
 import { QuickShare } from "@/components/quick-share";
 import { positions, type Availability, type Player, type Position } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import { formatDate, formatMarketValue } from "@/lib/format";
+import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
+import { formatMarketValue } from "@/lib/format";
 import { positionLine } from "@/lib/player-ui";
 import { briefFromWhatsApp, isUnrealistic, parseBrief, scorePlayer, type ClubBrief, type MatchResult } from "@/lib/match-brief";
 import { PASTE_STORAGE_KEY, parseWhatsAppPaste, type PasteParse } from "@/lib/paste-parser";
@@ -335,6 +336,9 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           {dict.status.expiring}
         </button>
       </div>
+      <p className="mb-3 max-w-3xl break-words text-sm text-slate-400">
+        {availability === "free" ? dict.status.freeNote : dict.status.expiringNote}
+      </p>
 
       <button
         type="button"
@@ -590,25 +594,14 @@ function PlayerRow({
       <td>
         <span className={`pos-badge pos-${positionLine(player.position)}`}>{player.position}</span>
       </td>
-      <td>{player.club ?? player.lastClub}</td>
+      <td>{formatListedClub(player, dict)}</td>
       <td>{player.league}</td>
       <td>{player.country}</td>
       <td>
-        {player.availability === "free" ? (
-          <span className="contract-cell">
-            <span className="pill pill-free">{dict.status.freeLabel}</span>
-            {player.freeSince ? (
-              <span className="pill">
-                {dict.status.ended} {formatDate(player.freeSince, locale)}
-              </span>
-            ) : null}
-          </span>
-        ) : (
-          <span className="pill">
-            {dict.status.until}{" "}
-            {player.contractUntil ? formatDate(player.contractUntil, locale) : "—"}
-          </span>
-        )}
+        <span className="contract-cell">
+          <span className="pill">{contractPrimary(player, dict, locale)}</span>
+          {contractNote(player, dict) ? <span className="pill">{contractNote(player, dict)}</span> : null}
+        </span>
       </td>
       <td className="num">{formatSeasonCount(player, player.appearances)}</td>
       <td className="num">{formatMarketValue(player.marketValueEur, locale)}</td>
@@ -749,7 +742,7 @@ function PlayerCard({
           {ideal ? <span className="ideal-tag">{dict.match.ideal}</span> : null}
         </span>
         <span className="break-words text-sm text-slate-400">
-          {player.club ?? player.lastClub} · {player.age} · {formatMarketValue(player.marketValueEur, locale)}
+          {formatListedClub(player, dict)} · {player.age} · {formatMarketValue(player.marketValueEur, locale)}
         </span>
         {showFit && match ? (
           <span className={`fit-badge fit-${match.fit} w-fit`}>

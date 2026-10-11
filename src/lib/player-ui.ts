@@ -11,9 +11,8 @@ export function positionLine(position: Position): PositionLine {
 
 export type ContractAccent = "free" | "soon" | null;
 
-/** Free now = emerald. Contract ending within 12 months (or marked expiring) = orange. */
+/** Listed future expiry within 12 months (or marked expiring) = orange. Past dates are not treated as confirmed free. */
 export function contractAccent(player: Player, now = new Date()): ContractAccent {
-  if (player.availability === "free") return "free";
   if (player.contractUntil) {
     const until = Date.parse(`${player.contractUntil}T00:00:00Z`);
     if (!Number.isNaN(until)) {

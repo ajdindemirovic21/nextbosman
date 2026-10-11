@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "NextBosman — Svincolati e contratti in scadenza",
-    "description": "Ricerca mondiale veloce per agenti: giocatori senza club e contratti in scadenza.",
-    "searchTitle": "Cerca svincolati e contratti in scadenza",
-    "searchDescription": "Svincolati e contratti in scadenza, nel mondo. Abbina un brief a nomi del livello giusto.",
-    "searchFreeTitle": "Cerca svincolati",
-    "searchFreeDescription": "Senza contratto e pronti a parlare. Ricerca mondiale di svincolati per agenti.",
-    "searchExpiringTitle": "Contratti in scadenza",
-    "searchExpiringDescription": "Giocatori ancora in club con contratto in scadenza. Il vantaggio è il timing.",
+    "title": "NextBosman — Date di contratto elencate per agenti",
+    "description": "Ricerca mondiale di date di contratto elencate. La disponibilità attuale non è confermata.",
+    "searchTitle": "Cerca date di contratto elencate",
+    "searchDescription": "Contratti scaduti o sconosciuti e scadenze future elencate, nel mondo. La disponibilità attuale non è confermata.",
+    "searchFreeTitle": "Contratti scaduti / sconosciuti",
+    "searchFreeDescription": "Giocatori con una scadenza passata elencata o senza data di contratto nella fonte. La disponibilità attuale non è confermata.",
+    "searchExpiringTitle": "Scadenza futura elencata",
+    "searchExpiringDescription": "Giocatori con una data di contratto futura nella fonte. Non è una conferma in tempo reale dello stato attuale.",
     "supportTitle": "Sostieni NextBosman",
     "supportDescription": "La scrivania resta gratis per gli agenti. Donazione opzionale se ti aiuta a chiudere una chiamata. Il Pro arriva dopo.",
     "listsTitle": "Liste salvate",
@@ -19,8 +19,8 @@
   },
   "nav": {
     "search": "Ricerca",
-    "free": "Svincolati",
-    "expiring": "In scadenza",
+    "free": "Scaduti / sconosciuti",
+    "expiring": "Data elencata",
     "support": "Supporto",
     "lists": "Liste",
     "parser": "WhatsApp",
@@ -36,7 +36,7 @@
     "title": "Gratis per gli agenti.",
     "lead": "Ricerca e matching restano aperti. Se la scrivania ti chiude una chiamata, puoi restituire. Il Pro arriva dopo — solo quando vale 15–20 € al mese.",
     "freeTitle": "La scrivania",
-    "freeText": "Svincolati, contratti in scadenza, brief e statistiche. Niente ads, niente account.",
+    "freeText": "Date di contratto elencate, brief e statistiche. La disponibilità attuale non è confermata. Niente ads, niente account.",
     "donateTitle": "Donazione",
     "donateText": "Facoltativa. Un caffè, o di più se un affare è partito da qui.",
     "donateCta": "Dona",
@@ -54,28 +54,43 @@
     "kicker": "Per agenti di calcio",
     "slogan": "Il prossimo Bosman è già sul mercato.",
     "pasteHeadline": "Incolla il WhatsApp. Escono i nomi.",
-    "lead": "Il tuo vantaggio è il timing. Contratto in scadenza, giocatore senza club, DS che vuole un nome stanotte: quella è la finestra.",
+    "lead": "Il tuo vantaggio è il timing. Una data di contratto elencata, un brief di club, un DS che vuole un nome stanotte: quella è la finestra.",
     "stats": [
-      { "label": "13.000+ database giocatori" },
-      { "label": "Svincolati e fine contratto" },
-      { "label": "Filtro passaporto UE" }
+      {
+        "label": "13.000+ database giocatori"
+      },
+      {
+        "label": "Date di contratto elencate"
+      },
+      {
+        "label": "Filtro passaporto UE"
+      }
     ],
     "how": [
-      { "title": "1. Incolla il brief", "text": "Inserisci la richiesta del club" },
-      { "title": "2. Match intelligente", "text": "Ricerca istantanea nel database" },
-      { "title": "3. Invialo al club", "text": "Genera il profilo WhatsApp" }
+      {
+        "title": "1. Incolla il brief",
+        "text": "Inserisci la richiesta del club"
+      },
+      {
+        "title": "2. Match intelligente",
+        "text": "Ricerca istantanea nel database"
+      },
+      {
+        "title": "3. Invialo al club",
+        "text": "Genera il profilo WhatsApp"
+      }
     ],
-    "purpose": "NextBosman è la scrivania mondiale per svincolati e fine contratto. Incolla il brief del club e vedi chi è davvero disponibile per quella chiamata.",
-    "ctaFree": "Cerca svincolati",
-    "ctaFreeHint": "Senza contratto. Pronti a parlare.",
-    "ctaExpiring": "Contratti in scadenza",
-    "ctaExpiringHint": "Ancora in club. Il tempo scorre.",
+    "purpose": "NextBosman è la scrivania mondiale delle date di contratto elencate. Incolla il brief del club e abbina i nomi. La disponibilità attuale non è confermata.",
+    "ctaFree": "Contratti scaduti / sconosciuti",
+    "ctaFreeHint": "Scadenza passata elencata o dati di contratto assenti. La disponibilità attuale non è confermata.",
+    "ctaExpiring": "Scadenza futura elencata",
+    "ctaExpiringHint": "La fonte indica una data futura. Non è una conferma in tempo reale.",
     "ctaMatch": "Abbina un brief",
     "ctaMatchHint": "Incolla cosa ha chiesto il club.",
     "points": [
       {
-        "title": "Disponibili ora",
-        "text": "Prima senza club, poi i contratti in scadenza. La velocità è il prodotto."
+        "title": "Prima le date elencate",
+        "text": "Prima i contratti scaduti o sconosciuti, poi le scadenze future elencate. Le date arrivano dalla fonte, non da un controllo live."
       },
       {
         "title": "Verrebbero?",
@@ -89,19 +104,26 @@
   },
   "search": {
     "title": "La scrivania",
-    "subtitle": "Svincolati e contratti in scadenza, nel mondo. Abbina un brief a nomi del livello giusto."
+    "subtitle": "Contratti scaduti o sconosciuti e scadenze future elencate, nel mondo. La disponibilità attuale non è confermata."
   },
   "hero": {
     "kicker": "Per agenti di calcio",
-    "title": "Chi è disponibile — nel mondo.",
-    "subtitle": "Cerca svincolati e fine contratto."
+    "title": "Date di contratto elencate — nel mondo.",
+    "subtitle": "Cerca contratti scaduti o sconosciuti e scadenze future elencate."
   },
   "status": {
-    "free": "Svincolati",
-    "expiring": "Contratto in scadenza",
-    "freeLabel": "Svincolato",
+    "free": "Contratti scaduti / sconosciuti",
+    "expiring": "Scadenza futura elencata",
+    "freeLabel": "Non confermato",
     "until": "Fino al",
-    "ended": "Terminato"
+    "ended": "Terminato",
+    "freeNote": "Questi giocatori hanno una scadenza elencata nel passato o non hanno data di contratto nella fonte. La disponibilità attuale non è confermata. Un club assente non prova che il giocatore sia svincolato.",
+    "expiringNote": "La fonte indica una data di contratto futura. Non è una conferma in tempo reale dello stato attuale.",
+    "listedExpiry": "Scadenza elencata: {date}",
+    "statusUnconfirmed": "Stato attuale non confermato",
+    "contractUnknown": "Dati di contratto non disponibili",
+    "listedUntil": "Contratto elencato fino al {date}",
+    "listedClub": "Club elencato nella fonte"
   },
   "paste": {
     "title": "Incolla WhatsApp veloce",
@@ -109,11 +131,11 @@
     "placeholder": "Incolla qui il testo WhatsApp (es. FCSB cerca ST, svincolato, passaporto UE)...",
     "apply": "Analizza e filtra",
     "position": "Ruolo",
-    "free": "Svincolato",
-    "expiring": "Contratto in scadenza",
+    "free": "Contratti scaduti / sconosciuti",
+    "expiring": "Scadenza futura elencata",
     "eu": "Passaporto UE",
     "loan": "Prestito citato — non c’è ancora una lista a parte",
-    "empty": "Niente da applicare. Prova ruolo, svincolato/in scadenza o UE."
+    "empty": "Niente da applicare. Prova un ruolo, un filtro contratto o UE."
   },
   "filters": {
     "position": "Ruolo",
@@ -170,8 +192,8 @@
       "ageOff": "Età fuori dal brief",
       "eu": "Passaporto UE richiesto",
       "euMiss": "Niente passaporto UE",
-      "available": "Attualmente svincolato",
-      "expiring": "Ancora sotto contratto, in scadenza"
+      "available": "Scadenza elencata o dati di contratto assenti; stato attuale non confermato",
+      "expiring": "La fonte indica una data di contratto futura"
     }
   },
   "profile": {

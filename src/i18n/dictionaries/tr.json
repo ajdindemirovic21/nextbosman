@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "NextBosman — Serbest oyuncular ve biten sözleşmeler",
-    "description": "Menajerler için hızlı dünya araması: kulüpsüz oyuncular ve sözleşmesi bitmek üzere olanlar.",
-    "searchTitle": "Serbest oyuncu ve biten sözleşme ara",
-    "searchDescription": "Serbest oyuncular ve biten sözleşmeler, dünya çapında. Brifi seviyeye uyan isimlerle eşleştir.",
-    "searchFreeTitle": "Serbest oyuncu ara",
-    "searchFreeDescription": "Sözleşmesiz ve görüşmeye hazır. Menajerler için dünya çapında serbest oyuncu araması.",
-    "searchExpiringTitle": "Biten sözleşmeler",
-    "searchExpiringDescription": "Hâlâ kulüpte olan ve sözleşmesi bitmek üzere oyuncular. Avantaj zamanlama.",
+    "title": "NextBosman — Menajerler için listelenen sözleşme tarihleri",
+    "description": "Listelenen sözleşme tarihlerinin dünya çapında araması. Güncel müsaitlik doğrulanmamıştır.",
+    "searchTitle": "Listelenen sözleşme tarihlerini ara",
+    "searchDescription": "Süresi dolmuş veya bilinmeyen sözleşmeler ve listelenen gelecek bitişler, dünya çapında. Güncel müsaitlik doğrulanmamıştır.",
+    "searchFreeTitle": "Süresi dolmuş / bilinmeyen sözleşmeler",
+    "searchFreeDescription": "Kaynakta geçmiş bitiş tarihi olan veya sözleşme tarihi olmayan oyuncular. Güncel müsaitlik doğrulanmamıştır.",
+    "searchExpiringTitle": "Listelenen gelecek bitiş",
+    "searchExpiringDescription": "Kaynakta gelecekteki sözleşme tarihi olan oyuncular. Bu, güncel durumun canlı onayı değildir.",
     "supportTitle": "NextBosman’ı destekle",
     "supportDescription": "Masa menajerler için ücretsiz kalır. Yardımcı olduysa isteğe bağlı bağış. Pro sonra gelir.",
     "listsTitle": "Kayıtlı listeler",
@@ -19,8 +19,8 @@
   },
   "nav": {
     "search": "Arama",
-    "free": "Serbest",
-    "expiring": "Biten",
+    "free": "Dolmuş / bilinmeyen",
+    "expiring": "Listelenen tarih",
     "support": "Destek",
     "lists": "Listeler",
     "signIn": "Ajan girişi",
@@ -36,7 +36,7 @@
     "title": "Menajerler için ücretsiz.",
     "lead": "Arama ve eşleştirme açık kalır. Masa bir görüşmeyi kapattıysa geri verebilirsin. Ücretli Pro sonra gelir — ayda 15–20 € gerçekten hak edince.",
     "freeTitle": "Masa",
-    "freeText": "Serbest oyuncular, biten sözleşmeler, kulüp brifleri ve istatistik. Reklam yok, hesap yok.",
+    "freeText": "Listelenen sözleşme tarihleri, kulüp brifleri ve istatistik. Güncel müsaitlik doğrulanmamıştır. Reklam yok, hesap yok.",
     "donateTitle": "Bağış",
     "donateText": "İsteğe bağlı. Bir kahve, ya da buradan bir iş çıktıysa daha fazlası. Ek özellik yok.",
     "donateCta": "Bağış yap",
@@ -54,28 +54,43 @@
     "kicker": "Futbol menajerleri için",
     "slogan": "Bir sonraki Bosman zaten piyasada.",
     "pasteHeadline": "WhatsApp’ı yapıştır. İsimleri al.",
-    "lead": "Avantajın zamanlamadır. Biten sözleşme, kulüpsüz oyuncu, bu gece isim isteyen sportif direktör — pencere budur.",
+    "lead": "Avantajın zamanlamadır. Listelenen sözleşme tarihi, kulüp brifi, bu gece isim isteyen sportif direktör — pencere budur.",
     "stats": [
-      { "label": "13.000+ oyuncu veritabanı" },
-      { "label": "Serbest oyuncular ve biten sözleşmeler" },
-      { "label": "AB pasaportu filtresi" }
+      {
+        "label": "13.000+ oyuncu veritabanı"
+      },
+      {
+        "label": "Listelenen sözleşme tarihleri"
+      },
+      {
+        "label": "AB pasaportu filtresi"
+      }
     ],
     "how": [
-      { "title": "1. Brifi yapıştır", "text": "Kulüp talebini ekle" },
-      { "title": "2. Akıllı eşleşme", "text": "Veritabanında anında arama" },
-      { "title": "3. Kulübe gönder", "text": "WhatsApp profili oluştur" }
+      {
+        "title": "1. Brifi yapıştır",
+        "text": "Kulüp talebini ekle"
+      },
+      {
+        "title": "2. Akıllı eşleşme",
+        "text": "Veritabanında anında arama"
+      },
+      {
+        "title": "3. Kulübe gönder",
+        "text": "WhatsApp profili oluştur"
+      }
     ],
-    "purpose": "NextBosman, serbest oyuncular ve sözleşmesi bitenler için dünya masasıdır. Kulüp brifini yapıştır ve o arama için kim gerçekten müsait bak.",
-    "ctaFree": "Serbest oyuncuları ara",
-    "ctaFreeHint": "Sözleşmesiz. Görüşmeye hazır.",
-    "ctaExpiring": "Biten sözleşmeler",
-    "ctaExpiringHint": "Hâlâ kulüpte. Saat işliyor.",
+    "purpose": "NextBosman, listelenen sözleşme tarihleri için dünya masasıdır. Kulüp brifini yapıştır ve isimleri eşleştir. Güncel müsaitlik doğrulanmamıştır.",
+    "ctaFree": "Süresi dolmuş / bilinmeyen sözleşmeler",
+    "ctaFreeHint": "Listelenen geçmiş bitiş veya eksik sözleşme verisi. Güncel müsaitlik doğrulanmamıştır.",
+    "ctaExpiring": "Listelenen gelecek bitiş",
+    "ctaExpiringHint": "Kaynak gelecekte bir tarih listeler. Bu canlı onay değildir.",
     "ctaMatch": "Kulüp brifi eşleştir",
     "ctaMatchHint": "Kulübün ne istediğini yapıştır.",
     "points": [
       {
-        "title": "Şimdi müsait",
-        "text": "Önce kulüpsüzler, sonra sözleşmesi bitenler. Ürün hızdır."
+        "title": "Önce listelenen tarihler",
+        "text": "Önce süresi dolmuş veya bilinmeyen sözleşmeler, sonra listelenen gelecek bitişler. Tarihler kaynaktan gelir, canlı kontrolden değil."
       },
       {
         "title": "Gelirler mi?",
@@ -89,19 +104,26 @@
   },
   "search": {
     "title": "Masa",
-    "subtitle": "Serbest oyuncular ve biten sözleşmeler, dünya çapında. Brifi seviyeye uyan isimlerle eşleştir."
+    "subtitle": "Süresi dolmuş veya bilinmeyen sözleşmeler ve listelenen gelecek bitişler, dünya çapında. Güncel müsaitlik doğrulanmamıştır."
   },
   "hero": {
     "kicker": "Futbol menajerleri için",
-    "title": "Kim müsait — dünyada.",
-    "subtitle": "Serbest oyuncuları ve sözleşmesi bitenleri arayın."
+    "title": "Listelenen sözleşme tarihleri — dünyada.",
+    "subtitle": "Süresi dolmuş veya bilinmeyen sözleşmeleri ve listelenen gelecek bitişleri arayın."
   },
   "status": {
-    "free": "Serbest oyuncular",
-    "expiring": "Sözleşme bitiyor",
-    "freeLabel": "Serbest",
+    "free": "Süresi dolmuş / bilinmeyen sözleşmeler",
+    "expiring": "Listelenen gelecek bitiş",
+    "freeLabel": "Doğrulanmadı",
     "until": "Kadar",
-    "ended": "Bitti"
+    "ended": "Bitti",
+    "freeNote": "Bu oyuncuların kaynakta geçmişte bitiş tarihi vardır veya sözleşme tarihi yoktur. Güncel müsaitlik doğrulanmamıştır. Eksik kulüp, oyuncunun serbest olduğunun kanıtı değildir.",
+    "expiringNote": "Kaynak gelecekte bir sözleşme tarihi listeler. Bu, güncel durumun canlı onayı değildir.",
+    "listedExpiry": "Listelenen bitiş: {date}",
+    "statusUnconfirmed": "Güncel durum doğrulanmadı",
+    "contractUnknown": "Sözleşme verisi yok",
+    "listedUntil": "Sözleşme {date} tarihine kadar listelenmiş",
+    "listedClub": "Kaynakta listelenen kulüp"
   },
   "paste": {
     "title": "Hızlı WhatsApp yapıştır",
@@ -109,11 +131,11 @@
     "placeholder": "WhatsApp talebini buraya yapıştır (örn. FCSB ST arıyor, serbest oyuncu, AB pasaportu)...",
     "apply": "Çözümle ve filtrele",
     "position": "Mevki",
-    "free": "Serbest oyuncu",
-    "expiring": "Sözleşme bitiyor",
+    "free": "Süresi dolmuş / bilinmeyen sözleşmeler",
+    "expiring": "Listelenen gelecek bitiş",
     "eu": "AB pasaportu",
     "loan": "Kiralık geçiyor — henüz ayrı liste yok",
-    "empty": "Uygulanacak bir şey yok. Mevki, serbest/biten veya AB dene."
+    "empty": "Uygulanacak bir şey yok. Mevki, sözleşme filtresi veya AB dene."
   },
   "filters": {
     "position": "Mevki",
@@ -170,8 +192,8 @@
       "ageOff": "Yaş brifin dışında",
       "eu": "İstenen AB pasaportu",
       "euMiss": "AB pasaportu yok",
-      "available": "Şu an serbest",
-      "expiring": "Hâlâ sözleşmeli, ama bitiyor"
+      "available": "Listelenen bitiş veya eksik sözleşme verisi; güncel durum doğrulanmadı",
+      "expiring": "Kaynak gelecekte bir sözleşme tarihi listeler"
     }
   },
   "profile": {

@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "NextBosman — Slobodni igrači i isteci ugovora",
-    "description": "Brza svjetska pretraga za agente: igrači bez kluba i igrači koj ugovor ističe.",
-    "searchTitle": "Pretraga slobodnih igrača i isteka ugovora",
-    "searchDescription": "Slobodni igrači i isteci ugovora, diljem svijeta. Upari brif s imenima koja odgovaraju razini.",
-    "searchFreeTitle": "Pretraga slobodnih igrača",
-    "searchFreeDescription": "Bez ugovora i spremni za razgovor. Svjetska pretraga slobodnih igrača za agente.",
-    "searchExpiringTitle": "Isteći ugovori",
-    "searchExpiringDescription": "Igrači još u klubu koj ugovor ističe. Prednost je timing.",
+    "title": "NextBosman — Navedeni datumi ugovora za agente",
+    "description": "Svjetska pretraga navedenih datuma ugovora za agente. Trenutačna dostupnost nije potvrđena.",
+    "searchTitle": "Pretraga navedenih datuma ugovora",
+    "searchDescription": "Istekli ili nepoznati ugovori i navedeni budući isteci, diljem svijeta. Trenutačna dostupnost nije potvrđena.",
+    "searchFreeTitle": "Istekli / nepoznati ugovori",
+    "searchFreeDescription": "Igrači s navedenim prošlim istekom ili bez datuma ugovora u izvoru. Trenutačna dostupnost nije potvrđena.",
+    "searchExpiringTitle": "Navedeni budući istek",
+    "searchExpiringDescription": "Igrači s budućim datumom ugovora u izvoru. To nije potvrda trenutačnog statusa.",
     "supportTitle": "Podrži NextBosman",
     "supportDescription": "Stol ostaje besplatan za agente. Donacija po želji ako pomogne da zatvoriš poziv. Pro kasnije.",
     "listsTitle": "Spremljene liste",
@@ -19,8 +19,8 @@
   },
   "nav": {
     "search": "Pretraga",
-    "free": "Slobodni",
-    "expiring": "Isteći",
+    "free": "Istekli / nepoznati",
+    "expiring": "Navedeni istek",
     "support": "Podrška",
     "lists": "Liste",
     "parser": "WhatsApp",
@@ -36,7 +36,7 @@
     "title": "Besplatno za agente.",
     "lead": "Pretraga i matching ostaju otvoreni. Ako ti stol pomogne da zatvoriš poziv, možeš vratiti. Plaćeni Pro dolazi kasnije — tek kad stvarno vrijedi 15–20 € mjesečno.",
     "freeTitle": "Stol",
-    "freeText": "Slobodni igrači, isteci ugovora, klupski brifovi i statistika. Bez reklama, bez računa.",
+    "freeText": "Navedeni datumi ugovora, klupski brifovi i statistika. Trenutačna dostupnost nije potvrđena. Bez reklama, bez računa.",
     "donateTitle": "Donacija",
     "donateText": "Po želji. Jedna kava, ili više ako je deal krenuo ovdje. Nema dodatnih funkcija uz to.",
     "donateCta": "Doniraj",
@@ -56,7 +56,7 @@
     "pasteHeadline": "Zalijepi WhatsApp. Dobiješ imena.",
     "stats": [
       { "label": "13,000+ baza igrača" },
-      { "label": "Free agents & istek ugovora" },
+      { "label": "Navedeni datumi ugovora" },
       { "label": "EU putovnica filter" }
     ],
     "how": [
@@ -64,18 +64,18 @@
       { "title": "2. Pametni match", "text": "Instant pretraga baze" },
       { "title": "3. Pošalji klubu", "text": "Generiraj profil za WhatsApp" }
     ],
-    "lead": "Tvoja prednost je timing. Ugovor koji ističe, igrač bez kluba, sportski direktor koj treba ime večeras — to je prozor.",
-    "purpose": "NextBosman je svjetski stol za slobodne igrače i one koj ugovor ističe. Zalijepi klupski brif i vidi tko je stvarno dostupan za taj poziv.",
-    "ctaFree": "Pretraži slobodne",
-    "ctaFreeHint": "Bez ugovora. Spreman za razgovor.",
-    "ctaExpiring": "Ugovori ističu",
-    "ctaExpiringHint": "Još su u klubu. Sat otkucava.",
+    "lead": "Tvoja prednost je timing. Navedeni datum ugovora, klupski brif, sportski direktor koj treba ime večeras — to je prozor.",
+    "purpose": "NextBosman je svjetski stol za navedene datume ugovora. Zalijepi klupski brif i upari imena s upitom. Trenutačna dostupnost nije potvrđena.",
+    "ctaFree": "Istekli / nepoznati ugovori",
+    "ctaFreeHint": "Navedeni prošli istek ili nedostajući podaci o ugovoru. Trenutačna dostupnost nije potvrđena.",
+    "ctaExpiring": "Navedeni budući istek",
+    "ctaExpiringHint": "Izvor navodi budući datum. To nije potvrda trenutačnog statusa.",
     "ctaMatch": "Upari klupski brif",
     "ctaMatchHint": "Zalijepi što klub traži.",
     "points": [
       {
-        "title": "Dostupni sad",
-        "text": "Prvo igrači bez kluba, zatim oni pred istekom. Brzina je proizvod."
+        "title": "Prvo navedeni datumi",
+        "text": "Prvo istekli ili nepoznati ugovori, zatim navedeni budući istek. Datumi dolaze iz izvora, ne iz provjere uživo."
       },
       {
         "title": "Bi li došli?",
@@ -89,17 +89,24 @@
   },
   "search": {
     "title": "Stol",
-    "subtitle": "Slobodni igrači i isteci ugovora, diljem svijeta. Upari brif s imenima koja odgovaraju razini."
+    "subtitle": "Istekli ili nepoznati ugovori i navedeni budući isteci, diljem svijeta. Trenutačna dostupnost nije potvrđena."
   },
   "hero": {
     "kicker": "Za nogometne agente",
-    "title": "Tko je slobodan — u svijetu.",
-    "subtitle": "Pretraži slobodne igrače i one pred istekom ugovora."
+    "title": "Navedeni datumi ugovora — u svijetu.",
+    "subtitle": "Pretraži istekle ili nepoznate ugovore i navedene buduće isteke."
   },
   "status": {
-    "free": "Slobodni igrači",
-    "expiring": "Ugovor ističe",
-    "freeLabel": "Slobodan",
+    "free": "Istekli / nepoznati ugovori",
+    "freeNote": "Ovi igrači imaju naveden istek ugovora u prošlosti ili nemaju datum ugovora u izvoru. Trenutačna dostupnost nije potvrđena. Nedostajući klub nije dokaz da je igrač slobodan.",
+    "expiring": "Navedeni budući istek",
+    "expiringNote": "Izvor navodi budući datum ugovora. To nije potvrda trenutačnog statusa.",
+    "freeLabel": "Nepotvrđeno",
+    "listedExpiry": "Navedeni istek: {date}",
+    "statusUnconfirmed": "Trenutačni status nije potvrđen",
+    "contractUnknown": "Podaci o ugovoru nisu dostupni",
+    "listedUntil": "Ugovor naveden do {date}",
+    "listedClub": "Klub naveden u izvoru",
     "until": "Do",
     "ended": "Završio"
   },
@@ -109,11 +116,11 @@
     "placeholder": "Zalijepi ovdje tekst upita s WhatsAppa (npr. FCSB traži ST, slobodan igrač, EU putovnica)...",
     "apply": "Analiziraj i filtriraj",
     "position": "Pozicija",
-    "free": "Slobodan igrač",
-    "expiring": "Ugovor ističe",
+    "free": "Istekli / nepoznati ugovori",
+    "expiring": "Navedeni budući istek",
     "eu": "EU putovnica",
     "loan": "Spomenuta posudba — još nije posebna lista",
-    "empty": "Nema što primijeniti. Probaj poziciju, slobodan/ističe ili EU."
+    "empty": "Nema što primijeniti. Probaj poziciju, filter ugovora ili EU."
   },
   "filters": {
     "position": "Pozicija",
@@ -170,8 +177,8 @@
       "ageOff": "Godine su izvan brifa",
       "eu": "EU putovnica kako je traženo",
       "euMiss": "Nema EU putovnicu",
-      "available": "Trenutačno slobodan",
-      "expiring": "Još ima ugovor, ali ističe"
+      "available": "Navedeni istek ili nedostajući podaci o ugovoru; trenutačni status nije potvrđen",
+      "expiring": "Izvor navodi budući datum ugovora"
     }
   },
   "profile": {

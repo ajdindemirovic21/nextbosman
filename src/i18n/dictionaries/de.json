@@ -1,13 +1,13 @@
 {
   "meta": {
-    "title": "NextBosman — Vereinslose & auslaufende Verträge",
-    "description": "Schnelle weltweite Suche für Berater: Spieler ohne Verein und Spieler mit auslaufendem Vertrag.",
-    "searchTitle": "Vereinslose und auslaufende Verträge suchen",
-    "searchDescription": "Vereinslose und auslaufende Verträge, weltweit. Briefe an Namen matchen, die zum Niveau passen.",
-    "searchFreeTitle": "Vereinslose Spieler suchen",
-    "searchFreeDescription": "Ohne Vertrag und gesprächsbereit. Weltweite Suche nach vereinslosen Spielern.",
-    "searchExpiringTitle": "Auslaufende Verträge",
-    "searchExpiringDescription": "Spieler noch im Verein, deren Vertrag ausläuft. Timing ist der Vorteil.",
+    "title": "NextBosman — Gelistete Vertragsdaten für Berater",
+    "description": "Weltweite Suche nach gelisteten Vertragsdaten. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
+    "searchTitle": "Gelistete Vertragsdaten suchen",
+    "searchDescription": "Abgelaufene oder unbekannte Verträge und gelistete zukünftige Daten, weltweit. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
+    "searchFreeTitle": "Abgelaufene / unbekannte Verträge",
+    "searchFreeDescription": "Spieler mit gelistetem vergangenem Ablauf oder ohne Vertragsdatum in der Quelle. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
+    "searchExpiringTitle": "Gelistetes zukünftiges Ablaufdatum",
+    "searchExpiringDescription": "Spieler mit einem zukünftigen Vertragsdatum in der Quelle. Das ist keine Live-Bestätigung des aktuellen Status.",
     "supportTitle": "NextBosman unterstützen",
     "supportDescription": "Der Schreibtisch bleibt für Berater kostenlos. Spende optional, wenn er hilft. Pro kommt später.",
     "listsTitle": "Gespeicherte Listen",
@@ -19,8 +19,8 @@
   },
   "nav": {
     "search": "Suche",
-    "free": "Vereinslos",
-    "expiring": "Auslaufend",
+    "free": "Abgelaufen / unbekannt",
+    "expiring": "Gelistetes Datum",
     "support": "Support",
     "lists": "Listen",
     "signIn": "Agent-Login",
@@ -36,7 +36,7 @@
     "title": "Kostenlos für Berater.",
     "lead": "Suche und Matching bleiben offen. Hilft der Schreibtisch bei einem Anruf, kannst du etwas zurückgeben. Pro kommt später — erst wenn es 15–20 € im Monat wert ist.",
     "freeTitle": "Der Schreibtisch",
-    "freeText": "Vereinslose, auslaufende Verträge, Klub-Briefings und Stats. Keine Werbung, kein Konto.",
+    "freeText": "Gelistete Vertragsdaten, Klub-Briefings und Stats. Die aktuelle Verfügbarkeit ist nicht bestätigt. Keine Werbung, kein Konto.",
     "donateTitle": "Spende",
     "donateText": "Freiwillig. Ein Kaffee, oder mehr wenn hier ein Deal begann.",
     "donateCta": "Spenden",
@@ -54,28 +54,43 @@
     "kicker": "Für Fußballberater",
     "slogan": "Der nächste Bosman ist schon auf dem Markt.",
     "pasteHeadline": "WhatsApp einfügen. Namen bekommen.",
-    "lead": "Dein Vorteil ist Timing. Auslaufender Vertrag, Spieler ohne Klub, ein Sportchef der heute Nacht einen Namen braucht — das ist das Fenster.",
+    "lead": "Dein Vorteil ist Timing. Ein gelistetes Vertragsdatum, ein Klub-Briefing, ein Sportchef der heute Nacht einen Namen braucht — das ist das Fenster.",
     "stats": [
-      { "label": "13.000+ Spielerdatenbank" },
-      { "label": "Vereinslose & auslaufende Verträge" },
-      { "label": "EU-Pass Filter" }
+      {
+        "label": "13.000+ Spielerdatenbank"
+      },
+      {
+        "label": "Gelistete Vertragsdaten"
+      },
+      {
+        "label": "EU-Pass Filter"
+      }
     ],
     "how": [
-      { "title": "1. Briefing einfügen", "text": "Klub-Anfrage reinkopieren" },
-      { "title": "2. Smart Match", "text": "Sofortsuche in der Datenbank" },
-      { "title": "3. An den Klub senden", "text": "WhatsApp-Profil erzeugen" }
+      {
+        "title": "1. Briefing einfügen",
+        "text": "Klub-Anfrage reinkopieren"
+      },
+      {
+        "title": "2. Smart Match",
+        "text": "Sofortsuche in der Datenbank"
+      },
+      {
+        "title": "3. An den Klub senden",
+        "text": "WhatsApp-Profil erzeugen"
+      }
     ],
-    "purpose": "NextBosman ist der weltweite Schreibtisch für vereinslose Spieler und auslaufende Verträge. Klub-Briefing einfügen und sehen, wer für diesen Anruf wirklich verfügbar ist.",
-    "ctaFree": "Vereinslose suchen",
-    "ctaFreeHint": "Ohne Vertrag. Gesprächsbereit.",
-    "ctaExpiring": "Verträge laufen aus",
-    "ctaExpiringHint": "Noch im Klub. Die Uhr läuft.",
+    "purpose": "NextBosman ist der weltweite Schreibtisch für gelistete Vertragsdaten. Klub-Briefing einfügen und Namen zum Auftrag matchen. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
+    "ctaFree": "Abgelaufene / unbekannte Verträge",
+    "ctaFreeHint": "Gelisteter vergangener Ablauf oder fehlende Vertragsdaten. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
+    "ctaExpiring": "Gelistetes zukünftiges Ablaufdatum",
+    "ctaExpiringHint": "Die Quelle nennt ein zukünftiges Datum. Das ist keine Live-Bestätigung.",
     "ctaMatch": "Klub-Briefing matchen",
     "ctaMatchHint": "Einfügen, was der Klub will.",
     "points": [
       {
-        "title": "Jetzt verfügbar",
-        "text": "Zuerst vereinslos, dann auslaufende Verträge. Tempo ist das Produkt."
+        "title": "Zuerst gelistete Daten",
+        "text": "Zuerst abgelaufene oder unbekannte Verträge, dann gelistete zukünftige Daten. Die Daten kommen aus der Quelle, nicht aus einer Live-Prüfung."
       },
       {
         "title": "Würden sie kommen?",
@@ -89,19 +104,26 @@
   },
   "search": {
     "title": "Der Schreibtisch",
-    "subtitle": "Vereinslose und auslaufende Verträge, weltweit. Briefe an Namen matchen, die zum Niveau passen."
+    "subtitle": "Abgelaufene oder unbekannte Verträge und gelistete zukünftige Daten, weltweit. Die aktuelle Verfügbarkeit ist nicht bestätigt."
   },
   "hero": {
     "kicker": "Für Fußballberater",
-    "title": "Wer ist verfügbar — weltweit.",
-    "subtitle": "Suche vereinslose Spieler und auslaufende Verträge."
+    "title": "Gelistete Vertragsdaten — weltweit.",
+    "subtitle": "Suche abgelaufene oder unbekannte Verträge und gelistete zukünftige Daten."
   },
   "status": {
-    "free": "Vereinslos",
-    "expiring": "Vertrag läuft aus",
-    "freeLabel": "Frei",
+    "free": "Abgelaufene / unbekannte Verträge",
+    "expiring": "Gelistetes zukünftiges Ablaufdatum",
+    "freeLabel": "Unbestätigt",
     "until": "Bis",
-    "ended": "Endete"
+    "ended": "Endete",
+    "freeNote": "Diese Spieler haben ein gelistetes Ablaufdatum in der Vergangenheit oder kein Vertragsdatum in der Quelle. Die aktuelle Verfügbarkeit ist nicht bestätigt. Ein fehlender Verein beweist nicht, dass der Spieler vereinslos ist.",
+    "expiringNote": "Die Quelle nennt ein zukünftiges Vertragsdatum. Das ist keine Live-Bestätigung des aktuellen Status.",
+    "listedExpiry": "Gelisteter Ablauf: {date}",
+    "statusUnconfirmed": "Aktueller Status nicht bestätigt",
+    "contractUnknown": "Vertragsdaten nicht verfügbar",
+    "listedUntil": "Vertrag gelistet bis {date}",
+    "listedClub": "Verein in der Quelle gelistet"
   },
   "paste": {
     "title": "Schneller WhatsApp-Paste",
@@ -109,11 +131,11 @@
     "placeholder": "WhatsApp-Anfrage hier einfügen (z. B. FCSB sucht ST, vereinslos, EU-Pass)...",
     "apply": "Analysieren und filtern",
     "position": "Position",
-    "free": "Vereinslos",
-    "expiring": "Vertrag läuft aus",
+    "free": "Abgelaufene / unbekannte Verträge",
+    "expiring": "Gelistetes zukünftiges Ablaufdatum",
     "eu": "EU-Pass",
     "loan": "Leihe erwähnt — noch keine eigene Liste",
-    "empty": "Nichts anzuwenden. Position, frei/auslaufend oder EU versuchen."
+    "empty": "Nichts anzuwenden. Position, Vertragsfilter oder EU versuchen."
   },
   "filters": {
     "position": "Position",
@@ -170,8 +192,8 @@
       "ageOff": "Alter außerhalb des Briefings",
       "eu": "EU-Pass wie gewünscht",
       "euMiss": "Kein EU-Pass",
-      "available": "Derzeit vereinslos",
-      "expiring": "Noch unter Vertrag, läuft aber aus"
+      "available": "Gelisteter Ablauf oder fehlende Vertragsdaten; aktueller Status nicht bestätigt",
+      "expiring": "Die Quelle nennt ein zukünftiges Vertragsdatum"
     }
   },
   "profile": {

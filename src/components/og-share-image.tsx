@@ -1,6 +1,6 @@
 export const ogImageSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
-export const ogAlt = "NextBosman — free agents and expiring contracts";
+export const ogAlt = "NextBosman — listed contract dates for football agents";
 
 export function OgShareImage() {
   return (
@@ -80,7 +80,7 @@ export function OgShareImage() {
         The next Bosman is already out there.
       </div>
       <div style={{ marginTop: 16, fontSize: 24, color: "#94a3b8", maxWidth: 880 }}>
-        Free agents and expiring contracts, worldwide.
+        Listed contract dates worldwide. Current availability is not confirmed.
       </div>
     </div>
   );
