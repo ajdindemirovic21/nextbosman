@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  --app-header-height: 56px;
+  --list-picker-height: 0px;
   --bg: #0b0f17;
   --bg-elev: rgba(15, 23, 42, 0.7);
   --bg-row: rgba(30, 41, 59, 0.45);
@@ -20,10 +22,13 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: clip;
+}
+
 html,
 body {
   min-height: 100%;
-  overflow-x: hidden;
   background:
     radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.12), transparent 55%),
     var(--bg);
@@ -221,6 +226,27 @@ body {
 .save-list:disabled {
   opacity: 0.45;
   cursor: default;
+}
+
+.list-picker {
+  position: sticky;
+  top: var(--app-header-height);
+  z-index: 40;
+  margin: 0 -4px;
+  padding: 6px 4px 8px;
+  background:
+    linear-gradient(to bottom, var(--bg) 70%, rgba(11, 15, 23, 0.92));
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 768px) {
+  .list-picker {
+    padding: 10px 4px 12px;
+  }
+}
+
+.list-content {
+  scroll-margin-top: calc(var(--app-header-height) + var(--list-picker-height) + 8px);
 }
 
 .saved-lists {

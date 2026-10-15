@@ -59,8 +59,8 @@ export default async function RootLayout({
   const dict = await getDictionary(lang);
 
   return (
-    <html lang={lang} className={`${sans.className} ${sans.variable} h-full overflow-x-hidden antialiased`}>
-      <body className="min-h-full overflow-x-hidden bg-[#0B0F17] text-slate-100">
+    <html lang={lang} className={`${sans.className} ${sans.variable} h-full antialiased`}>
+      <body className="min-h-full bg-[#0B0F17] text-slate-100">
         <AppChrome lang={lang} dict={dict}>
           {children}
           <footer className="site-foot">

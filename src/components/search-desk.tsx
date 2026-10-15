@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AddToSavedList } from "@/components/add-to-saved-list";
+import { ListFields } from "@/components/list-fields";
 import { HighlightsLink } from "@/components/highlights-link";
 import { PlayerDrawer } from "@/components/player-drawer";
 import { QuickShare } from "@/components/quick-share";
@@ -26,7 +27,8 @@ import { uniquePlayerIds } from "@/lib/player-ids";
 import { PAGE_SIZE, parsePageParam } from "@/lib/player-page";
 import { playerSearchPath, searchPathWithoutPlayer } from "@/lib/player-link";
 import { formatSeasonCount } from "@/lib/season-stats";
-import type { SavedList } from "@/lib/supabase/types";
+import { suggestedListFields } from "@/lib/list-title";
+import type { SavedList, SavedListFilters } from "@/lib/supabase/types";
 
 type Props = {
   dict: Dictionary;
@@ -82,9 +84,11 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   const [nationalities, setNationalities] = useState<string[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "auth" | "error">(
+  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "auth" | "title" | "error">(
     "idle",
   );
+  const [saveTitle, setSaveTitle] = useState("");
+  const [saveClub, setSaveClub] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [savedLists, setSavedLists] = useState<SavedList[]>([]);
   const [targetListId, setTargetListId] = useState("");
@@ -99,7 +103,6 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
       return copy;
     });
     setListsSignedOut(false);
-    setTargetListId((current) => current || next.id);
   }
 
   useEffect(() => {
@@ -118,7 +121,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         const nextLists = body.lists ?? [];
         setSavedLists(nextLists);
         setTargetListId((current) =>
-          current && nextLists.some((list) => list.id === current) ? current : (nextLists[0]?.id ?? ""),
+          current && nextLists.some((list) => list.id === current) ? current : "",
         );
       })
       .catch(() => {
@@ -185,6 +188,57 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     effectiveMaxMv,
     brief?.raw ?? "",
   ].join("|");
+  const suggestedList = useMemo(() => {
+    const codes = positionFilter
+      .split(",")
+      .map((code) => code.trim())
+      .filter((code): code is Position => (positions as readonly string[]).includes(code));
+    return suggestedListFields(
+      {
+        club: pasteResult?.club || brief?.club,
+        positions: codes.length ? codes : "all",
+        minAge: brief?.minAge ?? ageMin,
+        maxAge: brief?.maxAge ?? ageMax,
+        euOnly: euOnly || Boolean(brief?.euPassport),
+      },
+      {
+        ageUpTo: dict.account.listTitleAgeUpTo,
+        ageFrom: dict.account.listTitleAgeFrom,
+        ageRange: dict.account.listTitleAgeRange,
+        eu: dict.account.listTitleEu,
+      },
+    );
+  }, [
+    pasteResult?.club,
+    brief?.club,
+    brief?.minAge,
+    brief?.maxAge,
+    brief?.euPassport,
+    positionFilter,
+    ageMin,
+    ageMax,
+    euOnly,
+    dict.account.listTitleAgeUpTo,
+    dict.account.listTitleAgeFrom,
+    dict.account.listTitleAgeRange,
+    dict.account.listTitleEu,
+  ]);
+  const saveFilters: SavedListFilters = {
+    status: availability,
+    position,
+    nationality,
+    euOnly,
+    minAge: ageMin ?? undefined,
+    maxAge: ageMax ?? undefined,
+    maxMv: valueCap,
+  };
+  const saveQueryText = pasteDraft || briefDraft || null;
+
+  useEffect(() => {
+    setSaveTitle(suggestedList.title);
+    setSaveClub(suggestedList.club);
+  }, [filterKey]);
+
   const urlPage = parsePageParam(searchParams.get("page"));
   const committedFilters = useRef(filterKey);
   const page = committedFilters.current !== filterKey ? 1 : urlPage;
@@ -193,6 +247,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     const filtersChanged = committedFilters.current !== filterKey;
     if (filtersChanged) {
       committedFilters.current = filterKey;
+      setTargetListId("");
       if (searchParams.has("page") && parsePageParam(searchParams.get("page")) !== 1) {
         setLoading(true);
         setSaveState("idle");
@@ -610,88 +665,81 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           </div>
         )}
         {loading || saveIds.length === 0 ? null : (
-          <p className="mb-2 max-w-xl text-sm text-slate-400" role="status">
-            {total > saveIds.length
-              ? dict.account.snapshotPage
-                  .replace("{saved}", String(saveIds.length))
-                  .replace("{total}", String(total))
-              : dict.account.snapshotAll.replace("{saved}", String(saveIds.length))}
-          </p>
+          <div className="mb-3 grid max-w-xl gap-2">
+            <p className="text-sm text-slate-400" role="status">
+              {total > saveIds.length
+                ? dict.account.snapshotPage
+                    .replace("{saved}", String(saveIds.length))
+                    .replace("{total}", String(total))
+                : dict.account.snapshotAll.replace("{saved}", String(saveIds.length))}
+            </p>
+            <p className="text-sm text-slate-400">{dict.account.saveAsNewHint}</p>
+            <ListFields
+              dict={dict}
+              title={saveTitle}
+              club={saveClub}
+              disabled={loading || saveState === "saving"}
+              onTitleChange={setSaveTitle}
+              onClubChange={setSaveClub}
+            />
+          </div>
         )}
-        {savedLists.length > 0 ? (
-          <label className="mb-2 grid max-w-xl gap-1 text-xs text-slate-400">
-            <span>{dict.account.selectList}</span>
-            <select
-              className="min-h-11 rounded-lg border border-slate-800 bg-slate-950 px-3 text-sm text-white"
-              value={targetListId}
-              onChange={(event) => setTargetListId(event.target.value)}
-            >
-              {savedLists.map((list) => (
-                <option key={list.id} value={list.id}>
-                  {list.title}
-                </option>
-              ))}
-            </select>
-          </label>
-        ) : null}
         <button
           type="button"
           className="save-list"
           disabled={loading || rows.length === 0 || saveState === "saving"}
           onClick={async () => {
+            if (saveState === "saving") return;
+            const title = saveTitle.trim();
+            if (!title) {
+              setSaveState("title");
+              return;
+            }
             setSaveState("saving");
-            const playerIds = saveIds;
-            const title =
-              brief?.club ||
-              (pasteResult?.positions.length
-                ? `${availability} ${pasteResult.positions.join("/")}`
-                : `${availability} ${position}`);
-            const res = await fetch("/api/saved-lists", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                title,
-                clubName: brief?.club ?? null,
-                queryText: pasteDraft || briefDraft || null,
-                filters: {
-                  status: availability,
-                  position,
-                  nationality,
-                  euOnly,
-                  minAge: ageMin ?? undefined,
-                  maxAge: ageMax ?? undefined,
-                  maxMv: valueCap,
-                },
-                playerIds,
-              }),
-            });
-            if (res.ok) {
-              const body = (await res.json()) as { list?: SavedList };
-              if (body.list) rememberList(body.list);
-              setSaveState("saved");
-            } else if (res.status === 401) setSaveState("auth");
-            else setSaveState("error");
+            try {
+              const res = await fetch("/api/saved-lists", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  title,
+                  clubName: saveClub.trim() || null,
+                  queryText: saveQueryText,
+                  filters: saveFilters,
+                  playerIds: saveIds,
+                }),
+              });
+              if (res.ok) {
+                const body = (await res.json()) as { list?: SavedList };
+                if (body.list) rememberList(body.list);
+                setSaveState("saved");
+              } else if (res.status === 401) setSaveState("auth");
+              else setSaveState("error");
+            } catch {
+              setSaveState("error");
+            }
           }}
         >
           {saveState === "saving"
             ? dict.account.saving
             : saveState === "saved"
               ? dict.account.saved
-              : dict.account.saveList}
+              : dict.account.saveAsNewList}
         </button>
         <p
           className={
-            saveState === "auth" || saveState === "error"
+            saveState === "auth" || saveState === "error" || saveState === "title"
               ? "agent-msg"
               : "mt-2 max-w-xl text-sm text-slate-500"
           }
-          role={saveState === "auth" || saveState === "error" ? "alert" : undefined}
+          role={saveState === "auth" || saveState === "error" || saveState === "title" ? "alert" : undefined}
         >
           {saveState === "auth"
             ? dict.account.needAccount
-            : saveState === "error"
-              ? dict.account.saveFailed
-              : dict.table.sampleNote}
+            : saveState === "title"
+              ? dict.account.titleRequired
+              : saveState === "error"
+                ? dict.account.saveFailed
+                : dict.table.sampleNote}
         </p>
       </div>
 
@@ -720,6 +768,10 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
               onListIdChange={setTargetListId}
               signedOut={listsSignedOut}
               onListUpdated={rememberList}
+              suggestedTitle={suggestedList.title}
+              suggestedClub={suggestedList.club}
+              filters={saveFilters}
+              queryText={saveQueryText}
             />
           ))
         )}
@@ -763,6 +815,10 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                   onListIdChange={setTargetListId}
                   signedOut={listsSignedOut}
                   onListUpdated={rememberList}
+                  suggestedTitle={suggestedList.title}
+                  suggestedClub={suggestedList.club}
+                  filters={saveFilters}
+                  queryText={saveQueryText}
                 />
               ))
             )}
@@ -783,6 +839,10 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           signedOut={listsSignedOut}
           onClose={closePlayer}
           onListUpdated={rememberList}
+          suggestedTitle={suggestedList.title}
+          suggestedClub={suggestedList.club}
+          filters={saveFilters}
+          queryText={saveQueryText}
         />
       ) : null}
     </section>
@@ -865,6 +925,10 @@ function PlayerRow({
   onListIdChange,
   signedOut,
   onListUpdated,
+  suggestedTitle,
+  suggestedClub,
+  filters,
+  queryText,
 }: {
   player: Player;
   match: MatchResult | null;
@@ -877,6 +941,10 @@ function PlayerRow({
   onListIdChange: (id: string) => void;
   signedOut: boolean;
   onListUpdated: (list: SavedList) => void;
+  suggestedTitle: string;
+  suggestedClub: string;
+  filters: SavedListFilters;
+  queryText: string | null;
 }) {
   return (
     <tr>
@@ -913,12 +981,17 @@ function PlayerRow({
         <div className="mt-2">
           <AddToSavedList
             playerId={player.id}
+            playerName={player.name}
             lists={lists}
             listId={listId}
             onListIdChange={onListIdChange}
             signedOut={signedOut}
             dict={dict}
             onListUpdated={onListUpdated}
+            suggestedTitle={suggestedTitle}
+            suggestedClub={suggestedClub}
+            filters={filters}
+            queryText={queryText}
             compact
           />
         </div>
@@ -1089,6 +1162,10 @@ function PlayerCard({
   onListIdChange,
   signedOut,
   onListUpdated,
+  suggestedTitle,
+  suggestedClub,
+  filters,
+  queryText,
 }: {
   player: Player;
   match: MatchResult | null;
@@ -1102,6 +1179,10 @@ function PlayerCard({
   onListIdChange: (id: string) => void;
   signedOut: boolean;
   onListUpdated: (list: SavedList) => void;
+  suggestedTitle: string;
+  suggestedClub: string;
+  filters: SavedListFilters;
+  queryText: string | null;
 }) {
   return (
     <li className="overflow-visible rounded-2xl border border-slate-800/80 bg-slate-900/70 shadow-lg">
@@ -1136,13 +1217,17 @@ function PlayerCard({
         />
         <AddToSavedList
           playerId={player.id}
+          playerName={player.name}
           lists={lists}
           listId={listId}
           onListIdChange={onListIdChange}
           signedOut={signedOut}
           dict={dict}
           onListUpdated={onListUpdated}
-          showPicker
+          suggestedTitle={suggestedTitle}
+          suggestedClub={suggestedClub}
+          filters={filters}
+          queryText={queryText}
         />
       </div>
     </li>

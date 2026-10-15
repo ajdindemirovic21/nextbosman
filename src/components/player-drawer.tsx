@@ -6,7 +6,7 @@ import { HighlightsLink } from "@/components/highlights-link";
 import { QuickShare } from "@/components/quick-share";
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import type { SavedList } from "@/lib/supabase/types";
+import type { SavedList, SavedListFilters } from "@/lib/supabase/types";
 import { nationalityFlagSrc } from "@/lib/flags";
 import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
 import { formatDate, formatMarketValue } from "@/lib/format";
@@ -28,6 +28,10 @@ type Props = {
   signedOut: boolean;
   onClose: () => void;
   onListUpdated: (list: SavedList) => void;
+  suggestedTitle: string;
+  suggestedClub: string;
+  filters: SavedListFilters;
+  queryText: string | null;
 };
 
 function per90(player: Player, count: number) {
@@ -47,6 +51,10 @@ export function PlayerDrawer({
   signedOut,
   onClose,
   onListUpdated,
+  suggestedTitle,
+  suggestedClub,
+  filters,
+  queryText,
 }: Props) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const club = formatListedClub(player, dict);
@@ -175,13 +183,17 @@ export function PlayerDrawer({
           <AddToSavedList
             key={player.id}
             playerId={player.id}
+            playerName={player.name}
             lists={lists}
             listId={listId}
             onListIdChange={onListIdChange}
             signedOut={signedOut}
             dict={dict}
             onListUpdated={onListUpdated}
-            showPicker
+            suggestedTitle={suggestedTitle}
+            suggestedClub={suggestedClub}
+            filters={filters}
+            queryText={queryText}
           />
         </div>
       </aside>

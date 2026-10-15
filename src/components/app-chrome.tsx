@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useState, type ReactNode } from "react";
+import { Suspense, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { AgentMenu } from "@/components/agent-menu";
 import { BottomNav } from "@/components/bottom-nav";
 import {
@@ -21,10 +21,26 @@ type Props = {
 
 export function AppChrome({ lang, dict, children }: Props) {
   const [profileOpen, setProfileOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const apply = () => {
+      document.documentElement.style.setProperty("--app-header-height", `${el.offsetHeight}px`);
+    };
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950 pt-[max(0.5rem,env(safe-area-inset-top))]">
+      <header
+        ref={headerRef}
+        className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950 pt-[max(0.5rem,env(safe-area-inset-top))]"
+      >
         <div className="mx-auto flex max-w-[1180px] flex-wrap items-center gap-2 px-[max(0.75rem,env(safe-area-inset-left))] py-2 pr-[max(0.75rem,env(safe-area-inset-right))] md:flex-nowrap md:px-6">
           <Link href={`/${lang}`} className="brand min-w-0 shrink-0">
             <LogoMark />

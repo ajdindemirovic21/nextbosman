@@ -1,12 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import { QuickShare } from "@/components/quick-share";
-import { searchPathFromFilters } from "@/lib/list-search";
+import {
+  filterSavedLists,
+  nextListAfterDelete,
+  savedListsPath,
+  searchPathFromFilters,
+} from "@/lib/list-search";
+import { formatListOption } from "@/lib/list-title";
 import { playerSearchPath } from "@/lib/player-link";
 import { uniquePlayerIds } from "@/lib/player-ids";
 import { sharedListPath } from "@/lib/share-token";
@@ -19,12 +26,38 @@ type Props = {
 
 type LoadState = "loading" | "ok" | "auth" | "error";
 
+const LIST_SEARCH_MIN = 6;
+
+async function loadPlayersByIds(ids: string[]): Promise<Record<string, Player>> {
+  const byId: Record<string, Player> = {};
+  const unique = uniquePlayerIds(ids);
+  const chunkSize = 200;
+  for (let i = 0; i < unique.length; i += chunkSize) {
+    const chunk = unique.slice(i, i + chunkSize);
+    const playersRes = await fetch(`/api/players?ids=${encodeURIComponent(chunk.join(","))}`);
+    const playersBody = (await playersRes.json()) as { players?: Player[] };
+    if (!playersRes.ok) throw new Error("load");
+    for (const player of playersBody.players ?? []) {
+      byId[player.id] = player;
+    }
+  }
+  return byId;
+}
+
 export function SavedListsDesk({ lang, dict }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const urlListId = searchParams.get("list")?.trim() || "";
   const [lists, setLists] = useState<SavedList[]>([]);
   const [playersById, setPlayersById] = useState<Record<string, Player>>({});
   const [state, setState] = useState<LoadState>("loading");
   const [notice, setNotice] = useState<string | null>(null);
   const [noticeError, setNoticeError] = useState(false);
+  const [query, setQuery] = useState("");
+  const [failedLoadId, setFailedLoadId] = useState<string | null>(null);
+  const pickerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLElement>(null);
+  const skipScroll = useRef(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -36,22 +69,8 @@ export function SavedListsDesk({ lang, dict }: Props) {
           return;
         }
         if (!res.ok) throw new Error(body.error || dict.account.loadFailed);
-        const nextLists = body.lists ?? [];
-        const ids = uniquePlayerIds(nextLists.flatMap((list) => list.playerIds));
-        const byId: Record<string, Player> = {};
-        const chunkSize = 200;
-        for (let i = 0; i < ids.length; i += chunkSize) {
-          const chunk = ids.slice(i, i + chunkSize);
-          const playersRes = await fetch(`/api/players?ids=${encodeURIComponent(chunk.join(","))}`);
-          const playersBody = (await playersRes.json()) as { players?: Player[] };
-          if (!playersRes.ok) throw new Error(dict.account.loadFailed);
-          for (const player of playersBody.players ?? []) {
-            byId[player.id] = player;
-          }
-        }
         if (!cancelled) {
-          setLists(nextLists);
-          setPlayersById(byId);
+          setLists(body.lists ?? []);
           setState("ok");
         }
       })
@@ -63,7 +82,86 @@ export function SavedListsDesk({ lang, dict }: Props) {
     };
   }, [dict.account.loadFailed]);
 
+  const selected = useMemo(
+    () => lists.find((list) => list.id === urlListId) ?? null,
+    [lists, urlListId],
+  );
+  const missing = state === "ok" && lists.length > 0 && Boolean(urlListId) && !selected;
   const empty = state === "ok" && lists.length === 0;
+  const filtered = useMemo(() => filterSavedLists(lists, query), [lists, query]);
+  const pickerLists = useMemo(() => {
+    if (!selected || filtered.some((list) => list.id === selected.id)) return filtered;
+    return [selected, ...filtered];
+  }, [filtered, selected]);
+  const showSearch = lists.length >= LIST_SEARCH_MIN;
+
+  useEffect(() => {
+    if (state !== "ok" || lists.length === 0 || urlListId) return;
+    router.replace(savedListsPath(lang, lists[0].id), { scroll: false });
+  }, [state, lists, urlListId, lang, router]);
+
+  useEffect(() => {
+    if (missing) skipScroll.current = false;
+  }, [missing]);
+
+  const membersPending = Boolean(
+    selected &&
+      failedLoadId !== selected.id &&
+      uniquePlayerIds(selected.playerIds).some((id) => !playersById[id]),
+  );
+
+  useEffect(() => {
+    if (!selected) return;
+    const needed = uniquePlayerIds(selected.playerIds).filter((id) => !playersById[id]);
+    if (!needed.length) return;
+    let cancelled = false;
+    loadPlayersByIds(needed)
+      .then((byId) => {
+        if (cancelled) return;
+        setPlayersById((current) => ({ ...current, ...byId }));
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setFailedLoadId(selected.id);
+          setNotice(dict.account.loadFailed);
+          setNoticeError(true);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [selected, playersById, dict.account.loadFailed]);
+
+  const selectedId = selected?.id;
+  useEffect(() => {
+    if (!selectedId) return;
+    if (skipScroll.current) {
+      skipScroll.current = false;
+      return;
+    }
+    contentRef.current?.scrollIntoView({ block: "start" });
+  }, [selectedId]);
+
+  useLayoutEffect(() => {
+    const el = pickerRef.current;
+    if (!el) return;
+    const apply = () => {
+      document.documentElement.style.setProperty("--list-picker-height", `${el.offsetHeight}px`);
+    };
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.setProperty("--list-picker-height", "0px");
+    };
+  }, [showSearch, empty, state]);
+
+  function goToList(id: string, mode: "push" | "replace") {
+    const path = savedListsPath(lang, id);
+    if (mode === "replace") router.replace(path, { scroll: false });
+    else router.push(path, { scroll: false });
+  }
 
   return (
     <main className="page">
@@ -86,33 +184,84 @@ export function SavedListsDesk({ lang, dict }: Props) {
         ) : null}
       </section>
       {state === "loading" ? <p className="text-sm text-slate-400">…</p> : null}
-      <ul className="saved-lists">
-        {lists.map((list) => (
-          <SavedListCard
-            key={list.id}
-            list={list}
-            playersById={playersById}
-            lang={lang}
-            dict={dict}
-            onUpdated={(next, message) => {
-              setLists((current) => current.map((item) => (item.id === next.id ? next : item)));
-              if (message) {
-                setNotice(message);
+      {state === "ok" && lists.length > 0 ? (
+        <div ref={pickerRef} className="list-picker">
+          <label className="grid gap-1">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+              {dict.account.myLists}
+            </span>
+            {showSearch ? (
+              <input
+                className="min-h-11 rounded-lg border border-slate-800 bg-slate-950 px-3 text-sm text-white md:max-w-xl"
+                value={query}
+                autoComplete="off"
+                placeholder={dict.account.findListPlaceholder}
+                aria-label={dict.account.findList}
+                onChange={(event) => setQuery(event.target.value)}
+              />
+            ) : null}
+            <select
+              className="min-h-11 w-full rounded-lg border border-slate-800 bg-slate-950 px-3 text-sm text-white md:max-w-xl"
+              value={selected?.id ?? ""}
+              aria-label={dict.account.myLists}
+              onChange={(event) => {
+                const id = event.target.value;
+                if (id) goToList(id, "push");
+              }}
+            >
+              {missing ? <option value="">{dict.account.selectList}</option> : null}
+              {pickerLists.map((list) => (
+                <option key={list.id} value={list.id}>
+                  {formatListOption(list, dict.account.players)}
+                </option>
+              ))}
+            </select>
+          </label>
+          {showSearch && query.trim() && filtered.length === 0 ? (
+            <p className="mt-2 text-sm text-slate-400">{dict.account.noMatchingLists}</p>
+          ) : null}
+        </div>
+      ) : null}
+      <section
+        ref={contentRef}
+        className="list-content"
+      >
+        {missing ? (
+          <p className="lede" role="status">
+            {dict.account.listNotFound}
+          </p>
+        ) : null}
+        {selected ? (
+          <ul className="saved-lists">
+            <SavedListCard
+              list={selected}
+              playersById={playersById}
+              membersLoading={membersPending}
+              lang={lang}
+              dict={dict}
+              onUpdated={(next, message) => {
+                setLists((current) => current.map((item) => (item.id === next.id ? next : item)));
+                if (message) {
+                  setNotice(message);
+                  setNoticeError(false);
+                }
+              }}
+              onDeleted={() => {
+                const next = nextListAfterDelete(lists, selected.id);
+                setLists((current) => current.filter((item) => item.id !== selected.id));
+                setNotice(dict.account.deletedList);
                 setNoticeError(false);
-              }
-            }}
-            onDeleted={() => {
-              setLists((current) => current.filter((item) => item.id !== list.id));
-              setNotice(dict.account.deletedList);
-              setNoticeError(false);
-            }}
-            onError={(message) => {
-              setNotice(message);
-              setNoticeError(true);
-            }}
-          />
-        ))}
-      </ul>
+                if (next) goToList(next.id, "replace");
+                else router.replace(savedListsPath(lang), { scroll: false });
+              }}
+              onError={(message) => {
+                setNotice(message);
+                setNoticeError(true);
+              }}
+            />
+          </ul>
+        ) : null}
+      </section>
     </main>
   );
 }
@@ -120,6 +269,7 @@ export function SavedListsDesk({ lang, dict }: Props) {
 function SavedListCard({
   list,
   playersById,
+  membersLoading,
   lang,
   dict,
   onUpdated,
@@ -128,6 +278,7 @@ function SavedListCard({
 }: {
   list: SavedList;
   playersById: Record<string, Player>;
+  membersLoading: boolean;
   lang: Locale;
   dict: Dictionary;
   onUpdated: (list: SavedList, message?: string) => void;
@@ -233,6 +384,8 @@ function SavedListCard({
       <ul className="mt-3 grid list-none gap-2 p-0">
         {ids.length === 0 ? (
           <li className="text-sm text-slate-500">{dict.account.emptyMembers}</li>
+        ) : membersLoading ? (
+          <li className="text-sm text-slate-500">…</li>
         ) : (
           ids.map((id) => {
             const player = playersById[id];
