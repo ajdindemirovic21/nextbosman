@@ -16,6 +16,7 @@ export type SavedListFilters = {
   position?: Position | "all";
   nationality?: string;
   euOnly?: boolean;
+  minAge?: number;
   maxAge?: number;
   maxMv?: number | "any";
 };

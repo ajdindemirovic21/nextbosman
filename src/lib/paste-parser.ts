@@ -9,6 +9,7 @@ export type PasteParse = {
   positions: Position[];
   club?: string;
   euPassport: boolean;
+  minAge?: number;
   maxAge?: number;
   maxMv?: number;
   salaryEur?: number;
@@ -100,23 +101,31 @@ export function extractClubName(raw: string): string | undefined {
 
 const AGE_BAND = "(?:1[6-9]|[2-3][0-9]|40)";
 
-export function extractMaxAge(raw: string): number | undefined {
+export function extractAgeBounds(raw: string): { minAge?: number; maxAge?: number } {
   const text = fold(raw);
   const range = text.match(new RegExp(`(${AGE_BAND})\\s*(?:-|–|to)\\s*(${AGE_BAND})`));
-  if (range) return Number(range[2]);
+  if (range) return { minAge: Number(range[1]), maxAge: Number(range[2]) };
 
   const exclusive = text.match(
     new RegExp(`\\b(?:under|younger than|below|mlad[ií] od|age\\s*<)\\s*(${AGE_BAND})\\b`),
   );
-  if (exclusive) return Number(exclusive[1]) - 1;
+  if (exclusive) return { maxAge: Number(exclusive[1]) - 1 };
 
   const inclusive = text.match(
     new RegExp(`\\b(?:do|up to|max(?:imum)?(?:\\s+age)?|age\\s*≤|aged?)\\s*(${AGE_BAND})\\b`),
   );
-  if (!inclusive) return undefined;
+  if (!inclusive) return {};
   const after = text.slice((inclusive.index ?? 0) + inclusive[0].length);
-  if (/^\s*(?:[.,]\d{3})?\s*(?:k|m|eura|eur|euro|€)/.test(after)) return undefined;
-  return Number(inclusive[1]);
+  if (/^\s*(?:[.,]\d{3})?\s*(?:k|m|eura|eur|euro|€)/.test(after)) return {};
+  return { maxAge: Number(inclusive[1]) };
+}
+
+export function extractMaxAge(raw: string): number | undefined {
+  return extractAgeBounds(raw).maxAge;
+}
+
+export function extractMinAge(raw: string): number | undefined {
+  return extractAgeBounds(raw).minAge;
 }
 
 export function parseMoneyToEur(raw: string): number | undefined {
@@ -172,6 +181,19 @@ export function extractMoneyNeeds(raw: string): {
     const start = match.index ?? 0;
     const afterAmount = text.slice(start + match[0].length);
     if (/^\s*godin/.test(afterAmount) || /^\s*years?\b/.test(afterAmount)) continue;
+    const unit = (match[2] ?? "").toLowerCase();
+    const hasCurrency = /[€$]/.test(match[0]) || /^(eura|eur|euros?)$/.test(unit);
+    const hasScale = /^(m(?:io|illion)?|k)$/.test(unit);
+    const grouped = /[.,]\d{3}/.test(match[1]);
+    const bare = Number(match[1]);
+    const looksLikeAge =
+      !hasCurrency &&
+      !hasScale &&
+      !grouped &&
+      Number.isInteger(bare) &&
+      bare >= 16 &&
+      bare <= 40;
+    if (looksLikeAge) continue;
     const window = `${text.slice(Math.max(0, start - 28), start)} ${text.slice(start, start + match[0].length + 28)}`;
     const kind = classifyMoneyWindow(window);
     if (kind === "salary" && out.salaryEur == null) out.salaryEur = amount;
@@ -186,6 +208,7 @@ export function pasteHasRecognizedNeeds(parsed: PasteParse): boolean {
     parsed.positions.length ||
       parsed.club ||
       parsed.euPassport ||
+      parsed.minAge ||
       parsed.maxAge ||
       parsed.maxMv ||
       parsed.salaryEur ||
@@ -206,6 +229,7 @@ export function suggestedCatalogStatus(parsed: PasteParse): CatalogStatus | unde
 export type CatalogFiltersFromPaste = {
   positions: Position[] | "all";
   euOnly: boolean;
+  minAge?: number;
   maxAge?: number;
   maxMv: number | "any";
   status?: CatalogStatus;
@@ -215,6 +239,7 @@ export function catalogFiltersFromPaste(parsed: PasteParse): CatalogFiltersFromP
   return {
     positions: parsed.positions.length ? parsed.positions : "all",
     euOnly: parsed.euPassport,
+    minAge: parsed.minAge,
     maxAge: parsed.maxAge,
     maxMv: parsed.maxMv ?? "any",
     status: suggestedCatalogStatus(parsed),
@@ -225,6 +250,7 @@ export function parseWhatsAppPaste(raw: string): PasteParse {
   const text = fold(raw);
   const found = extractPositions(raw);
   const money = extractMoneyNeeds(raw);
+  const age = extractAgeBounds(raw);
   const loan = /\bloan\b|posudba|na posudbu|prestamo/.test(text);
   const wantsFreeAgent =
     /slobodan|slobodni|free\s*agent|bez ugovora|without a club|out of contract/.test(text);
@@ -241,7 +267,8 @@ export function parseWhatsAppPaste(raw: string): PasteParse {
     positions: found,
     position: found[0],
     club: extractClubName(raw),
-    maxAge: extractMaxAge(raw),
+    minAge: age.minAge,
+    maxAge: age.maxAge,
     maxMv: money.maxMv,
     salaryEur: money.salaryEur,
     transferEur: money.transferEur,

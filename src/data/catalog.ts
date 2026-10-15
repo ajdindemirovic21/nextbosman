@@ -12,6 +12,7 @@ export type PlayerQuery = {
   position?: Position | Position[] | "all";
   nationality?: string;
   euOnly?: boolean;
+  minAge?: number;
   maxAge?: number;
   maxMv?: number | "any";
   limit?: number;
@@ -69,8 +70,8 @@ function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
     rows = rows.filter((player) => player.nationality === filters.nationality);
   }
   if (filters.euOnly) rows = rows.filter((player) => player.euPassport);
-  const maxAge = filters.maxAge;
-  if (maxAge) rows = rows.filter((player) => player.age <= maxAge);
+  if (filters.minAge) rows = rows.filter((player) => player.age >= filters.minAge!);
+  if (filters.maxAge) rows = rows.filter((player) => player.age <= filters.maxAge!);
   const maxMv = filters.maxMv;
   if (typeof maxMv === "number") {
     rows = rows.filter((player) => player.marketValueEur <= maxMv);
@@ -104,6 +105,7 @@ async function queryPlayersFromSupabase(filters: PlayerQuery): Promise<PlayerQue
     query = query.eq("nationality", filters.nationality);
   }
   if (filters.euOnly) query = query.eq("eu_passport", true);
+  if (filters.minAge) query = query.gte("age", filters.minAge);
   if (filters.maxAge) query = query.lte("age", filters.maxAge);
   if (filters.maxMv && filters.maxMv !== "any") {
     query = query.lte("market_value_eur", filters.maxMv);

@@ -1,5 +1,5 @@
 import type { Player, Position } from "@/data/mock-players";
-import { extractClubName, extractMaxAge, extractMoneyNeeds, extractPositions, parseWhatsAppPaste } from "@/lib/paste-parser";
+import { extractAgeBounds, extractClubName, extractMoneyNeeds, extractPositions, parseWhatsAppPaste } from "@/lib/paste-parser";
 
 export type Fit = "strong" | "possible" | "weak";
 
@@ -18,23 +18,20 @@ export type ClubBrief = {
   suggestedStretchMv?: number;
 };
 
+export type ConditionStatus = "met" | "unmet" | "unknown";
+
+export type MatchFact = {
+  key: "position" | "age" | "eu" | "marketValue";
+  status: ConditionStatus;
+  have: string;
+  want: string;
+};
+
 export type MatchResult = {
   fit: Fit;
   score: number;
+  facts: MatchFact[];
   reasons: string[];
-};
-
-const RELATED: Record<Position, Position[]> = {
-  GK: [],
-  CB: ["DM", "LB", "RB"],
-  LB: ["RB", "CB", "LW"],
-  RB: ["LB", "CB", "RW"],
-  DM: ["CM", "CB"],
-  CM: ["DM", "AM"],
-  AM: ["CM", "ST", "LW", "RW"],
-  LW: ["RW", "AM", "ST", "LB"],
-  RW: ["LW", "AM", "ST", "RB"],
-  ST: ["AM", "LW", "RW"],
 };
 
 const THIRD_TIER =
@@ -168,14 +165,9 @@ export function parseBrief(raw: string): ClubBrief | null {
     brief.euPassport = true;
   }
 
-  const ageRange = text.match(/(\d{2})\s*(?:-|–|to)\s*(\d{2})/);
-  if (ageRange) {
-    brief.minAge = Number(ageRange[1]);
-    brief.maxAge = Number(ageRange[2]);
-  } else {
-    const maxAge = extractMaxAge(raw);
-    if (maxAge) brief.maxAge = maxAge;
-  }
+  const age = extractAgeBounds(raw);
+  if (age.minAge) brief.minAge = age.minAge;
+  if (age.maxAge) brief.maxAge = age.maxAge;
 
   for (const market of MARKETS) {
     if (market.test(text)) {
@@ -204,7 +196,10 @@ export function briefFromWhatsApp(raw: string): ClubBrief | null {
   if (paste.euPassport) brief.euPassport = true;
   if (paste.club) brief.club = paste.club;
   else delete brief.club;
+  if (paste.minAge) brief.minAge = paste.minAge;
+  else delete brief.minAge;
   if (paste.maxAge) brief.maxAge = paste.maxAge;
+  else delete brief.maxAge;
   if (paste.maxMv) {
     brief.maxMv = paste.maxMv;
     brief.typicalMv = paste.maxMv;
@@ -213,92 +208,78 @@ export function briefFromWhatsApp(raw: string): ClubBrief | null {
   return brief;
 }
 
-/** Highest MV this player might still accept for this brief — only when MV was stated. */
-export function moveCeiling(player: Player, brief: ClubBrief): number | null {
-  if (!brief.maxMv) return null;
-  const typical = brief.typicalMv ?? brief.maxMv;
-  const stretch = brief.stretchMv ?? brief.maxMv;
-  if (!typical || !stretch) return stretch ?? null;
-
-  let cap = typical;
-  cap *= player.availability === "free" ? 2.1 : 1.2;
-  if (player.age >= 30) cap *= 1.3;
-  if (player.age >= 33) cap *= 1.2;
-  if (player.age <= 23) cap *= 0.5;
-  else if (player.age <= 26) cap *= 0.7;
-  return Math.min(Math.round(cap), stretch);
-}
-
-export function isUnrealistic(player: Player, brief: ClubBrief): boolean {
-  if (!brief.maxMv) return false;
-  const ceiling = moveCeiling(player, brief);
-  return Boolean(ceiling && player.marketValueEur > ceiling);
+export function requestedAgeLabel(brief: ClubBrief): string {
+  if (brief.minAge != null && brief.maxAge != null) return `${brief.minAge}–${brief.maxAge}`;
+  if (brief.maxAge != null) return `<=${brief.maxAge}`;
+  if (brief.minAge != null) return `>=${brief.minAge}`;
+  return "";
 }
 
 export function scorePlayer(player: Player, brief: ClubBrief): MatchResult {
-  let score = 42;
-  const reasons: string[] = [];
-  let ceilingFit: Fit | null = null;
+  const facts: MatchFact[] = [];
 
   if (brief.positions.length > 0) {
-    if (brief.positions.includes(player.position)) {
-      score += 26;
-      reasons.push("position");
-    } else if (brief.positions.some((pos) => RELATED[pos].includes(player.position))) {
-      score += 8;
-      reasons.push("positionClose");
-    } else {
-      score -= 26;
-      reasons.push("positionMiss");
-    }
+    const want = brief.positions.join("/");
+    const have = player.position || "";
+    facts.push({
+      key: "position",
+      status: have && brief.positions.includes(player.position) ? "met" : have ? "unmet" : "unknown",
+      have,
+      want,
+    });
   }
 
   if (brief.minAge != null || brief.maxAge != null) {
-    const minAge = brief.minAge ?? 18;
-    const maxAge = brief.maxAge ?? 40;
-    if (player.age >= minAge && player.age <= maxAge) {
-      score += 10;
-      reasons.push("age");
+    const want = requestedAgeLabel(brief);
+    if (!player.age && player.age !== 0) {
+      facts.push({ key: "age", status: "unknown", have: "", want });
     } else {
-      score -= 18;
-      reasons.push("ageOff");
+      const minOk = brief.minAge == null || player.age >= brief.minAge;
+      const maxOk = brief.maxAge == null || player.age <= brief.maxAge;
+      facts.push({
+        key: "age",
+        status: minOk && maxOk ? "met" : "unmet",
+        have: String(player.age),
+        want,
+      });
     }
   }
 
-  const ceiling = moveCeiling(player, brief);
-  if (ceiling) {
-    const ratio = player.marketValueEur / ceiling;
-    if (ratio > 1) {
-      score -= 55;
-      reasons.push("levelUnrealistic");
-      ceilingFit = "weak";
-    } else if (ratio > 0.68) {
-      score -= 10;
-      reasons.push("levelHigh");
-      ceilingFit = "possible";
+  if (brief.maxMv) {
+    const want = String(brief.maxMv);
+    if (!player.marketValueEur) {
+      facts.push({ key: "marketValue", status: "unknown", have: "", want });
     } else {
-      score += 20;
-      reasons.push("level");
+      facts.push({
+        key: "marketValue",
+        status: player.marketValueEur <= brief.maxMv ? "met" : "unmet",
+        have: String(player.marketValueEur),
+        want,
+      });
     }
   }
 
   if (brief.euPassport) {
-    if (player.euPassport) {
-      score += 10;
-      reasons.push("eu");
-    } else {
-      score -= 22;
-      reasons.push("euMiss");
-    }
+    facts.push({
+      key: "eu",
+      status: player.euPassport ? "met" : "unmet",
+      have: player.euPassport ? "eu" : "none",
+      want: "eu",
+    });
   }
 
-  if (player.availability === "expiring") {
-    reasons.push("expiring");
-  }
+  const unmet = facts.filter((fact) => fact.status === "unmet").length;
+  const unknown = facts.filter((fact) => fact.status === "unknown").length;
+  const met = facts.filter((fact) => fact.status === "met").length;
+  let fit: Fit = "possible";
+  if (unmet > 0) fit = "weak";
+  else if (facts.length > 0 && unknown === 0) fit = "strong";
 
-  score = Math.max(0, Math.min(100, score));
-  let fit: Fit = score >= 72 ? "strong" : score >= 50 ? "possible" : "weak";
-  if (ceilingFit === "weak") fit = "weak";
-  if (ceilingFit === "possible" && fit === "strong") fit = "possible";
-  return { fit, score, reasons };
+  const score = Math.max(0, 100 - unmet * 40 - unknown * 15 + met);
+  return {
+    fit,
+    score,
+    facts,
+    reasons: facts.map((fact) => `${fact.key}:${fact.status}`),
+  };
 }

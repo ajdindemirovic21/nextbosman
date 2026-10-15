@@ -11,6 +11,7 @@ import { nationalityFlagSrc } from "@/lib/flags";
 import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
 import { formatDate, formatMarketValue } from "@/lib/format";
 import type { MatchResult } from "@/lib/match-brief";
+import { formatMatchFact } from "@/lib/match-display";
 import { playerWhatsAppShare } from "@/lib/highlights";
 import { contractAccent } from "@/lib/player-ui";
 import { formatSeasonCount, hasSeasonStats } from "@/lib/season-stats";
@@ -83,11 +84,7 @@ export function PlayerDrawer({
           />
         </div>
 
-        {match ? (
-          <p className={`fit-badge fit-${match.fit}`}>
-            {dict.match[match.fit]} · {match.score}
-          </p>
-        ) : null}
+        {match ? <p className={`fit-badge fit-${match.fit}`}>{dict.match[match.fit]}</p> : null}
 
         <p className="drawer-season">{dict.profile.season}</p>
         {hasSeasonStats(player) ? null : (
@@ -158,8 +155,18 @@ export function PlayerDrawer({
 
         {match ? (
           <ul className="reason-list">
-            {match.reasons.map((reason) => (
-              <li key={reason}>{dict.match.reasons[reason as keyof typeof dict.match.reasons]}</li>
+            {match.facts.map((fact) => (
+              <li key={fact.key}>
+                {dict.match[
+                  fact.status === "met"
+                    ? "conditionMet"
+                    : fact.status === "unmet"
+                      ? "conditionUnmet"
+                      : "conditionUnknown"
+                ]}
+                {": "}
+                {formatMatchFact(fact, dict, locale)}
+              </li>
             ))}
           </ul>
         ) : null}

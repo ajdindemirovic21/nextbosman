@@ -34,6 +34,7 @@ export function HomePaste({ lang, dict }: Props) {
     query.set("status", filters.status ?? "all");
     if (filters.positions !== "all") query.set("position", filters.positions.join(","));
     if (filters.euOnly) query.set("eu", "1");
+    if (filters.minAge) query.set("minAge", String(filters.minAge));
     if (filters.maxAge) query.set("maxAge", String(filters.maxAge));
     if (filters.maxMv !== "any") query.set("maxMv", String(filters.maxMv));
     router.push(`/${lang}/search?${query}`);

@@ -5,6 +5,13 @@ import { NextRequest } from "next/server";
 
 const MAX_IDS = 200;
 
+function parseOptionalAge(raw: string | null): number | undefined {
+  if (raw == null || raw === "" || raw === "any") return undefined;
+  const value = Number(raw);
+  if (!Number.isFinite(value) || value < 15 || value > 55) return undefined;
+  return value;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const idsRaw = searchParams.get("ids");
@@ -37,7 +44,8 @@ export async function GET(request: NextRequest) {
     position,
     nationality: searchParams.get("nationality") || "all",
     euOnly: searchParams.get("eu") === "1",
-    maxAge: Number(searchParams.get("maxAge") || 40),
+    minAge: parseOptionalAge(searchParams.get("minAge")),
+    maxAge: parseOptionalAge(searchParams.get("maxAge")),
     maxMv: maxMvRaw && maxMvRaw !== "any" ? Number(maxMvRaw) : "any",
     limit: positionCodes.length > 1 ? 120 : 80,
   });

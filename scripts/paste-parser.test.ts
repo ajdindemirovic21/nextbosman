@@ -7,8 +7,7 @@ import {
   pasteHasRecognizedNeeds,
   suggestedCatalogStatus,
 } from "../src/lib/paste-parser.ts";
-import { briefFromWhatsApp, isUnrealistic, parseBrief } from "../src/lib/match-brief.ts";
-import type { Player } from "../src/data/mock-players.ts";
+import { briefFromWhatsApp, parseBrief } from "../src/lib/match-brief.ts";
 
 const q1 = "FCSB looking for a ST, EU passport, under 28, free agent.";
 const q2 = "Tražimo lijevog ili desnog beka do 25 godina, plata do 10.000 eura mjesečno.";
@@ -27,6 +26,7 @@ assert.equal(suggestedCatalogStatus(p1), "all");
 assert.deepEqual(catalogFiltersFromPaste(p1), {
   positions: ["ST"],
   euOnly: true,
+  minAge: undefined,
   maxAge: 27,
   maxMv: "any",
   status: "all",
@@ -49,6 +49,7 @@ assert.equal(suggestedCatalogStatus(p2), "all");
 assert.deepEqual(catalogFiltersFromPaste(p2), {
   positions: ["LB", "RB"],
   euOnly: false,
+  minAge: undefined,
   maxAge: 25,
   maxMv: "any",
   status: "all",
@@ -66,6 +67,7 @@ assert.equal(p3.maxMv, undefined);
 assert.deepEqual(catalogFiltersFromPaste(p3), {
   positions: ["CB", "DM"],
   euOnly: false,
+  minAge: undefined,
   maxAge: undefined,
   maxMv: "any",
   status: "all",
@@ -81,6 +83,7 @@ assert.equal(suggestedCatalogStatus(p4), "all");
 assert.deepEqual(catalogFiltersFromPaste(p4), {
   positions: ["LW", "RW"],
   euOnly: false,
+  minAge: undefined,
   maxAge: undefined,
   maxMv: "any",
   status: "all",
@@ -95,6 +98,7 @@ assert.equal(parseWhatsAppPaste("under 28").maxAge, 27);
 assert.equal(parseWhatsAppPaste("do 28 godina").maxAge, 28);
 assert.equal(parseWhatsAppPaste("do 25 godina").maxAge, 25);
 assert.equal(parseWhatsAppPaste("age 24-30").maxAge, 30);
+assert.equal(parseWhatsAppPaste("age 24-30").minAge, 24);
 
 assert.equal(parseMoneyToEur("10.000"), 10_000);
 assert.equal(parseMoneyToEur("500k"), 500_000);
@@ -123,15 +127,9 @@ assert.equal(suggestedCatalogStatus(parseWhatsAppPaste("ST, contract expiring"))
 assert.equal(parseBrief("FCSB looking for a ST")?.typicalMv, undefined);
 assert.equal(parseBrief("market value up to 1,5m")?.maxMv, 1_500_000);
 
-const expensive = {
-  age: 26,
-  availability: "expiring",
-  marketValueEur: 50_000_000,
-} as Player;
-assert.equal(isUnrealistic(expensive, briefFromWhatsApp(q1)!), false);
-assert.equal(
-  isUnrealistic(expensive, briefFromWhatsApp("Looking for a ST, market value up to 1,5m")!),
-  true,
-);
+const combo = parseWhatsAppPaste("under 28, market value up to 1,5m");
+assert.equal(combo.maxAge, 27);
+assert.equal(combo.minAge, undefined);
+assert.equal(combo.maxMv, 1_500_000);
 
 console.log("paste-parser tests passed");

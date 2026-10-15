@@ -11,7 +11,8 @@ import type { Dictionary } from "@/i18n/get-dictionary";
 import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
 import { formatMarketValue } from "@/lib/format";
 import { positionLine } from "@/lib/player-ui";
-import { briefFromWhatsApp, isUnrealistic, parseBrief, scorePlayer, type ClubBrief, type MatchResult } from "@/lib/match-brief";
+import { briefFromWhatsApp, parseBrief, scorePlayer, type ClubBrief, type MatchResult } from "@/lib/match-brief";
+import { formatMatchFact } from "@/lib/match-display";
 import {
   PASTE_STORAGE_KEY,
   catalogFiltersFromPaste,
@@ -33,6 +34,14 @@ type Props = {
 };
 
 const valueCaps = [500_000, 1_000_000, 2_000_000, 5_000_000] as const;
+const AGE_OPTIONS = Array.from({ length: 30 }, (_, index) => index + 16);
+
+function parseAgeState(raw: string | null): number | null {
+  if (!raw || raw === "any") return null;
+  const value = Number(raw);
+  if (!Number.isFinite(value) || value < 15 || value > 55) return null;
+  return value;
+}
 
 function statusFromSearch(raw: string | null, fallback: CatalogStatus): CatalogStatus {
   if (raw === "free" || raw === "expiring" || raw === "all") return raw;
@@ -50,9 +59,8 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     .filter((code): code is Position => (positions as readonly string[]).includes(code));
   const startPosition: Position | "all" =
     urlPositionCodes.length === 1 ? urlPositionCodes[0] : "all";
-  const urlAge = Number(searchParams.get("maxAge"));
-  const startAge =
-    Number.isFinite(urlAge) && urlAge >= 18 && urlAge <= 40 ? urlAge : 36;
+  const startAgeMin = parseAgeState(searchParams.get("minAge"));
+  const startAgeMax = parseAgeState(searchParams.get("maxAge"));
   const urlMv = searchParams.get("maxMv");
   const startMv: number | "any" =
     urlMv && urlMv !== "any" && Number.isFinite(Number(urlMv)) ? Number(urlMv) : "any";
@@ -60,13 +68,13 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   const [position, setPosition] = useState<Position | "all">(startPosition);
   const [euOnly, setEuOnly] = useState(searchParams.get("eu") === "1");
   const [valueCap, setValueCap] = useState<number | "any">(startMv);
-  const [ageMax, setAgeMax] = useState<number>(startAge);
+  const [ageMin, setAgeMin] = useState<number | null>(startAgeMin);
+  const [ageMax, setAgeMax] = useState<number | null>(startAgeMax);
   const [nationality, setNationality] = useState(searchParams.get("nationality") || "all");
   const [briefDraft, setBriefDraft] = useState("");
   const [brief, setBrief] = useState<ClubBrief | null>(null);
   const [pasteDraft, setPasteDraft] = useState("");
   const [pasteResult, setPasteResult] = useState<PasteParse | null>(null);
-  const [hideWeak, setHideWeak] = useState(true);
   const [spotlight, setSpotlight] = useState<Player | null>(null);
   const [playerError, setPlayerError] = useState<string | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);
@@ -141,8 +149,10 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     else if (eu === "0") setEuOnly(false);
     const nextNationality = searchParams.get("nationality");
     if (nextNationality) setNationality(nextNationality);
-    const nextAge = Number(searchParams.get("maxAge"));
-    if (Number.isFinite(nextAge) && nextAge >= 18 && nextAge <= 40) setAgeMax(nextAge);
+    const nextMinAge = parseAgeState(searchParams.get("minAge"));
+    if (searchParams.has("minAge")) setAgeMin(nextMinAge);
+    const nextMaxAge = parseAgeState(searchParams.get("maxAge"));
+    if (searchParams.has("maxAge")) setAgeMax(nextMaxAge);
     const nextMv = searchParams.get("maxMv");
     if (nextMv === "any") setValueCap("any");
     else if (nextMv && Number.isFinite(Number(nextMv))) setValueCap(Number(nextMv));
@@ -170,10 +180,13 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
       status: availability,
       position: positionFilter,
       nationality,
-      maxAge: String(brief?.maxAge ?? ageMax),
       eu: euOnly || brief?.euPassport ? "1" : "0",
       maxMv: effectiveMaxMv,
     });
+    const nextMinAge = brief?.minAge ?? ageMin;
+    const nextMaxAge = brief?.maxAge ?? ageMax;
+    if (nextMinAge != null) params.set("minAge", String(nextMinAge));
+    if (nextMaxAge != null) params.set("maxAge", String(nextMaxAge));
     let cancelled = false;
     setLoading(true);
     setSaveState("idle");
@@ -194,7 +207,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     return () => {
       cancelled = true;
     };
-  }, [availability, positionFilter, nationality, ageMax, euOnly, effectiveMaxMv, brief]);
+  }, [availability, positionFilter, nationality, ageMin, ageMax, euOnly, effectiveMaxMv, brief]);
 
   const rows = useMemo(() => {
     const scored = players
@@ -204,10 +217,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
       }))
       .filter((row) => {
         if (!row.match || !brief) return true;
-        if (row.match.reasons.includes("positionMiss")) return false;
-        if (isUnrealistic(row.player, brief)) return false;
-        if (hideWeak && row.match.fit === "weak") return false;
-        return true;
+        return !row.match.facts.some((fact) => fact.key === "position" && fact.status === "unmet");
       });
 
     scored.sort((a, b) => {
@@ -218,7 +228,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     });
 
     return scored;
-  }, [players, brief, hideWeak]);
+  }, [players, brief]);
 
   const saveIds = useMemo(
     () => uniquePlayerIds(rows.map(({ player }) => player.id)),
@@ -288,7 +298,6 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
 
   function runMatch() {
     setBrief(parseBrief(briefDraft));
-    setHideWeak(true);
   }
 
   function clearMatch() {
@@ -306,11 +315,11 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     const nextStatus = suggestedCatalogStatus(parsed);
     if (nextStatus) setAvailability(nextStatus);
     setEuOnly(filters.euOnly);
-    setAgeMax(filters.maxAge ?? 36);
+    setAgeMin(filters.minAge ?? null);
+    setAgeMax(filters.maxAge ?? null);
     setValueCap(filters.maxMv);
     const nextBrief = briefFromWhatsApp(text);
     setBrief(nextBrief);
-    setHideWeak(true);
   }
 
   function applyWhatsAppPaste() {
@@ -360,16 +369,6 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           <button type="button" className="btn-ghost" onClick={clearMatch}>
             {dict.match.clear}
           </button>
-          {brief ? (
-            <label className="check inline">
-              <input
-                type="checkbox"
-                checked={hideWeak}
-                onChange={(event) => setHideWeak(event.target.checked)}
-              />
-              <span>{dict.match.hideWeak}</span>
-            </label>
-          ) : null}
         </div>
         {brief?.club ? <p className="match-for">{dict.match.for.replace("{club}", brief.club)}</p> : null}
         {brief?.market && brief.maxMv ? (
@@ -462,6 +461,8 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           nationality={nationality}
           setNationality={setNationality}
           nationalities={nationalities}
+          ageMin={ageMin}
+          setAgeMin={setAgeMin}
           ageMax={ageMax}
           setAgeMax={setAgeMax}
           valueCap={valueCap}
@@ -499,6 +500,8 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                 nationality={nationality}
                 setNationality={setNationality}
                 nationalities={nationalities}
+                ageMin={ageMin}
+                setAgeMin={setAgeMin}
                 ageMax={ageMax}
                 setAgeMax={setAgeMax}
                 valueCap={valueCap}
@@ -515,8 +518,15 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         <p>
           {loading
             ? "…"
-            : dict.table.results.replace("{count}", String(total > rows.length ? rows.length : total))}
+            : total > rows.length
+              ? dict.table.showingOfTotal
+                  .replace("{shown}", String(rows.length))
+                  .replace("{total}", String(total))
+              : dict.table.results.replace("{count}", String(total))}
         </p>
+        {loading || !brief || rows.length === 0 ? null : (
+          <p className="mb-2 max-w-xl text-sm text-slate-400">{dict.table.rankedAmongLoaded}</p>
+        )}
         {loading || saveIds.length === 0 ? null : (
           <p className="mb-2 max-w-xl text-sm text-slate-400" role="status">
             {total > rows.length
@@ -566,7 +576,8 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                   position,
                   nationality,
                   euOnly,
-                  maxAge: ageMax,
+                  minAge: ageMin ?? undefined,
+                  maxAge: ageMax ?? undefined,
                   maxMv: valueCap,
                 },
                 playerIds,
@@ -621,9 +632,6 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
               locale={locale}
               showFit={Boolean(brief)}
               sharePath={playerSearchPath(locale, player.id, queryString)}
-              ideal={Boolean(
-                match && match.fit === "strong" && match.reasons.includes("position"),
-              )}
               onOpen={() => openPlayer(player.id)}
               lists={savedLists}
               listId={targetListId}
@@ -677,11 +685,6 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
                   dict={dict}
                   locale={locale}
                   showFit={Boolean(brief)}
-                  ideal={Boolean(
-                    match &&
-                      match.fit === "strong" &&
-                      match.reasons.includes("position"),
-                  )}
                   onOpen={() => openPlayer(player.id)}
                   lists={savedLists}
                   listId={targetListId}
@@ -721,7 +724,15 @@ function PasteResultChips({ dict, parsed }: { dict: Dictionary; parsed: PastePar
     applied.push(`${dict.paste.position}: ${dict.positions[code]}`);
   }
   if (parsed.euPassport) applied.push(dict.paste.eu);
-  if (parsed.maxAge) applied.push(dict.paste.age.replace("{age}", String(parsed.maxAge)));
+  if (parsed.minAge && parsed.maxAge) {
+    applied.push(
+      dict.paste.ageRange.replace("{min}", String(parsed.minAge)).replace("{max}", String(parsed.maxAge)),
+    );
+  } else if (parsed.minAge) {
+    applied.push(dict.paste.ageMin.replace("{age}", String(parsed.minAge)));
+  } else if (parsed.maxAge) {
+    applied.push(dict.paste.age.replace("{age}", String(parsed.maxAge)));
+  }
   if (parsed.maxMv) {
     applied.push(dict.paste.marketValue.replace("{value}", formatMarketValue(parsed.maxMv, "en")));
   }
@@ -776,7 +787,6 @@ function PlayerRow({
   dict,
   locale,
   showFit,
-  ideal,
   onOpen,
   lists,
   listId,
@@ -789,7 +799,6 @@ function PlayerRow({
   dict: Dictionary;
   locale: string;
   showFit: boolean;
-  ideal: boolean;
   onOpen: () => void;
   lists: SavedList[];
   listId: string;
@@ -801,9 +810,22 @@ function PlayerRow({
     <tr>
       {showFit && match ? (
         <td>
-          <span className={`fit-badge fit-${match.fit}`}>
-            {ideal ? dict.match.ideal : dict.match[match.fit]}
-          </span>
+          <span className={`fit-badge fit-${match.fit}`}>{dict.match[match.fit]}</span>
+          <ul className="mt-2 grid gap-1 text-xs text-slate-400">
+            {match.facts.map((fact) => (
+              <li key={fact.key}>
+                {dict.match[
+                  fact.status === "met"
+                    ? "conditionMet"
+                    : fact.status === "unmet"
+                      ? "conditionUnmet"
+                      : "conditionUnknown"
+                ]}
+                {": "}
+                {formatMatchFact(fact, dict, locale)}
+              </li>
+            ))}
+          </ul>
         </td>
       ) : showFit ? (
         <td>—</td>
@@ -814,7 +836,6 @@ function PlayerRow({
             {player.name}
           </button>
           <span className={`pos-badge pos-${positionLine(player.position)}`}>{player.position}</span>
-          {ideal ? <span className="ideal-tag">{dict.match.ideal}</span> : null}
           <HighlightsLink playerName={player.name} dict={dict} compact />
         </span>
         <div className="mt-2">
@@ -861,6 +882,8 @@ function FilterFields({
   nationality,
   setNationality,
   nationalities,
+  ageMin,
+  setAgeMin,
   ageMax,
   setAgeMax,
   valueCap,
@@ -875,8 +898,10 @@ function FilterFields({
   nationality: string;
   setNationality: (value: string) => void;
   nationalities: string[];
-  ageMax: number;
-  setAgeMax: (value: number) => void;
+  ageMin: number | null;
+  setAgeMin: (value: number | null) => void;
+  ageMax: number | null;
+  setAgeMax: (value: number | null) => void;
   valueCap: number | "any";
   setValueCap: (value: number | "any") => void;
   euOnly: boolean;
@@ -911,15 +936,41 @@ function FilterFields({
       </label>
       <label>
         <span>
-          {dict.filters.age} ≤ {ageMax}
+          {dict.filters.age} · {dict.filters.minAge}
         </span>
-        <input
-          type="range"
-          min={18}
-          max={40}
-          value={ageMax}
-          onChange={(event) => setAgeMax(Number(event.target.value))}
-        />
+        <select
+          value={ageMin ?? "any"}
+          onChange={(event) => {
+            const next = event.target.value;
+            setAgeMin(next === "any" ? null : Number(next));
+          }}
+        >
+          <option value="any">{dict.filters.anyAge}</option>
+          {AGE_OPTIONS.map((age) => (
+            <option key={`min-${age}`} value={age}>
+              {age}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        <span>
+          {dict.filters.age} · {dict.filters.maxAge}
+        </span>
+        <select
+          value={ageMax ?? "any"}
+          onChange={(event) => {
+            const next = event.target.value;
+            setAgeMax(next === "any" ? null : Number(next));
+          }}
+        >
+          <option value="any">{dict.filters.anyAge}</option>
+          {AGE_OPTIONS.map((age) => (
+            <option key={`max-${age}`} value={age}>
+              {age}
+            </option>
+          ))}
+        </select>
       </label>
       <label>
         <span>{dict.filters.marketValue}</span>
@@ -959,7 +1010,6 @@ function PlayerCard({
   dict,
   locale,
   showFit,
-  ideal,
   sharePath,
   onOpen,
   lists,
@@ -973,7 +1023,6 @@ function PlayerCard({
   dict: Dictionary;
   locale: string;
   showFit: boolean;
-  ideal: boolean;
   sharePath: string;
   onOpen: () => void;
   lists: SavedList[];
@@ -992,15 +1041,19 @@ function PlayerCard({
         <span className="flex min-w-0 flex-wrap items-center gap-2">
           <span className="min-w-0 break-words font-bold text-white">{player.name}</span>
           <span className={`pos-badge pos-${positionLine(player.position)}`}>{player.position}</span>
-          {ideal ? <span className="ideal-tag">{dict.match.ideal}</span> : null}
         </span>
         <span className="break-words text-sm text-slate-400">
           {formatListedClub(player, dict)} · {player.age} · {formatMarketValue(player.marketValueEur, locale)}
         </span>
         {showFit && match ? (
-          <span className={`fit-badge fit-${match.fit} w-fit`}>
-            {ideal ? dict.match.ideal : dict.match[match.fit]}
-          </span>
+          <>
+            <span className={`fit-badge fit-${match.fit} w-fit`}>{dict.match[match.fit]}</span>
+            <span className="grid gap-1 text-xs text-slate-400">
+              {match.facts.map((fact) => (
+                <span key={fact.key}>{formatMatchFact(fact, dict, locale)}</span>
+              ))}
+            </span>
+          </>
         ) : null}
       </button>
       <div className="px-4 pb-3">

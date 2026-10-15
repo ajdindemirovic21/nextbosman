@@ -13,6 +13,9 @@ export function searchPathFromFilters(locale: string, filters: SavedListFilters)
   params.set("position", position);
   params.set("nationality", filters.nationality?.trim() || "all");
   params.set("eu", filters.euOnly ? "1" : "0");
+  if (typeof filters.minAge === "number" && Number.isFinite(filters.minAge)) {
+    params.set("minAge", String(filters.minAge));
+  }
   if (typeof filters.maxAge === "number" && Number.isFinite(filters.maxAge)) {
     params.set("maxAge", String(filters.maxAge));
   }
