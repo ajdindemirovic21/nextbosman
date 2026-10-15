@@ -42,29 +42,35 @@ export function HomePaste({ lang, dict }: Props) {
 
   return (
     <section
-      className="home-paste box-border w-full min-w-0 max-w-full rounded-2xl border border-slate-800/80 bg-slate-900/70 p-4 shadow-xl backdrop-blur-md md:p-6"
+      className="home-paste box-border w-full min-w-0 max-w-full rounded-2xl bg-[var(--bg-elev)] p-3 md:p-5"
       aria-labelledby="home-paste-title"
     >
-      <p className="kicker text-xs font-semibold uppercase tracking-wider text-emerald-400">
-        {dict.paste.title}
-      </p>
       <h2
         id="home-paste-title"
-        className="text-xl font-bold tracking-tight break-words text-white sm:text-2xl"
+        className="text-lg font-semibold tracking-tight break-words text-[var(--text)] sm:text-xl"
       >
         {dict.home.pasteHeadline}
       </h2>
       <p className="home-paste-lead break-words">{dict.paste.hint}</p>
       <textarea
-        className="box-border max-w-full min-w-0 w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-3 text-sm leading-6 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none sm:px-4"
+        className="box-border max-w-full min-w-0 w-full rounded-xl bg-[var(--bg)] px-3 py-3 text-base leading-7 text-slate-100 placeholder:text-slate-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 sm:px-4 sm:text-sm sm:leading-6"
         value={text}
         onChange={(event) => setText(event.target.value)}
         placeholder={dict.paste.placeholder}
-        rows={6}
+        rows={5}
       />
-      <button type="button" className="btn-primary max-w-full" onClick={run} disabled={!text.trim()}>
-        {dict.paste.apply}
-      </button>
+      <div className="flex max-w-full flex-wrap items-center gap-3">
+        <button type="button" className="btn-primary max-w-full" onClick={run} disabled={!text.trim()}>
+          {dict.paste.apply}
+        </button>
+        <button
+          type="button"
+          className="btn-text max-w-full"
+          onClick={() => setText(dict.home.exampleRequest)}
+        >
+          {dict.home.exampleCta}
+        </button>
+      </div>
     </section>
   );
 }

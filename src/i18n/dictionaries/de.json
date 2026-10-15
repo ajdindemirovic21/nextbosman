@@ -23,11 +23,12 @@
     "search": "Suche",
     "free": "Abgelaufen / unbekannt",
     "expiring": "Gelistetes Datum",
-    "support": "Support",
-    "lists": "Listen",
-    "signIn": "Agent-Login",
+    "support": "Hilfe",
+    "lists": "Meine Listen",
+    "signIn": "Anmelden",
     "parser": "WhatsApp",
-    "profile": "Profil"
+    "profile": "Profil",
+    "language": "Sprache"
   },
   "footer": {
     "free": "Der Schreibtisch bleibt kostenlos.",
@@ -54,9 +55,9 @@
   },
   "home": {
     "kicker": "Für Fußballberater",
-    "slogan": "Der nächste Bosman ist schon auf dem Markt.",
-    "pasteHeadline": "WhatsApp einfügen. Namen bekommen.",
-    "lead": "Dein Vorteil ist Timing. Ein gelistetes Vertragsdatum, ein Klub-Briefing, ein Sportchef der heute Nacht einen Namen braucht — das ist das Fenster.",
+    "slogan": "Vom Klubauftrag zur Spielerliste",
+    "pasteHeadline": "Klubanfrage aus WhatsApp einfügen",
+    "lead": "Finde Spieler, die zu den Anforderungen deines Klubs passen.",
     "stats": [
       {
         "label": "13.000+ Spielerdatenbank"
@@ -70,24 +71,24 @@
     ],
     "how": [
       {
-        "title": "1. Briefing einfügen",
-        "text": "Klub-Anfrage reinkopieren"
+        "title": "1. Einfügen",
+        "text": "Klubanfrage einfügen"
       },
       {
-        "title": "2. Smart Match",
-        "text": "Sofortsuche in der Datenbank"
+        "title": "2. Abgleichen",
+        "text": "Nach genannten, prüfbaren Bedingungen filtern"
       },
       {
-        "title": "3. An den Klub senden",
-        "text": "WhatsApp-Profil erzeugen"
+        "title": "3. Senden",
+        "text": "Spielerprofil öffnen"
       }
     ],
-    "purpose": "NextBosman ist der weltweite Schreibtisch für gelistete Vertragsdaten. Klub-Briefing einfügen und Namen zum Auftrag matchen. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
+    "purpose": "NextBosman durchsucht weltweit gelistete Vertragsdaten und ordnet Namen einer Klubanfrage zu.",
     "ctaFree": "Abgelaufene / unbekannte Verträge",
-    "ctaFreeHint": "Gelisteter vergangener Ablauf oder fehlende Vertragsdaten. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
+    "ctaFreeHint": "Gelisteter Ablauf in der Vergangenheit oder kein Datum in der Quelle.",
     "ctaExpiring": "Gelistetes zukünftiges Ablaufdatum",
-    "ctaExpiringHint": "Die Quelle nennt ein zukünftiges Datum. Das ist keine Live-Bestätigung.",
-    "ctaMatch": "Klub-Briefing matchen",
+    "ctaExpiringHint": "Ein zukünftiges Datum ist gelistet. Keine Live-Bestätigung.",
+    "ctaMatch": "Klubanfrage abgleichen",
     "ctaMatchHint": "Einfügen, was der Klub will.",
     "points": [
       {
@@ -95,14 +96,17 @@
         "text": "Zuerst abgelaufene oder unbekannte Verträge, dann gelistete zukünftige Daten. Die Daten kommen aus der Quelle, nicht aus einer Live-Prüfung."
       },
       {
-        "title": "Würden sie kommen?",
-        "text": "Matching fragt, ob ein Spieler Liga und Klub wirklich annehmen würde — nicht nur, ob die Position passt."
+        "title": "Prüfbare Bedingungen",
+        "text": "Der Abgleich prüft Position, Alter, EU-Pass und gelistete Daten gegen die Klubanfrage. Er schätzt nicht, ob ein Transfer zustande kommt."
       },
       {
-        "title": "Stats per Klick",
+        "title": "Kennzahlen per Klick",
         "text": "Spiele, Tore, Vorlagen, Minuten — genug, um zu wissen, ob der Anruf lohnt."
       }
-    ]
+    ],
+    "exampleCta": "Beispielauftrag einfügen",
+    "exampleRequest": "FCSB sucht ST, Höchstalter 27, EU-Pass",
+    "disclaimer": "Die aktuelle Verfügbarkeit ist nicht bestätigt."
   },
   "search": {
     "title": "Der Schreibtisch",

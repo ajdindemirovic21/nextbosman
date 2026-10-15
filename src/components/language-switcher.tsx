@@ -5,17 +5,18 @@ import { localeLabels, locales, type Locale } from "@/i18n/config";
 
 type Props = {
   current: Locale;
+  label: string;
 };
 
-export function LanguageSwitcher({ current }: Props) {
+export function LanguageSwitcher({ current, label }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
   return (
-    <label className="lang-switch relative inline-flex shrink-0">
-      <span className="sr-only">Language</span>
+    <label className="lang-switch relative inline-flex max-w-[9.5rem] shrink-0">
+      <span className="sr-only">{label}</span>
       <select
-        className="min-h-10 min-w-[7.5rem] max-w-full appearance-none rounded-lg border border-slate-500 bg-slate-800 py-2 pl-3 pr-8 text-sm font-medium text-white focus:border-emerald-500 focus:outline-none"
+        className="min-h-10 w-full min-w-[6.75rem] appearance-none truncate rounded-lg bg-[var(--bg-row)] py-2 pl-2.5 pr-7 text-sm font-medium text-white"
         value={current}
         onChange={(event) => {
           const next = event.target.value as Locale;
@@ -34,12 +35,12 @@ export function LanguageSwitcher({ current }: Props) {
   );
 }
 
-export function LanguageSwitcherFallback({ current }: Props) {
+export function LanguageSwitcherFallback({ current, label }: Props) {
   return (
-    <label className="lang-switch relative inline-flex shrink-0">
-      <span className="sr-only">Language</span>
+    <label className="lang-switch relative inline-flex max-w-[9.5rem] shrink-0">
+      <span className="sr-only">{label}</span>
       <select
-        className="min-h-10 min-w-[7.5rem] max-w-full appearance-none rounded-lg border border-slate-500 bg-slate-800 py-2 pl-3 pr-8 text-sm font-medium text-white"
+        className="min-h-10 w-full min-w-[6.75rem] appearance-none truncate rounded-lg bg-[var(--bg-row)] py-2 pl-2.5 pr-7 text-sm font-medium text-white"
         value={current}
         disabled
       >

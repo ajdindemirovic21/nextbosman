@@ -1,6 +1,8 @@
+import { NbMarkGraphic } from "@/components/logo-mark";
+
 export const ogImageSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
-export const ogAlt = "NextBosman — listed contract dates for football agents";
+export const ogAlt = "NextBosman — find players who match a club request";
 
 export function OgShareImage() {
   return (
@@ -12,75 +14,46 @@ export function OgShareImage() {
         flexDirection: "column",
         justifyContent: "center",
         padding: "72px 80px",
-        background: "#0B0F17",
-        color: "#f8fafc",
+        background: "#1a2330",
+        color: "#eef3f8",
         position: "relative",
       }}
     >
       <div
         style={{
           position: "absolute",
-          top: -120,
-          left: 280,
-          width: 640,
+          top: -140,
+          left: 220,
+          width: 720,
           height: 420,
           borderRadius: 999,
-          background: "rgba(16, 185, 129, 0.16)",
+          background: "rgba(56, 82, 110, 0.28)",
         }}
       />
       <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+        <NbMarkGraphic size={112} color="#eef3f8" />
         <div
           style={{
-            width: 148,
-            height: 148,
-            borderRadius: 74,
-            background: "#f8fafc",
-            border: "6px solid #111111",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            fontSize: 64,
+            fontWeight: 700,
+            letterSpacing: -1.4,
+            lineHeight: 1.05,
           }}
         >
-          <div
-            style={{
-              width: 46,
-              height: 46,
-              background: "#111111",
-              transform: "rotate(18deg)",
-            }}
-          />
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              fontSize: 22,
-              letterSpacing: 4,
-              textTransform: "uppercase",
-              color: "#34d399",
-              fontWeight: 700,
-            }}
-          >
-            For football agents
-          </div>
-          <div style={{ fontSize: 72, fontWeight: 800, letterSpacing: -2, lineHeight: 1.05 }}>
-            NextBosman
-          </div>
+          NextBosman
         </div>
       </div>
       <div
         style={{
-          marginTop: 36,
-          fontSize: 36,
-          fontWeight: 700,
-          lineHeight: 1.25,
-          maxWidth: 920,
-          color: "#e2e8f0",
+          marginTop: 32,
+          fontSize: 34,
+          fontWeight: 600,
+          lineHeight: 1.3,
+          maxWidth: 880,
+          color: "#c5d0dc",
         }}
       >
-        The next Bosman is already out there.
-      </div>
-      <div style={{ marginTop: 16, fontSize: 24, color: "#94a3b8", maxWidth: 880 }}>
-        Listed contract dates worldwide. Current availability is not confirmed.
+        Find players who match your club’s requirements.
       </div>
     </div>
   );

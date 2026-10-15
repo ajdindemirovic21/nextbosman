@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import { GoogleSignIn } from "@/components/google-sign-in";
@@ -17,11 +17,13 @@ type Props = {
 
 export function AgentMenu({ lang, dict, embedded }: Props) {
   const [user, setUser] = useState<User | null>(null);
+  const [authReady, setAuthReady] = useState(!isSupabaseConfigured());
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   function openPanel() {
     setOpen(true);
@@ -29,14 +31,39 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
   }
 
   useEffect(() => {
-    if (!isSupabaseConfigured()) return;
+    if (!isSupabaseConfigured()) {
+      setAuthReady(true);
+      return;
+    }
     const supabase = createBrowserSupabase();
-    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user ?? null);
+      setAuthReady(true);
+    });
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      setAuthReady(true);
     });
     return () => data.subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!open || embedded) return;
+    function onPointer(event: MouseEvent) {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("keydown", onKey);
+    const first = rootRef.current?.querySelector<HTMLElement>("button, input");
+    queueMicrotask(() => first?.focus());
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open, embedded]);
 
   async function submit(mode: "in" | "up") {
     setBusy(true);
@@ -65,6 +92,14 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
     setUser(null);
   }
 
+  if (!authReady) {
+    return embedded ? (
+      <p className="text-sm text-slate-400">{dict.nav.profile}</p>
+    ) : (
+      <div className="agent-menu min-h-10 w-10" aria-hidden />
+    );
+  }
+
   if (user) {
     const meta = user.user_metadata ?? {};
     const name = String(meta.full_name || meta.name || user.email || "Agent");
@@ -73,17 +108,7 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
 
     return (
       <div className={embedded ? "grid gap-3" : "agent-menu"}>
-        <Link
-          className={
-            embedded
-              ? "whitespace-nowrap rounded-lg px-3 py-1.5 text-sm text-slate-300 no-underline"
-              : "!hidden whitespace-nowrap rounded-lg px-3 py-1.5 text-sm text-slate-300 no-underline transition hover:bg-slate-800/60 hover:text-white md:!inline-flex"
-          }
-          href={`/${lang}/lists`}
-        >
-          {dict.nav.lists}
-        </Link>
-        <span className="inline-flex min-w-0 max-w-[12rem] items-center gap-2">
+        <span className="inline-flex min-w-0 max-w-[10rem] items-center gap-2 sm:max-w-[12rem]">
           {photo ? (
             <img
               src={photo}
@@ -98,17 +123,23 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
               {initial}
             </span>
           )}
-          <span className="min-w-0 truncate text-xs text-slate-200" title={user.email ?? name}>
+          <span className="hidden min-w-0 truncate text-sm text-slate-100 lg:inline" title={user.email ?? name}>
             {name}
           </span>
         </span>
-        <button
-          type="button"
-          className="shrink-0 whitespace-nowrap rounded-lg border border-emerald-500/60 bg-emerald-500/10 px-3 py-1.5 text-sm font-medium text-emerald-400 transition hover:bg-emerald-500/20"
-          onClick={() => void signOut()}
-        >
+        {embedded ? (
+          <Link className="btn-text" href={`/${lang}/lists`}>
+            {dict.nav.lists}
+          </Link>
+        ) : null}
+        <button type="button" className="btn-secondary shrink-0" onClick={() => void signOut()}>
           {dict.account.signOut}
         </button>
+        {embedded ? null : (
+          <Link className="btn-text hidden xl:inline" href={`/${lang}/support`}>
+            {dict.nav.support}
+          </Link>
+        )}
       </div>
     );
   }
@@ -116,43 +147,52 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
   const showForm = embedded || open;
 
   return (
-    <div className={embedded ? "grid gap-3" : "agent-menu"}>
+    <div ref={rootRef} className={embedded ? "grid gap-3" : "agent-menu"}>
       {embedded ? null : (
         <>
-          <GoogleSignIn lang={lang} dict={dict} compact />
+          <Link className="btn-text hidden xl:inline" href={`/${lang}/support`}>
+            {dict.nav.support}
+          </Link>
           <button
             type="button"
-            className="min-h-10 shrink-0 whitespace-nowrap rounded-lg border border-emerald-500/60 bg-emerald-500/10 px-3 py-2 text-sm font-medium text-emerald-400 transition hover:bg-emerald-500/20"
+            className="btn-primary min-h-10 shrink-0 px-3 py-2 text-sm"
+            aria-expanded={open}
+            aria-haspopup="dialog"
+            aria-controls="sign-in-dialog"
             onClick={() => (open ? setOpen(false) : openPanel())}
           >
             {dict.account.signIn}
-          </button>
-          <button
-            type="button"
-            className="min-h-10 shrink-0 whitespace-nowrap rounded-lg border border-slate-500 bg-slate-800 px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
-            onClick={() => (open ? setOpen(false) : openPanel())}
-          >
-            {dict.account.signUp}
           </button>
         </>
       )}
       {showForm ? (
         <form
+          id={embedded ? undefined : "sign-in-dialog"}
+          role={embedded ? undefined : "dialog"}
+          aria-label={dict.account.signIn}
           className={
             embedded
               ? "grid gap-3"
-              : "agent-panel rounded-2xl border border-slate-800/80 bg-slate-900/70 shadow-xl backdrop-blur-md"
+              : "agent-panel rounded-2xl border border-slate-800/80 bg-slate-900/95 shadow-xl backdrop-blur-md"
           }
           onSubmit={(event) => {
             event.preventDefault();
             void submit("in");
           }}
         >
+          {embedded ? null : (
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-sm font-semibold text-white">{dict.account.signIn}</p>
+              <button type="button" className="btn-secondary px-3 py-1.5 text-sm" onClick={() => setOpen(false)}>
+                {dict.profile.close}
+              </button>
+            </div>
+          )}
           <GoogleSignIn lang={lang} dict={dict} />
           <label>
             {dict.account.email}
             <input
-              className="w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2 text-slate-100 focus:border-emerald-500 focus:outline-none"
+              className="w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2 text-slate-100 focus-visible:border-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
               type="email"
               autoComplete="email"
               value={email}
@@ -163,7 +203,7 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
           <label>
             {dict.account.password}
             <input
-              className="w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2 text-slate-100 focus:border-emerald-500 focus:outline-none"
+              className="w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2 text-slate-100 focus-visible:border-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
               type="password"
               autoComplete="current-password"
               value={password}
@@ -172,16 +212,18 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
               minLength={6}
             />
           </label>
-          {message ? <p className="agent-msg">{message}</p> : null}
+          {message ? <p className="agent-msg" role="alert">{message}</p> : null}
           <div className="agent-actions">
-            <button type="submit" disabled={busy}>
+            <button type="submit" className="btn-primary" disabled={busy}>
               {dict.account.signIn}
             </button>
-            <button type="button" disabled={busy} onClick={() => void submit("up")}>
+            <button type="button" className="btn-secondary" disabled={busy} onClick={() => void submit("up")}>
               {dict.account.signUp}
             </button>
           </div>
-          <p className="agent-hint">{dict.account.confirm}</p>
+          <Link className="btn-text" href={`/${lang}/support`}>
+            {dict.nav.support}
+          </Link>
         </form>
       ) : null}
     </div>

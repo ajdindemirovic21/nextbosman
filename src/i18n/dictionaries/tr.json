@@ -24,10 +24,11 @@
     "free": "Dolmuş / bilinmeyen",
     "expiring": "Listelenen tarih",
     "support": "Destek",
-    "lists": "Listeler",
-    "signIn": "Ajan girişi",
+    "lists": "Listelerim",
+    "signIn": "Giriş yap",
     "parser": "WhatsApp",
-    "profile": "Profil"
+    "profile": "Profil",
+    "language": "Dil"
   },
   "footer": {
     "free": "Masa ücretsiz kalır.",
@@ -54,9 +55,9 @@
   },
   "home": {
     "kicker": "Futbol menajerleri için",
-    "slogan": "Bir sonraki Bosman zaten piyasada.",
-    "pasteHeadline": "WhatsApp’ı yapıştır. İsimleri al.",
-    "lead": "Avantajın zamanlamadır. Listelenen sözleşme tarihi, kulüp brifi, bu gece isim isteyen sportif direktör — pencere budur.",
+    "slogan": "Kulüp talebinden oyuncu listesine",
+    "pasteHeadline": "Kulüp talebini WhatsApp’tan yapıştır",
+    "lead": "Kulübünün şartlarına uyan oyuncuları bul.",
     "stats": [
       {
         "label": "13.000+ oyuncu veritabanı"
@@ -70,24 +71,24 @@
     ],
     "how": [
       {
-        "title": "1. Brifi yapıştır",
+        "title": "1. Yapıştır",
         "text": "Kulüp talebini ekle"
       },
       {
-        "title": "2. Akıllı eşleşme",
-        "text": "Veritabanında anında arama"
+        "title": "2. Eşleştir",
+        "text": "Belirtilen, kontrol edilebilir koşullara göre filtrele"
       },
       {
-        "title": "3. Kulübe gönder",
-        "text": "WhatsApp profili oluştur"
+        "title": "3. Gönder",
+        "text": "Oyuncu profilini aç"
       }
     ],
-    "purpose": "NextBosman, listelenen sözleşme tarihleri için dünya masasıdır. Kulüp brifini yapıştır ve isimleri eşleştir. Güncel müsaitlik doğrulanmamıştır.",
+    "purpose": "NextBosman dünyada listelenen sözleşme tarihlerini arar ve isimleri kulüp talebiyle eşleştirir.",
     "ctaFree": "Süresi dolmuş / bilinmeyen sözleşmeler",
-    "ctaFreeHint": "Listelenen geçmiş bitiş veya eksik sözleşme verisi. Güncel müsaitlik doğrulanmamıştır.",
+    "ctaFreeHint": "Listelenen geçmiş bitiş veya kaynakta sözleşme tarihi yok.",
     "ctaExpiring": "Listelenen gelecek bitiş",
-    "ctaExpiringHint": "Kaynak gelecekte bir tarih listeler. Bu canlı onay değildir.",
-    "ctaMatch": "Kulüp brifi eşleştir",
+    "ctaExpiringHint": "Gelecek bir tarih listelenir. Canlı onay değildir.",
+    "ctaMatch": "Kulüp talebini eşleştir",
     "ctaMatchHint": "Kulübün ne istediğini yapıştır.",
     "points": [
       {
@@ -95,14 +96,17 @@
         "text": "Önce süresi dolmuş veya bilinmeyen sözleşmeler, sonra listelenen gelecek bitişler. Tarihler kaynaktan gelir, canlı kontrolden değil."
       },
       {
-        "title": "Gelirler mi?",
-        "text": "Matching, oyuncunun o ligi ve kulübü gerçekten kabul edip etmeyeceğine bakar — sadece mevki uyumuna değil."
+        "title": "Kontrol edilebilir koşullar",
+        "text": "Eşleştirme mevki, yaş, AB pasaportu ve listelenen tarihleri kulüp talebiyle karşılaştırır. Transfer olup olmayacağını tahmin etmez."
       },
       {
         "title": "Tıklayınca istatistik",
         "text": "Maç, gol, asist, dakika — aramanın değip değmediğini anlamak için yeter."
       }
-    ]
+    ],
+    "exampleCta": "Örnek talep kullan",
+    "exampleRequest": "FCSB ST arıyor, en fazla 27 yaş, AB pasaportu",
+    "disclaimer": "Oyuncunun güncel transfer durumu doğrulanmamıştır."
   },
   "search": {
     "title": "Masa",
@@ -266,7 +270,7 @@
   "account": {
     "email": "E-posta",
     "password": "Şifre",
-    "signIn": "Giriş",
+    "signIn": "Giriş yap",
     "signUp": "Hesap oluştur",
     "signOut": "Çıkış",
     "google": "Google",

@@ -24,10 +24,11 @@
     "free": "Expired / unknown",
     "expiring": "Listed expiry",
     "support": "Support",
-    "lists": "Saved lists",
-    "signIn": "Agent sign in",
+    "lists": "My lists",
+    "signIn": "Sign in",
     "parser": "WhatsApp",
-    "profile": "Profile"
+    "profile": "Profile",
+    "language": "Language"
   },
   "footer": {
     "free": "The desk stays free.",
@@ -54,25 +55,43 @@
   },
   "home": {
     "kicker": "For football agents",
-    "slogan": "The next Bosman is already out there.",
-    "pasteHeadline": "Paste the WhatsApp. Get names.",
-    "lead": "Your edge is timing. A listed contract date, a club brief, a sporting director who needs a name tonight — that is the window.",
+    "slogan": "From a club request to a player list",
+    "pasteHeadline": "Paste the club request from WhatsApp",
+    "lead": "Find players who match your club’s requirements.",
+    "exampleCta": "Use an example request",
+    "exampleRequest": "FCSB looking for a ST, max age 27, EU passport",
+    "disclaimer": "Current availability is not confirmed.",
     "stats": [
-      { "label": "13,000+ player database" },
-      { "label": "Listed contract dates" },
-      { "label": "EU passport filter" }
+      {
+        "label": "13,000+ player database"
+      },
+      {
+        "label": "Listed contract dates"
+      },
+      {
+        "label": "EU passport filter"
+      }
     ],
     "how": [
-      { "title": "1. Paste the brief", "text": "Drop in the club request" },
-      { "title": "2. Smart match", "text": "Instant search of the database" },
-      { "title": "3. Send to the club", "text": "Generate a WhatsApp profile" }
+      {
+        "title": "1. Paste",
+        "text": "Add the club request"
+      },
+      {
+        "title": "2. Match",
+        "text": "Filter by stated, checkable conditions"
+      },
+      {
+        "title": "3. Send",
+        "text": "Open a player profile"
+      }
     ],
-    "purpose": "NextBosman is a worldwide desk for listed contract dates. Paste a club brief and match names to the request. Current availability is not confirmed.",
+    "purpose": "NextBosman searches listed contract dates worldwide and matches names to a club request.",
     "ctaFree": "Expired / unknown contracts",
-    "ctaFreeHint": "Listed past expiry or missing contract data. Current availability is not confirmed.",
+    "ctaFreeHint": "Past listed expiry, or no contract date in the source.",
     "ctaExpiring": "Listed future expiry",
-    "ctaExpiringHint": "A future date is listed in the source. Not a live confirmation.",
-    "ctaMatch": "Match a club brief",
+    "ctaExpiringHint": "A future date is listed. Not a live confirmation.",
+    "ctaMatch": "Match a club request",
     "ctaMatchHint": "Paste what the club asked for.",
     "points": [
       {
@@ -80,8 +99,8 @@
         "text": "Start with expired or unknown contracts, then listed future expiry. Dates come from the source, not a live status check."
       },
       {
-        "title": "Would they come?",
-        "text": "Matching asks if a player would actually take that league and club — not only if the position fits."
+        "title": "Checkable conditions",
+        "text": "Matching tests position, age, EU passport and listed dates against the club request. It does not estimate whether a transfer will happen."
       },
       {
         "title": "Stats on click",

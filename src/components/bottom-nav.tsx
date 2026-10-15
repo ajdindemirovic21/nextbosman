@@ -15,8 +15,8 @@ type Props = {
 };
 
 const itemClass = (active: boolean) =>
-  `flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 px-1 text-[10px] font-semibold tracking-wide ${
-    active ? "text-emerald-400" : "text-slate-400"
+  `flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 px-1 text-center text-[11px] font-semibold leading-tight tracking-wide focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-emerald-400 ${
+    active ? "text-emerald-400" : "text-slate-300"
   }`;
 
 export function BottomNav({ lang, dict, profileOpen, onProfile }: Props) {
@@ -36,7 +36,7 @@ export function BottomNav({ lang, dict, profileOpen, onProfile }: Props) {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-slate-800/80 bg-slate-950/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg md:!hidden"
+      className="fixed inset-x-0 bottom-0 z-40 hidden grid-cols-4 bg-[var(--header)] pb-[env(safe-area-inset-bottom)] max-md:grid"
       aria-label={dict.nav.search}
     >
       <Link className={itemClass(onSearch && !profileOpen)} href={`/${lang}/search`}>

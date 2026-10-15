@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { NbMarkGraphic } from "@/components/logo-mark";
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
@@ -13,12 +14,10 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0B0F17",
-          color: "#f8fafc",
-          fontSize: 260,
+          background: "#1a2330",
         }}
       >
-        ⚽
+        <NbMarkGraphic size={368} color="#eef3f8" />
       </div>
     ),
     { ...size },

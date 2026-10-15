@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
 import { notFound } from "next/navigation";
 import { AppChrome } from "@/components/app-chrome";
 import { isLocale, locales } from "@/i18n/config";
@@ -8,9 +8,10 @@ import { buildPageMetadata } from "@/lib/site-metadata";
 import { getConfiguredSiteUrl } from "@/lib/site-url";
 import "../globals.css";
 
-const sans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const sans = Source_Sans_3({
+  variable: "--font-source-sans",
   subsets: ["latin", "latin-ext"],
+  display: "swap",
 });
 
 export async function generateStaticParams() {
@@ -20,7 +21,7 @@ export async function generateStaticParams() {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0B0F17",
+  themeColor: "#1A2330",
   viewportFit: "cover",
 };
 
@@ -60,7 +61,7 @@ export default async function RootLayout({
 
   return (
     <html lang={lang} className={`${sans.className} ${sans.variable} h-full antialiased`}>
-      <body className="min-h-full bg-[#0B0F17] text-slate-100">
+      <body className="min-h-full bg-[var(--bg)] text-slate-100">
         <AppChrome lang={lang} dict={dict}>
           {children}
           <footer className="site-foot">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ogAlt } from "@/components/og-share-image";
 import { defaultLocale, locales, type Locale } from "@/i18n/config";
 import { getConfiguredSiteUrl } from "@/lib/site-url";
 
@@ -70,7 +71,7 @@ export function buildPageMetadata(lang: Locale, page: PageSeo): Metadata {
           url: `${site}/opengraph-image`,
           width: 1200,
           height: 630,
-          alt: "NextBosman — listed contract dates for football agents",
+          alt: ogAlt,
         },
       ],
     },
@@ -83,7 +84,7 @@ export function buildPageMetadata(lang: Locale, page: PageSeo): Metadata {
           url: `${site}/twitter-image`,
           width: 1200,
           height: 630,
-          alt: "NextBosman — listed contract dates for football agents",
+          alt: ogAlt,
         },
       ],
     },

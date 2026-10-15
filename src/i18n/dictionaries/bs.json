@@ -24,10 +24,11 @@
     "free": "Istekli / nepoznati",
     "expiring": "Navedeni istek",
     "support": "Podrška",
-    "lists": "Liste",
-    "signIn": "Prijava agenta",
+    "lists": "Moje liste",
+    "signIn": "Prijavi se",
     "parser": "WhatsApp",
-    "profile": "Profil"
+    "profile": "Profil",
+    "language": "Jezik"
   },
   "footer": {
     "free": "Sto ostaje besplatan.",
@@ -54,25 +55,43 @@
   },
   "home": {
     "kicker": "Za fudbalske agente",
-    "slogan": "Sljedeći Bosman već je na tržištu.",
-    "pasteHeadline": "Zalijepi WhatsApp. Dobiješ imena.",
-    "lead": "Tvoja prednost je timing. Navedeni datum ugovora, klupski brif, sportski direktor koji treba ime večeras — to je prozor.",
+    "slogan": "Od zahtjeva kluba do liste igrača",
+    "pasteHeadline": "Zalijepi zahtjev kluba s WhatsAppa",
+    "lead": "Pronađi igrače koji odgovaraju zahtjevima tvog kluba.",
+    "exampleCta": "Ubaci primjer zahtjeva",
+    "exampleRequest": "FCSB traži ST, najviše 27 godina, EU pasoš",
+    "disclaimer": "Trenutna dostupnost nije potvrđena.",
     "stats": [
-      { "label": "13,000+ baza igrača" },
-      { "label": "Navedeni datumi ugovora" },
-      { "label": "EU pasoš filter" }
+      {
+        "label": "13.000+ baza igrača"
+      },
+      {
+        "label": "Navedeni datumi ugovora"
+      },
+      {
+        "label": "Filter EU pasoša"
+      }
     ],
     "how": [
-      { "title": "1. Zalijepi upit", "text": "Ubaci brif kluba" },
-      { "title": "2. Pametni match", "text": "Instant pretraga baze" },
-      { "title": "3. Pošalji klubu", "text": "Generiši profil za WhatsApp" }
+      {
+        "title": "1. Zalijepi",
+        "text": "Ubaci zahtjev kluba"
+      },
+      {
+        "title": "2. Upari",
+        "text": "Filtriraj po navedenim, provjerljivim uslovima"
+      },
+      {
+        "title": "3. Pošalji",
+        "text": "Otvori profil igrača"
+      }
     ],
-    "purpose": "NextBosman je svjetski stol za navedene datume ugovora. Zalijepi klupski brif i upari imena s upitom. Trenutna dostupnost nije potvrđena.",
+    "purpose": "NextBosman pretražuje navedene datume ugovora širom svijeta i uparuje imena sa zahtjevom kluba.",
     "ctaFree": "Istekli / nepoznati ugovori",
-    "ctaFreeHint": "Navedeni prošli istek ili nedostajući podaci o ugovoru. Trenutna dostupnost nije potvrđena.",
+    "ctaFreeHint": "Navedeni prošli istek ili nema datuma ugovora u izvoru.",
     "ctaExpiring": "Navedeni budući istek",
-    "ctaExpiringHint": "Izvor navodi budući datum. To nije potvrda trenutnog statusa.",
-    "ctaMatch": "Upari klupski brif",
+    "ctaExpiringHint": "Izvor navodi budući datum. To nije potvrda uživo.",
+    "ctaMatch": "Upari zahtjev kluba",
     "ctaMatchHint": "Zalijepi šta klub traži.",
     "points": [
       {
@@ -80,12 +99,12 @@
         "text": "Prvo istekli ili nepoznati ugovori, zatim navedeni budući istek. Datumi dolaze iz izvora, ne iz provjere uživo."
       },
       {
-        "title": "Da li bi došli?",
-        "text": "Matching pita bi li igrač stvarno uzeo tu ligu i klub — ne samo da li pozicija odgovara."
+        "title": "Provjerljivi uslovi",
+        "text": "Uparivanje provjerava poziciju, godine, EU pasoš i navedene datume u odnosu na zahtjev kluba. Ne procjenjuje hoće li transfer proći."
       },
       {
         "title": "Statistika na klik",
-        "text": "Otvori igrača za utakmice, golove, asistencije i minute — dovoljno da znaš vredi li poziv."
+        "text": "Otvori igrača za utakmice, golove, asistencije i minute — dovoljno da znaš vrijedi li poziv."
       }
     ]
   },

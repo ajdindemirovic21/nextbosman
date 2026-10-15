@@ -24,10 +24,11 @@
     "free": "Expirados / desconhecidos",
     "expiring": "Data listada",
     "support": "Apoio",
-    "lists": "Listas",
+    "lists": "As minhas listas",
     "parser": "WhatsApp",
     "profile": "Perfil",
-    "signIn": "Entrar agente"
+    "signIn": "Entrar",
+    "language": "Idioma"
   },
   "footer": {
     "free": "A secretária fica grátis.",
@@ -54,9 +55,9 @@
   },
   "home": {
     "kicker": "Para agentes de futebol",
-    "slogan": "O próximo Bosman já está no mercado.",
-    "pasteHeadline": "Cola o WhatsApp. Saiem os nomes.",
-    "lead": "A tua vantagem é o timing. Uma data de contrato listada, um brief de clube, um diretor desportivo que precisa de um nome esta noite — essa é a janela.",
+    "slogan": "Do pedido do clube à lista de jogadores",
+    "pasteHeadline": "Cola o pedido do clube do WhatsApp",
+    "lead": "Encontra jogadores que correspondam aos requisitos do teu clube.",
     "stats": [
       {
         "label": "13.000+ base de jogadores"
@@ -70,24 +71,24 @@
     ],
     "how": [
       {
-        "title": "1. Cola o brief",
-        "text": "Mete o pedido do clube"
+        "title": "1. Colar",
+        "text": "Adiciona o pedido do clube"
       },
       {
-        "title": "2. Match inteligente",
-        "text": "Pesquisa instantânea na base"
+        "title": "2. Emparelhar",
+        "text": "Filtra por condições indicadas e verificáveis"
       },
       {
-        "title": "3. Envia ao clube",
-        "text": "Gera o perfil de WhatsApp"
+        "title": "3. Enviar",
+        "text": "Abre o perfil do jogador"
       }
     ],
-    "purpose": "NextBosman é a secretária mundial de datas de contrato listadas. Cola o brief do clube e emparelha nomes. A disponibilidade atual não está confirmada.",
+    "purpose": "O NextBosman pesquisa datas de contrato listadas no mundo e emparelha nomes com o pedido do clube.",
     "ctaFree": "Contratos expirados / desconhecidos",
-    "ctaFreeHint": "Vencimento passado listado ou dados de contrato em falta. A disponibilidade atual não está confirmada.",
+    "ctaFreeHint": "Vencimento passado listado, ou sem data de contrato na fonte.",
     "ctaExpiring": "Vencimento futuro listado",
-    "ctaExpiringHint": "A fonte indica uma data futura. Não é uma confirmação em direto.",
-    "ctaMatch": "Emparelhar um brief",
+    "ctaExpiringHint": "Há uma data futura listada. Não é uma confirmação em direto.",
+    "ctaMatch": "Emparelhar o pedido do clube",
     "ctaMatchHint": "Cola o que o clube pediu.",
     "points": [
       {
@@ -95,14 +96,17 @@
         "text": "Primeiro contratos expirados ou desconhecidos, depois vencimentos futuros listados. As datas vêm da fonte, não de uma verificação ao vivo."
       },
       {
-        "title": "Viriam?",
-        "text": "O matching pergunta se o jogador aceitaria mesmo essa liga e clube — não só se a posição bate."
+        "title": "Condições verificáveis",
+        "text": "O emparelhamento compara posição, idade, passaporte da UE e datas listadas com o pedido do clube. Não estima se a transferência vai acontecer."
       },
       {
-        "title": "Stats ao clique",
+        "title": "Estatísticas ao clique",
         "text": "Jogos, golos, assistências e minutos — chega para saber se vale a chamada."
       }
-    ]
+    ],
+    "exampleCta": "Usar um exemplo de pedido",
+    "exampleRequest": "FCSB procura um ST, no máximo 27 anos, passaporte UE",
+    "disclaimer": "A disponibilidade atual não está confirmada."
   },
   "search": {
     "title": "A secretária",
