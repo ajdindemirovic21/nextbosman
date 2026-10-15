@@ -125,7 +125,7 @@ async function main() {
     euOnly: true,
     maxAge: 27,
     maxMv: "any",
-    limit: 80,
+    page: 1,
   });
   assert.ok(live.total >= live.players.length);
   for (const row of live.players) {
@@ -138,7 +138,7 @@ async function main() {
     status: "all",
     position: "ST",
     maxMv: 1_500_000,
-    limit: 80,
+    page: 1,
   });
   for (const row of mvLive.players) {
     assert.ok(row.marketValueEur <= 1_500_000, `${row.name} MV ${row.marketValueEur} over explicit limit`);
@@ -149,7 +149,7 @@ async function main() {
     position: "ST",
     minAge: 24,
     maxAge: 30,
-    limit: 80,
+    page: 1,
   });
   for (const row of minLive.players) {
     assert.ok(row.age >= 24 && row.age <= 30, `${row.name} age ${row.age} outside 24-30`);
@@ -159,12 +159,12 @@ async function main() {
     status: "all",
     position: "ST",
     maxAge: 40,
-    limit: 1,
+    page: 1,
   });
   const uncapped = await queryPlayers({
     status: "all",
     position: "ST",
-    limit: 1,
+    page: 1,
   });
   assert.ok(uncapped.total >= capped40.total);
 

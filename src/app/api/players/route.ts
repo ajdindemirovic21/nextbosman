@@ -1,6 +1,7 @@
 import { getPlayersByIds, queryPlayers } from "@/data/catalog";
 import { positions, type CatalogStatus, type Position } from "@/data/mock-players";
 import { isPlayerId, uniquePlayerIds } from "@/lib/player-ids";
+import { PAGE_SIZE, parsePageParam } from "@/lib/player-page";
 import { NextRequest } from "next/server";
 
 const MAX_IDS = 200;
@@ -47,8 +48,12 @@ export async function GET(request: NextRequest) {
     minAge: parseOptionalAge(searchParams.get("minAge")),
     maxAge: parseOptionalAge(searchParams.get("maxAge")),
     maxMv: maxMvRaw && maxMvRaw !== "any" ? Number(maxMvRaw) : "any",
-    limit: positionCodes.length > 1 ? 120 : 80,
+    page: parsePageParam(searchParams.get("page")),
   });
 
-  return Response.json(result);
+  return Response.json({
+    ...result,
+    page: result.page,
+    pageSize: PAGE_SIZE,
+  });
 }

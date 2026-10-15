@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { CatalogStatus, Player, Position } from "@/data/mock-players";
 import { uniquePlayerIds } from "@/lib/player-ids";
+import { PAGE_SIZE, catalogIdKey, compareMarketValueThenId, pageOffset } from "@/lib/player-page";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { mapPlayerRow } from "@/lib/supabase/map-player";
 import { createPublicSupabase } from "@/lib/supabase/public";
@@ -15,8 +16,31 @@ export type PlayerQuery = {
   minAge?: number;
   maxAge?: number;
   maxMv?: number | "any";
-  limit?: number;
+  page?: number;
 };
+
+function applyCatalogFilters(query: any, filters: PlayerQuery) {
+  let next = query;
+  if (filters.status !== "all") {
+    next = next.eq("availability", filters.status);
+  }
+  const wanted = positionList(filters.position);
+  if (wanted?.length === 1) {
+    next = next.eq("position", wanted[0]);
+  } else if (wanted && wanted.length > 1) {
+    next = next.in("position", wanted);
+  }
+  if (filters.nationality && filters.nationality !== "all") {
+    next = next.eq("nationality", filters.nationality);
+  }
+  if (filters.euOnly) next = next.eq("eu_passport", true);
+  if (filters.minAge) next = next.gte("age", filters.minAge);
+  if (filters.maxAge) next = next.lte("age", filters.maxAge);
+  if (filters.maxMv && filters.maxMv !== "any") {
+    next = next.lte("market_value_eur", filters.maxMv);
+  }
+  return next as typeof query;
+}
 
 function positionList(position: PlayerQuery["position"]): Position[] | null {
   if (!position || position === "all") return null;
@@ -27,6 +51,8 @@ function positionList(position: PlayerQuery["position"]): Position[] | null {
 export type PlayerQueryResult = {
   players: Player[];
   total: number;
+  page: number;
+  pageSize: number;
   nationalities: string[];
 };
 
@@ -41,6 +67,8 @@ export function loadCatalog(): Player[] {
   const parsed = JSON.parse(fs.readFileSync(file, "utf8")) as Player[];
   cache = parsed.map((player) => ({
     ...player,
+    id: catalogIdKey(player.id),
+    marketValueEur: Number(player.marketValueEur) || 0,
     hasSeasonStats: player.hasSeasonStats === true,
   }));
   cacheMtime = mtime;
@@ -55,7 +83,7 @@ function withLocalSeasonStats(player: Player, row: PlayerRow): Player {
   return { ...player, hasSeasonStats: local?.hasSeasonStats === true };
 }
 
-function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
+export function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
   const catalog = loadCatalog();
   const nationalities = [...new Set(catalog.map((p) => p.nationality).filter(Boolean))].sort();
   let rows =
@@ -76,53 +104,60 @@ function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
   if (typeof maxMv === "number") {
     rows = rows.filter((player) => player.marketValueEur <= maxMv);
   }
-  rows.sort((a, b) => b.marketValueEur - a.marketValueEur);
+  rows.sort(compareMarketValueThenId);
   const total = rows.length;
-  const limit = filters.limit ?? 80;
-  return { players: rows.slice(0, limit), total, nationalities };
+  const page = Math.max(1, filters.page ?? 1);
+  const offset = pageOffset(page, PAGE_SIZE);
+  return {
+    players: rows.slice(offset, offset + PAGE_SIZE),
+    total,
+    page,
+    pageSize: PAGE_SIZE,
+    nationalities,
+  };
 }
 
-async function queryPlayersFromSupabase(filters: PlayerQuery): Promise<PlayerQueryResult> {
+export async function queryPlayersFromSupabase(filters: PlayerQuery): Promise<PlayerQueryResult> {
   const supabase = createPublicSupabase();
-  const limit = filters.limit ?? 80;
+  const page = Math.max(1, filters.page ?? 1);
+  const offset = pageOffset(page, PAGE_SIZE);
+  const to = offset + PAGE_SIZE - 1;
 
-  let query = supabase
-    .from("players")
-    .select("*", { count: "exact" })
-    .order("market_value_eur", { ascending: false })
-    .limit(limit);
-  if (filters.status !== "all") {
-    query = query.eq("availability", filters.status);
-  }
+  const nationsPromise = supabase.rpc("player_nationalities");
+  let query = applyCatalogFilters(
+    supabase
+      .from("players")
+      .select("*", { count: "exact" })
+      .order("market_value_eur", { ascending: false })
+      .order("id", { ascending: true })
+      .range(offset, to),
+    filters,
+  );
 
-  const wanted = positionList(filters.position);
-  if (wanted?.length === 1) {
-    query = query.eq("position", wanted[0]);
-  } else if (wanted && wanted.length > 1) {
-    query = query.in("position", wanted);
-  }
-  if (filters.nationality && filters.nationality !== "all") {
-    query = query.eq("nationality", filters.nationality);
-  }
-  if (filters.euOnly) query = query.eq("eu_passport", true);
-  if (filters.minAge) query = query.gte("age", filters.minAge);
-  if (filters.maxAge) query = query.lte("age", filters.maxAge);
-  if (filters.maxMv && filters.maxMv !== "any") {
-    query = query.lte("market_value_eur", filters.maxMv);
-  }
+  const [{ data, error, count }, nations] = await Promise.all([query, nationsPromise]);
+  const nationalities = Array.isArray(nations.data) ? (nations.data as string[]) : [];
 
-  const [{ data, error, count }, nations] = await Promise.all([
-    query,
-    supabase.rpc("player_nationalities"),
-  ]);
+  if (error?.code === "PGRST103") {
+    const counted = await applyCatalogFilters(
+      supabase.from("players").select("id", { count: "exact", head: true }),
+      filters,
+    );
+    return {
+      players: [],
+      total: counted.count ?? 0,
+      page,
+      pageSize: PAGE_SIZE,
+      nationalities,
+    };
+  }
 
   if (error) throw error;
-
-  const nationalities = Array.isArray(nations.data) ? (nations.data as string[]) : [];
 
   return {
     players: ((data ?? []) as PlayerRow[]).map((row) => withLocalSeasonStats(mapPlayerRow(row), row)),
     total: count ?? 0,
+    page,
+    pageSize: PAGE_SIZE,
     nationalities,
   };
 }

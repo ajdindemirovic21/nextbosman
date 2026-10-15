@@ -3,7 +3,7 @@ import type { PlayerRow } from "@/lib/supabase/types";
 
 export function mapPlayerRow(row: PlayerRow): Player {
   return {
-    id: row.id,
+    id: String(row.id),
     name: row.name,
     age: row.age,
     dateOfBirth: row.date_of_birth ?? "",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AddToSavedList } from "@/components/add-to-saved-list";
 import { HighlightsLink } from "@/components/highlights-link";
@@ -23,6 +23,7 @@ import {
 } from "@/lib/paste-parser";
 import { playerWhatsAppShare } from "@/lib/highlights";
 import { uniquePlayerIds } from "@/lib/player-ids";
+import { PAGE_SIZE, parsePageParam } from "@/lib/player-page";
 import { playerSearchPath, searchPathWithoutPlayer } from "@/lib/player-link";
 import { formatSeasonCount } from "@/lib/season-stats";
 import type { SavedList } from "@/lib/supabase/types";
@@ -85,7 +86,6 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     "idle",
   );
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(25);
   const [savedLists, setSavedLists] = useState<SavedList[]>([]);
   const [targetListId, setTargetListId] = useState("");
   const [listsSignedOut, setListsSignedOut] = useState(false);
@@ -175,7 +175,48 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           ? urlPositionCodes.join(",")
           : position;
 
+  const filterKey = [
+    availability,
+    positionFilter,
+    nationality,
+    String(ageMin ?? ""),
+    String(ageMax ?? ""),
+    euOnly || brief?.euPassport ? "1" : "0",
+    effectiveMaxMv,
+    brief?.raw ?? "",
+  ].join("|");
+  const urlPage = parsePageParam(searchParams.get("page"));
+  const committedFilters = useRef(filterKey);
+  const page = committedFilters.current !== filterKey ? 1 : urlPage;
+
   useEffect(() => {
+    const filtersChanged = committedFilters.current !== filterKey;
+    if (filtersChanged) {
+      committedFilters.current = filterKey;
+      if (searchParams.has("page") && parsePageParam(searchParams.get("page")) !== 1) {
+        setLoading(true);
+        setSaveState("idle");
+        const nextParams = new URLSearchParams(searchParams.toString());
+        nextParams.set("status", availability);
+        nextParams.set("position", String(positionFilter));
+        if (nationality && nationality !== "all") nextParams.set("nationality", nationality);
+        else nextParams.delete("nationality");
+        nextParams.set("eu", euOnly || brief?.euPassport ? "1" : "0");
+        if (effectiveMaxMv !== "any") nextParams.set("maxMv", effectiveMaxMv);
+        else nextParams.delete("maxMv");
+        const nextMinAge = brief?.minAge ?? ageMin;
+        const nextMaxAge = brief?.maxAge ?? ageMax;
+        if (nextMinAge != null) nextParams.set("minAge", String(nextMinAge));
+        else nextParams.delete("minAge");
+        if (nextMaxAge != null) nextParams.set("maxAge", String(nextMaxAge));
+        else nextParams.delete("maxAge");
+        nextParams.delete("page");
+        const query = nextParams.toString();
+        router.replace(query ? `/${locale}/search?${query}` : `/${locale}/search`, { scroll: false });
+        return;
+      }
+    }
+
     const params = new URLSearchParams({
       status: availability,
       position: positionFilter,
@@ -187,6 +228,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     const nextMaxAge = brief?.maxAge ?? ageMax;
     if (nextMinAge != null) params.set("minAge", String(nextMinAge));
     if (nextMaxAge != null) params.set("maxAge", String(nextMaxAge));
+    params.set("page", String(filtersChanged ? 1 : urlPage));
     let cancelled = false;
     setLoading(true);
     setSaveState("idle");
@@ -199,7 +241,10 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         setTotal(data.total ?? 0);
       })
       .catch(() => {
-        if (!cancelled) setPlayers([]);
+        if (!cancelled) {
+          setPlayers([]);
+          setTotal(0);
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -207,28 +252,30 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     return () => {
       cancelled = true;
     };
-  }, [availability, positionFilter, nationality, ageMin, ageMax, euOnly, effectiveMaxMv, brief]);
+  }, [
+    availability,
+    positionFilter,
+    nationality,
+    ageMin,
+    ageMax,
+    euOnly,
+    effectiveMaxMv,
+    brief,
+    filterKey,
+    urlPage,
+    locale,
+    router,
+    searchParams,
+  ]);
 
-  const rows = useMemo(() => {
-    const scored = players
-      .map((player) => ({
+  const rows = useMemo(
+    () =>
+      players.map((player) => ({
         player,
         match: brief ? scorePlayer(player, brief) : null,
-      }))
-      .filter((row) => {
-        if (!row.match || !brief) return true;
-        return !row.match.facts.some((fact) => fact.key === "position" && fact.status === "unmet");
-      });
-
-    scored.sort((a, b) => {
-      if (a.match && b.match && b.match.score !== a.match.score) {
-        return b.match.score - a.match.score;
-      }
-      return b.player.marketValueEur - a.player.marketValueEur;
-    });
-
-    return scored;
-  }, [players, brief]);
+      })),
+    [players, brief],
+  );
 
   const saveIds = useMemo(
     () => uniquePlayerIds(rows.map(({ player }) => player.id)),
@@ -242,8 +289,24 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   const selected =
     listed ?? (spotlight && spotlight.id === playerParam ? spotlight : null);
   const selectedMatch = selected && brief ? scorePlayer(selected, brief) : null;
-  const visibleRows = rows.slice(0, visibleCount);
   const queryString = searchParams.toString();
+  const rangeFrom = total === 0 || rows.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const rangeTo = total === 0 || rows.length === 0 ? 0 : rangeFrom + rows.length - 1;
+  const hasPrev = page > 1;
+  const hasNext = page * PAGE_SIZE < total;
+  const emptyMessage =
+    total === 0 ? dict.table.empty : rows.length === 0 ? dict.table.emptyPage : dict.table.empty;
+
+  function goToPage(nextPage: number) {
+    const safe = Math.max(1, nextPage);
+    const params = new URLSearchParams(searchParams.toString());
+    if (safe <= 1) params.delete("page");
+    else params.set("page", String(safe));
+    const query = params.toString();
+    const path = query ? `/${locale}/search?${query}` : `/${locale}/search`;
+    if (query === searchParams.toString()) return;
+    router.replace(path, { scroll: false });
+  }
 
   function openPlayer(id: string) {
     router.replace(playerSearchPath(locale, id, queryString), { scroll: false });
@@ -254,10 +317,6 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     setSpotlight(null);
     setPlayerError(null);
   }
-
-  useEffect(() => {
-    setVisibleCount(25);
-  }, [rows]);
 
   useEffect(() => {
     if (!playerParam || listed) return;
@@ -518,19 +577,42 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         <p>
           {loading
             ? "…"
-            : total > rows.length
-              ? dict.table.showingOfTotal
-                  .replace("{shown}", String(rows.length))
-                  .replace("{total}", String(total))
-              : dict.table.results.replace("{count}", String(total))}
+            : total === 0
+              ? dict.table.empty
+              : rows.length === 0
+                ? dict.table.emptyPage
+                : dict.table.showingRange
+                    .replace("{from}", String(rangeFrom))
+                    .replace("{to}", String(rangeTo))
+                    .replace("{total}", String(total))}
         </p>
-        {loading || !brief || rows.length === 0 ? null : (
-          <p className="mb-2 max-w-xl text-sm text-slate-400">{dict.table.rankedAmongLoaded}</p>
+        {loading || total === 0 ? null : (
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              className="btn-ghost min-h-11"
+              disabled={!hasPrev || loading}
+              onClick={() => goToPage(page - 1)}
+            >
+              {dict.table.previous}
+            </button>
+            <span className="text-sm text-slate-400">
+              {dict.table.pageLabel.replace("{page}", String(page))}
+            </span>
+            <button
+              type="button"
+              className="btn-ghost min-h-11"
+              disabled={!hasNext || loading}
+              onClick={() => goToPage(page + 1)}
+            >
+              {dict.table.next}
+            </button>
+          </div>
         )}
         {loading || saveIds.length === 0 ? null : (
           <p className="mb-2 max-w-xl text-sm text-slate-400" role="status">
-            {total > rows.length
-              ? dict.account.snapshotPartial
+            {total > saveIds.length
+              ? dict.account.snapshotPage
                   .replace("{saved}", String(saveIds.length))
                   .replace("{total}", String(total))
               : dict.account.snapshotAll.replace("{saved}", String(saveIds.length))}
@@ -620,10 +702,10 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
       ) : null}
 
       <ul className="grid gap-2 md:!hidden">
-        {visibleRows.length === 0 ? (
-          <li className="empty rounded-2xl border border-slate-800 px-4 py-8">{dict.table.empty}</li>
+        {rows.length === 0 ? (
+          <li className="empty rounded-2xl border border-slate-800 px-4 py-8">{emptyMessage}</li>
         ) : (
-          visibleRows.map(({ player, match }) => (
+          rows.map(({ player, match }) => (
             <PlayerCard
               key={player.id}
               player={player}
@@ -642,16 +724,6 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           ))
         )}
       </ul>
-      {visibleCount < rows.length ? (
-        <button
-          type="button"
-          className="min-h-12 w-full rounded-xl border border-slate-800 bg-slate-900/70 text-sm font-semibold text-slate-100 md:!hidden"
-          onClick={() => setVisibleCount((count) => count + 25)}
-        >
-          {dict.table.loadMore}
-        </button>
-      ) : null}
-
       <div className="table-wrap !hidden md:!block">
         <table>
           <thead>
@@ -673,7 +745,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
             {rows.length === 0 ? (
               <tr>
                 <td colSpan={brief ? 11 : 10} className="empty">
-                  {dict.table.empty}
+                  {emptyMessage}
                 </td>
               </tr>
             ) : (
