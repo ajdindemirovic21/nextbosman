@@ -114,6 +114,8 @@
     "subtitle": "Cherchez des contrats expirés ou inconnus et des échéances futures listées."
   },
   "status": {
+    "all": "Tout le catalogue",
+    "allNote": "Ce n’est pas un registre complet de tous les joueurs. Seuls les noms déjà dans NextBosman, avec des dates de contrat listées. La disponibilité actuelle n’est pas confirmée.",
     "free": "Contrats expirés / inconnus",
     "expiring": "Échéance future listée",
     "freeLabel": "Non confirmé",
@@ -136,8 +138,16 @@
     "free": "Contrats expirés / inconnus",
     "expiring": "Échéance future listée",
     "eu": "Passeport UE",
-    "loan": "Prêt mentionné — pas encore de liste à part",
-    "empty": "Rien à appliquer. Essayer un poste, un filtre contrat ou UE."
+    "loan": "Prêt demandé — le catalogue ne peut pas le confirmer",
+    "empty": "Demande non reconnue. Les filtres actuels sont conservés.",
+    "applied": "Filtres appliqués",
+    "unverified": "Non vérifiable dans le catalogue",
+    "club": "Club : {club}",
+    "age": "Âge jusqu’à {age}",
+    "marketValue": "Valeur marchande jusqu’à {value}",
+    "salary": "Salaire mentionné — absent du catalogue",
+    "transfer": "Budget transfert mentionné — absent du catalogue",
+    "freeUnconfirmed": "Agent libre demandé — le statut actuel n’est pas confirmé"
   },
   "filters": {
     "position": "Poste",
@@ -183,6 +193,7 @@
     "weak": "Fit faible",
     "for": "Pour {club}",
     "cap": "{market} — qui irait vraiment",
+    "levelHint": "Niveau suggéré pour {market} : environ {value}. Ce n’est pas un filtre ni un motif d’exclusion.",
     "reasons": {
       "position": "Poste correspondant",
       "positionClose": "Poste proche",

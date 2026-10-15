@@ -1,4 +1,4 @@
-import type { Availability, Position } from "@/data/mock-players";
+import type { Availability, CatalogStatus, Position } from "@/data/mock-players";
 
 export type AgentUser = {
   id: string;
@@ -12,7 +12,7 @@ export type AgentUser = {
 };
 
 export type SavedListFilters = {
-  status?: Availability;
+  status?: CatalogStatus;
   position?: Position | "all";
   nationality?: string;
   euOnly?: boolean;

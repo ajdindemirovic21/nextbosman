@@ -1,5 +1,5 @@
 import { getPlayersByIds, queryPlayers } from "@/data/catalog";
-import { positions, type Availability, type Position } from "@/data/mock-players";
+import { positions, type CatalogStatus, type Position } from "@/data/mock-players";
 import { isPlayerId, uniquePlayerIds } from "@/lib/player-ids";
 import { NextRequest } from "next/server";
 
@@ -14,8 +14,8 @@ export async function GET(request: NextRequest) {
     return Response.json({ players });
   }
 
-  const status = (searchParams.get("status") || "free") as Availability;
-  if (status !== "free" && status !== "expiring") {
+  const status = (searchParams.get("status") || "free") as CatalogStatus;
+  if (status !== "free" && status !== "expiring" && status !== "all") {
     return Response.json({ error: "Invalid status" }, { status: 400 });
   }
 

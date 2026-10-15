@@ -6,13 +6,20 @@ import { AddToSavedList } from "@/components/add-to-saved-list";
 import { HighlightsLink } from "@/components/highlights-link";
 import { PlayerDrawer } from "@/components/player-drawer";
 import { QuickShare } from "@/components/quick-share";
-import { positions, type Availability, type Player, type Position } from "@/data/mock-players";
+import { positions, type CatalogStatus, type Player, type Position } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
 import { formatMarketValue } from "@/lib/format";
 import { positionLine } from "@/lib/player-ui";
 import { briefFromWhatsApp, isUnrealistic, parseBrief, scorePlayer, type ClubBrief, type MatchResult } from "@/lib/match-brief";
-import { PASTE_STORAGE_KEY, parseWhatsAppPaste, type PasteParse } from "@/lib/paste-parser";
+import {
+  PASTE_STORAGE_KEY,
+  catalogFiltersFromPaste,
+  parseWhatsAppPaste,
+  pasteHasRecognizedNeeds,
+  suggestedCatalogStatus,
+  type PasteParse,
+} from "@/lib/paste-parser";
 import { playerWhatsAppShare } from "@/lib/highlights";
 import { uniquePlayerIds } from "@/lib/player-ids";
 import { playerSearchPath, searchPathWithoutPlayer } from "@/lib/player-link";
@@ -22,27 +29,34 @@ import type { SavedList } from "@/lib/supabase/types";
 type Props = {
   dict: Dictionary;
   locale: string;
-  initialAvailability?: Availability;
+  initialAvailability?: CatalogStatus;
 };
 
 const valueCaps = [500_000, 1_000_000, 2_000_000, 5_000_000] as const;
 
+function statusFromSearch(raw: string | null, fallback: CatalogStatus): CatalogStatus {
+  if (raw === "free" || raw === "expiring" || raw === "all") return raw;
+  return fallback;
+}
+
 export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const fromUrl = searchParams.get("status") === "expiring" ? "expiring" : initialAvailability;
+  const fromUrl = statusFromSearch(searchParams.get("status"), initialAvailability);
   const urlPosition = searchParams.get("position");
+  const urlPositionCodes = (urlPosition ?? "")
+    .split(",")
+    .map((code) => code.trim())
+    .filter((code): code is Position => (positions as readonly string[]).includes(code));
   const startPosition: Position | "all" =
-    urlPosition && (positions as readonly string[]).includes(urlPosition)
-      ? (urlPosition as Position)
-      : "all";
+    urlPositionCodes.length === 1 ? urlPositionCodes[0] : "all";
   const urlAge = Number(searchParams.get("maxAge"));
   const startAge =
     Number.isFinite(urlAge) && urlAge >= 18 && urlAge <= 40 ? urlAge : 36;
   const urlMv = searchParams.get("maxMv");
   const startMv: number | "any" =
     urlMv && urlMv !== "any" && Number.isFinite(Number(urlMv)) ? Number(urlMv) : "any";
-  const [availability, setAvailability] = useState<Availability>(fromUrl);
+  const [availability, setAvailability] = useState<CatalogStatus>(fromUrl);
   const [position, setPosition] = useState<Position | "all">(startPosition);
   const [euOnly, setEuOnly] = useState(searchParams.get("eu") === "1");
   const [valueCap, setValueCap] = useState<number | "any">(startMv);
@@ -114,8 +128,13 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   useEffect(() => {
     const nextPosition = searchParams.get("position");
     if (nextPosition === "all") setPosition("all");
-    else if (nextPosition && (positions as readonly string[]).includes(nextPosition)) {
-      setPosition(nextPosition as Position);
+    else if (nextPosition) {
+      const codes = nextPosition
+        .split(",")
+        .map((code) => code.trim())
+        .filter((code): code is Position => (positions as readonly string[]).includes(code));
+      if (codes.length === 1) setPosition(codes[0]);
+      else if (codes.length > 1) setPosition("all");
     }
     const eu = searchParams.get("eu");
     if (eu === "1") setEuOnly(true);
@@ -129,7 +148,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     else if (nextMv && Number.isFinite(Number(nextMv))) setValueCap(Number(nextMv));
   }, [searchParams]);
 
-  const matchCap = brief?.stretchMv ?? brief?.maxMv;
+  const matchCap = brief?.maxMv;
   const effectiveMaxMv = (() => {
     const fromUi = valueCap === "any" ? Infinity : valueCap;
     const fromBrief = matchCap ?? Infinity;
@@ -137,11 +156,19 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     return Number.isFinite(cap) ? String(cap) : "any";
   })();
 
+  const positionFilter =
+    pasteResult && pasteResult.positions.length > 0
+      ? pasteResult.positions.join(",")
+      : brief && brief.positions.length > 0
+        ? brief.positions.join(",")
+        : urlPositionCodes.length > 1
+          ? urlPositionCodes.join(",")
+          : position;
+
   useEffect(() => {
     const params = new URLSearchParams({
       status: availability,
-      position:
-        brief && brief.positions.length > 0 ? brief.positions.join(",") : position,
+      position: positionFilter,
       nationality,
       maxAge: String(brief?.maxAge ?? ageMax),
       eu: euOnly || brief?.euPassport ? "1" : "0",
@@ -167,7 +194,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     return () => {
       cancelled = true;
     };
-  }, [availability, position, nationality, ageMax, euOnly, effectiveMaxMv, brief]);
+  }, [availability, positionFilter, nationality, ageMax, euOnly, effectiveMaxMv, brief]);
 
   const rows = useMemo(() => {
     const scored = players
@@ -272,10 +299,15 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
     const parsed = parseWhatsAppPaste(text);
     setPasteDraft(text);
     setPasteResult(parsed);
-    if (parsed.positions.length === 1) setPosition(parsed.positions[0]);
-    else if (parsed.positions.length > 1) setPosition("all");
-    if (parsed.availability) setAvailability(parsed.availability);
-    if (parsed.euPassport) setEuOnly(true);
+    if (!pasteHasRecognizedNeeds(parsed)) return;
+    const filters = catalogFiltersFromPaste(parsed);
+    if (filters.positions !== "all" && filters.positions.length === 1) setPosition(filters.positions[0]);
+    else if (filters.positions !== "all") setPosition("all");
+    const nextStatus = suggestedCatalogStatus(parsed);
+    if (nextStatus) setAvailability(nextStatus);
+    setEuOnly(filters.euOnly);
+    setAgeMax(filters.maxAge ?? 36);
+    setValueCap(filters.maxMv);
     const nextBrief = briefFromWhatsApp(text);
     setBrief(nextBrief);
     setHideWeak(true);
@@ -340,7 +372,17 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
           ) : null}
         </div>
         {brief?.club ? <p className="match-for">{dict.match.for.replace("{club}", brief.club)}</p> : null}
-        {brief?.market ? <p className="match-cap">{dict.match.cap.replace("{market}", brief.market)}</p> : null}
+        {brief?.market && brief.maxMv ? (
+          <p className="match-cap">{dict.match.cap.replace("{market}", brief.market)}</p>
+        ) : brief?.market && brief.suggestedTypicalMv ? (
+          <p className="match-cap">
+            {dict.match.levelHint
+              .replace("{market}", brief.market)
+              .replace("{value}", formatMarketValue(brief.suggestedTypicalMv, locale))}
+          </p>
+        ) : brief?.market ? (
+          <p className="match-cap">{dict.match.cap.replace("{market}", brief.market)}</p>
+        ) : null}
       </div>
 
       <div
@@ -363,28 +405,19 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
             {dict.paste.apply}
           </button>
         </div>
-        {pasteResult ? (
-          <ul className="paste-chips">
-            {pasteResult.positions.map((code) => (
-              <li key={code}>
-                {dict.paste.position}: {dict.positions[code]}
-              </li>
-            ))}
-            {pasteResult.availability === "free" ? <li>{dict.paste.free}</li> : null}
-            {pasteResult.availability === "expiring" ? <li>{dict.paste.expiring}</li> : null}
-            {pasteResult.euPassport ? <li>{dict.paste.eu}</li> : null}
-            {pasteResult.loan ? <li>{dict.paste.loan}</li> : null}
-            {!pasteResult.positions.length &&
-            !pasteResult.availability &&
-            !pasteResult.euPassport &&
-            !pasteResult.loan ? (
-              <li>{dict.paste.empty}</li>
-            ) : null}
-          </ul>
-        ) : null}
+        {pasteResult ? <PasteResultChips dict={dict} parsed={pasteResult} /> : null}
       </div>
 
       <div className="status-toggle" role="tablist" aria-label="Availability">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={availability === "all"}
+          className={availability === "all" ? "is-active" : undefined}
+          onClick={() => setAvailability("all")}
+        >
+          {dict.status.all}
+        </button>
         <button
           type="button"
           role="tab"
@@ -405,7 +438,11 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         </button>
       </div>
       <p className="mb-3 max-w-3xl break-words text-sm text-slate-400">
-        {availability === "free" ? dict.status.freeNote : dict.status.expiringNote}
+        {availability === "all"
+          ? dict.status.allNote
+          : availability === "free"
+            ? dict.status.freeNote
+            : dict.status.expiringNote}
       </p>
 
       <button
@@ -674,6 +711,62 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         />
       ) : null}
     </section>
+  );
+}
+
+function PasteResultChips({ dict, parsed }: { dict: Dictionary; parsed: PasteParse }) {
+  const applied: string[] = [];
+  if (parsed.club) applied.push(dict.paste.club.replace("{club}", parsed.club));
+  for (const code of parsed.positions) {
+    applied.push(`${dict.paste.position}: ${dict.positions[code]}`);
+  }
+  if (parsed.euPassport) applied.push(dict.paste.eu);
+  if (parsed.maxAge) applied.push(dict.paste.age.replace("{age}", String(parsed.maxAge)));
+  if (parsed.maxMv) {
+    applied.push(dict.paste.marketValue.replace("{value}", formatMarketValue(parsed.maxMv, "en")));
+  }
+  const status = suggestedCatalogStatus(parsed);
+  if (status === "all") applied.push(dict.status.all);
+  if (status === "expiring") applied.push(dict.paste.expiring);
+
+  const unverified = parsed.unverifiable.map((need) => {
+    if (need === "salary") return dict.paste.salary;
+    if (need === "transfer") return dict.paste.transfer;
+    if (need === "loan") return dict.paste.loan;
+    return dict.paste.freeUnconfirmed;
+  });
+
+  if (!applied.length && !unverified.length) {
+    return (
+      <ul className="paste-chips">
+        <li>{dict.paste.empty}</li>
+      </ul>
+    );
+  }
+
+  return (
+    <div className="grid gap-3">
+      {applied.length ? (
+        <div>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">{dict.paste.applied}</p>
+          <ul className="paste-chips">
+            {applied.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      {unverified.length ? (
+        <div>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">{dict.paste.unverified}</p>
+          <ul className="paste-chips">
+            {unverified.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </div>
   );
 }
 

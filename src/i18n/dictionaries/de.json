@@ -114,6 +114,8 @@
     "subtitle": "Suche abgelaufene oder unbekannte Verträge und gelistete zukünftige Daten."
   },
   "status": {
+    "all": "Alles im Katalog",
+    "allNote": "Das ist kein vollständiges Register aller Spieler. Enthalten sind nur Namen, die bereits in NextBosman stehen, mit gelisteten Vertragsdaten. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
     "free": "Abgelaufene / unbekannte Verträge",
     "expiring": "Gelistetes zukünftiges Ablaufdatum",
     "freeLabel": "Unbestätigt",
@@ -136,8 +138,16 @@
     "free": "Abgelaufene / unbekannte Verträge",
     "expiring": "Gelistetes zukünftiges Ablaufdatum",
     "eu": "EU-Pass",
-    "loan": "Leihe erwähnt — noch keine eigene Liste",
-    "empty": "Nichts anzuwenden. Position, Vertragsfilter oder EU versuchen."
+    "loan": "Leihe gewünscht — der Katalog kann Leihe nicht bestätigen",
+    "empty": "Anfrage nicht erkannt. Die aktuellen Filter bleiben.",
+    "applied": "Gesetzte Filter",
+    "unverified": "Im Katalog nicht prüfbar",
+    "club": "Klub: {club}",
+    "age": "Alter bis {age}",
+    "marketValue": "Marktwert bis {value}",
+    "salary": "Gehalt erwähnt — nicht im Katalog",
+    "transfer": "Transferbudget erwähnt — nicht im Katalog",
+    "freeUnconfirmed": "Vereinslos gewünscht — aktueller Status nicht bestätigt"
   },
   "filters": {
     "position": "Position",
@@ -183,6 +193,7 @@
     "weak": "Schwacher Fit",
     "for": "Für {club}",
     "cap": "{market} — wer wirklich gehen würde",
+    "levelHint": "Vorgeschlagenes Niveau für {market}: etwa {value}. Kein Filter und kein Ausschlussgrund.",
     "reasons": {
       "position": "Position passt",
       "positionClose": "Ähnliche Position",

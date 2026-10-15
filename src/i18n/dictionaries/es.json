@@ -114,6 +114,8 @@
     "subtitle": "Busca contratos vencidos o desconocidos y vencimientos futuros listados."
   },
   "status": {
+    "all": "Todo el catálogo",
+    "allNote": "Esto no es un registro completo de todos los jugadores. Solo incluye nombres ya en NextBosman, con fechas de contrato listadas. La disponibilidad actual no está confirmada.",
     "free": "Contratos vencidos / desconocidos",
     "expiring": "Vencimiento futuro listado",
     "freeLabel": "Sin confirmar",
@@ -136,8 +138,16 @@
     "free": "Contratos vencidos / desconocidos",
     "expiring": "Vencimiento futuro listado",
     "eu": "Pasaporte UE",
-    "loan": "Cesión mencionada — aún no hay lista aparte",
-    "empty": "Nada que aplicar. Prueba una posición, filtro de contrato o UE."
+    "loan": "Se pide cesión — el catálogo no puede confirmarla",
+    "empty": "No se reconoció la petición. Se mantienen los filtros actuales.",
+    "applied": "Filtros aplicados",
+    "unverified": "No se puede comprobar en el catálogo",
+    "club": "Club: {club}",
+    "age": "Edad hasta {age}",
+    "marketValue": "Valor de mercado hasta {value}",
+    "salary": "Salario mencionado — no está en el catálogo",
+    "transfer": "Presupuesto de traspaso mencionado — no está en el catálogo",
+    "freeUnconfirmed": "Se pide agente libre — el estado actual no está confirmado"
   },
   "filters": {
     "position": "Posición",
@@ -183,6 +193,7 @@
     "weak": "Encaje débil",
     "for": "Para {club}",
     "cap": "{market} — quién iría de verdad",
+    "levelHint": "Nivel sugerido para {market}: alrededor de {value}. No se usa como filtro ni para excluir.",
     "reasons": {
       "position": "La posición coincide",
       "positionClose": "Posición cercana",

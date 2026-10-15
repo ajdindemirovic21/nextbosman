@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import type { Availability, Player, Position } from "@/data/mock-players";
+import type { CatalogStatus, Player, Position } from "@/data/mock-players";
 import { uniquePlayerIds } from "@/lib/player-ids";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { mapPlayerRow } from "@/lib/supabase/map-player";
@@ -8,7 +8,7 @@ import { createPublicSupabase } from "@/lib/supabase/public";
 import type { PlayerRow } from "@/lib/supabase/types";
 
 export type PlayerQuery = {
-  status: Availability;
+  status: CatalogStatus;
   position?: Position | Position[] | "all";
   nationality?: string;
   euOnly?: boolean;
@@ -57,7 +57,10 @@ function withLocalSeasonStats(player: Player, row: PlayerRow): Player {
 function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
   const catalog = loadCatalog();
   const nationalities = [...new Set(catalog.map((p) => p.nationality).filter(Boolean))].sort();
-  let rows = catalog.filter((player) => player.availability === filters.status);
+  let rows =
+    filters.status === "all"
+      ? [...catalog]
+      : catalog.filter((player) => player.availability === filters.status);
   const wanted = positionList(filters.position);
   if (wanted) {
     rows = rows.filter((player) => wanted.includes(player.position));
@@ -85,9 +88,11 @@ async function queryPlayersFromSupabase(filters: PlayerQuery): Promise<PlayerQue
   let query = supabase
     .from("players")
     .select("*", { count: "exact" })
-    .eq("availability", filters.status)
     .order("market_value_eur", { ascending: false })
     .limit(limit);
+  if (filters.status !== "all") {
+    query = query.eq("availability", filters.status);
+  }
 
   const wanted = positionList(filters.position);
   if (wanted?.length === 1) {

@@ -114,6 +114,8 @@
     "subtitle": "Cerca contratti scaduti o sconosciuti e scadenze future elencate."
   },
   "status": {
+    "all": "Tutto il catalogo",
+    "allNote": "Non è un registro completo di tutti i giocatori. Include solo i nomi già in NextBosman, con date di contratto elencate. La disponibilità attuale non è confermata.",
     "free": "Contratti scaduti / sconosciuti",
     "expiring": "Scadenza futura elencata",
     "freeLabel": "Non confermato",
@@ -136,8 +138,16 @@
     "free": "Contratti scaduti / sconosciuti",
     "expiring": "Scadenza futura elencata",
     "eu": "Passaporto UE",
-    "loan": "Prestito citato — non c’è ancora una lista a parte",
-    "empty": "Niente da applicare. Prova un ruolo, un filtro contratto o UE."
+    "loan": "Prestito richiesto — il catalogo non può confermarlo",
+    "empty": "Richiesta non riconosciuta. I filtri attuali restano.",
+    "applied": "Filtri applicati",
+    "unverified": "Non verificabile nel catalogo",
+    "club": "Club: {club}",
+    "age": "Età fino a {age}",
+    "marketValue": "Valore di mercato fino a {value}",
+    "salary": "Ingaggio citato — non è nel catalogo",
+    "transfer": "Budget di trasferimento citato — non è nel catalogo",
+    "freeUnconfirmed": "Svincolato richiesto — lo stato attuale non è confermato"
   },
   "filters": {
     "position": "Ruolo",
@@ -183,6 +193,7 @@
     "weak": "Fit debole",
     "for": "Per {club}",
     "cap": "{market} — chi andrebbe davvero",
+    "levelHint": "Livello suggerito per {market}: circa {value}. Non è un filtro né un motivo di esclusione.",
     "reasons": {
       "position": "Ruolo corrispondente",
       "positionClose": "Ruolo vicino",

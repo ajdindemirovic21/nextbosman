@@ -3,7 +3,10 @@ import type { SavedListFilters } from "@/lib/supabase/types";
 
 export function searchPathFromFilters(locale: string, filters: SavedListFilters): string {
   const params = new URLSearchParams();
-  params.set("status", filters.status === "expiring" ? "expiring" : "free");
+  params.set(
+    "status",
+    filters.status === "expiring" ? "expiring" : filters.status === "all" ? "all" : "free",
+  );
   const position = filters.position && (positions as readonly string[]).includes(filters.position)
     ? filters.position
     : "all";

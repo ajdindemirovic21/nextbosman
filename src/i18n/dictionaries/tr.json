@@ -114,6 +114,8 @@
     "subtitle": "Süresi dolmuş veya bilinmeyen sözleşmeleri ve listelenen gelecek bitişleri arayın."
   },
   "status": {
+    "all": "Katalogdaki tümü",
+    "allNote": "Bu, tüm oyuncuların tam kaydı değildir. Yalnızca NextBosman’da olan ve listelenen sözleşme tarihleri olan isimler vardır. Güncel müsaitlik doğrulanmamıştır.",
     "free": "Süresi dolmuş / bilinmeyen sözleşmeler",
     "expiring": "Listelenen gelecek bitiş",
     "freeLabel": "Doğrulanmadı",
@@ -136,8 +138,16 @@
     "free": "Süresi dolmuş / bilinmeyen sözleşmeler",
     "expiring": "Listelenen gelecek bitiş",
     "eu": "AB pasaportu",
-    "loan": "Kiralık geçiyor — henüz ayrı liste yok",
-    "empty": "Uygulanacak bir şey yok. Mevki, sözleşme filtresi veya AB dene."
+    "loan": "Kiralık isteniyor — katalog kiralığı doğrulayamaz",
+    "empty": "İstek tanınmadı. Mevcut filtreler korundu.",
+    "applied": "Uygulanan filtreler",
+    "unverified": "Katalogda kontrol edilemiyor",
+    "club": "Kulüp: {club}",
+    "age": "{age} yaşına kadar",
+    "marketValue": "{value} piyasa değerine kadar",
+    "salary": "Maaş geçiyor — katalogda yok",
+    "transfer": "Transfer bütçesi geçiyor — katalogda yok",
+    "freeUnconfirmed": "Serbest oyuncu isteniyor — güncel durum doğrulanmadı"
   },
   "filters": {
     "position": "Mevki",
@@ -183,6 +193,7 @@
     "weak": "Zayıf uyum",
     "for": "{club} için",
     "cap": "{market} — kim gerçekten gider",
+    "levelHint": "{market} için önerilen seviye: yaklaşık {value}. Filtre veya eleme nedeni değil.",
     "reasons": {
       "position": "Mevki uyuyor",
       "positionClose": "Yakın mevki",

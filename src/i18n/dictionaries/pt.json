@@ -114,6 +114,8 @@
     "subtitle": "Pesquise contratos expirados ou desconhecidos e vencimentos futuros listados."
   },
   "status": {
+    "all": "Tudo no catálogo",
+    "allNote": "Isto não é um registo completo de todos os jogadores. Inclui apenas nomes já no NextBosman, com datas de contrato listadas. A disponibilidade atual não está confirmada.",
     "free": "Contratos expirados / desconhecidos",
     "expiring": "Vencimento futuro listado",
     "freeLabel": "Não confirmado",
@@ -136,8 +138,16 @@
     "free": "Contratos expirados / desconhecidos",
     "expiring": "Vencimento futuro listado",
     "eu": "Passaporte UE",
-    "loan": "Empréstimo referido — ainda não há lista à parte",
-    "empty": "Nada a aplicar. Tenta uma posição, filtro de contrato ou UE."
+    "loan": "Empréstimo pedido — o catálogo não o pode confirmar",
+    "empty": "Pedido não reconhecido. Os filtros atuais mantêm-se.",
+    "applied": "Filtros aplicados",
+    "unverified": "Não dá para verificar no catálogo",
+    "club": "Clube: {club}",
+    "age": "Idade até {age}",
+    "marketValue": "Valor de mercado até {value}",
+    "salary": "Salário referido — não está no catálogo",
+    "transfer": "Orçamento de transferência referido — não está no catálogo",
+    "freeUnconfirmed": "Livre pedido — o estado atual não está confirmado"
   },
   "filters": {
     "position": "Posição",
@@ -183,6 +193,7 @@
     "weak": "Fit fraco",
     "for": "Para {club}",
     "cap": "{market} — quem iria de verdade",
+    "levelHint": "Nível sugerido para {market}: cerca de {value}. Não é filtro nem motivo de exclusão.",
     "reasons": {
       "position": "Posição coincide",
       "positionClose": "Posição próxima",

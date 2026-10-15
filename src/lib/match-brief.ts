@@ -1,5 +1,5 @@
 import type { Player, Position } from "@/data/mock-players";
-import { extractPositions, parseWhatsAppPaste } from "@/lib/paste-parser";
+import { extractClubName, extractMaxAge, extractMoneyNeeds, extractPositions, parseWhatsAppPaste } from "@/lib/paste-parser";
 
 export type Fit = "strong" | "possible" | "weak";
 
@@ -14,6 +14,8 @@ export type ClubBrief = {
   stretchMv?: number;
   maxMv?: number;
   market?: string;
+  suggestedTypicalMv?: number;
+  suggestedStretchMv?: number;
 };
 
 export type MatchResult = {
@@ -154,26 +156,13 @@ const MARKETS: MarketRule[] = [
   },
 ];
 
-function parseExplicitMaxMv(text: string): number | undefined {
-  const named = text.match(
-    /(?:max(?:imum)?|up to|until|ceiling|do)\s*(?:mv|value|market(?:\s*value)?)?\s*[€$]?\s*(\d+(?:[.,]\d+)?)\s*(m(?:io|illion)?|k)?/i,
-  );
-  const plain = text.match(/[€$]\s*(\d+(?:[.,]\d+)?)\s*(m(?:io|illion)?|k)\b/i);
-  const hit = named ?? plain;
-  if (!hit) return undefined;
-  const amount = Number(hit[1].replace(",", "."));
-  const unit = (hit[2] || "").toLowerCase();
-  if (unit.startsWith("m")) return Math.round(amount * 1_000_000);
-  if (unit === "k") return Math.round(amount * 1_000);
-  if (amount >= 1000) return Math.round(amount);
-  return undefined;
-}
-
 export function parseBrief(raw: string): ClubBrief | null {
   const text = raw.trim().toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
   if (!text) return null;
 
   const brief: ClubBrief = { raw: raw.trim(), positions: extractPositions(raw) };
+  const club = extractClubName(raw);
+  if (club) brief.club = club;
 
   if (/\beu passport\b|\beu\b|pasos|putovnica/.test(text)) {
     brief.euPassport = true;
@@ -184,30 +173,24 @@ export function parseBrief(raw: string): ClubBrief | null {
     brief.minAge = Number(ageRange[1]);
     brief.maxAge = Number(ageRange[2]);
   } else {
-    const maxAge = text.match(/under\s*(\d{2})|max(?:imum)?\s*age\s*(\d{2})|age\s*[≤<]\s*(\d{2})/);
-    if (maxAge) {
-      brief.maxAge = Number(maxAge[1] ?? maxAge[2] ?? maxAge[3]);
-    }
+    const maxAge = extractMaxAge(raw);
+    if (maxAge) brief.maxAge = maxAge;
   }
-
-  const firstLine = raw.trim().split("\n")[0]?.replace(/[^a-zA-Z0-9 .'-]/g, " ").trim();
-  if (firstLine && firstLine.length > 2) brief.club = firstLine;
 
   for (const market of MARKETS) {
     if (market.test(text)) {
       brief.market = market.market;
-      brief.typicalMv = market.typicalMv;
-      brief.stretchMv = market.stretchMv;
-      brief.maxMv = market.stretchMv;
+      brief.suggestedTypicalMv = market.typicalMv;
+      brief.suggestedStretchMv = market.stretchMv;
       break;
     }
   }
 
-  const explicit = parseExplicitMaxMv(text);
-  if (explicit) {
-    brief.typicalMv = explicit;
-    brief.stretchMv = explicit;
-    brief.maxMv = explicit;
+  const explicitMv = extractMoneyNeeds(raw).maxMv;
+  if (explicitMv) {
+    brief.typicalMv = explicitMv;
+    brief.stretchMv = explicitMv;
+    brief.maxMv = explicitMv;
   }
 
   return brief;
@@ -219,12 +202,21 @@ export function briefFromWhatsApp(raw: string): ClubBrief | null {
   const paste = parseWhatsAppPaste(raw);
   if (paste.positions.length) brief.positions = paste.positions;
   if (paste.euPassport) brief.euPassport = true;
+  if (paste.club) brief.club = paste.club;
+  else delete brief.club;
+  if (paste.maxAge) brief.maxAge = paste.maxAge;
+  if (paste.maxMv) {
+    brief.maxMv = paste.maxMv;
+    brief.typicalMv = paste.maxMv;
+    brief.stretchMv = paste.maxMv;
+  }
   return brief;
 }
 
-/** Highest MV this player might still accept for this brief — not a club budget cap. */
+/** Highest MV this player might still accept for this brief — only when MV was stated. */
 export function moveCeiling(player: Player, brief: ClubBrief): number | null {
-  const typical = brief.typicalMv;
+  if (!brief.maxMv) return null;
+  const typical = brief.typicalMv ?? brief.maxMv;
   const stretch = brief.stretchMv ?? brief.maxMv;
   if (!typical || !stretch) return stretch ?? null;
 
@@ -238,6 +230,7 @@ export function moveCeiling(player: Player, brief: ClubBrief): number | null {
 }
 
 export function isUnrealistic(player: Player, brief: ClubBrief): boolean {
+  if (!brief.maxMv) return false;
   const ceiling = moveCeiling(player, brief);
   return Boolean(ceiling && player.marketValueEur > ceiling);
 }

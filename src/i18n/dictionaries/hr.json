@@ -99,6 +99,8 @@
     "subtitle": "Pretraži istekle ili nepoznate ugovore i navedene buduće isteke."
   },
   "status": {
+    "all": "Svi u katalogu",
+    "allNote": "Ovo nije potpun registar svih igrača. Uključeni su samo igrači već u NextBosmanu, s navedenim datumima ugovora. Trenutačna dostupnost nije potvrđena.",
     "free": "Istekli / nepoznati ugovori",
     "freeNote": "Ovi igrači imaju naveden istek ugovora u prošlosti ili nemaju datum ugovora u izvoru. Trenutačna dostupnost nije potvrđena. Nedostajući klub nije dokaz da je igrač slobodan.",
     "expiring": "Navedeni budući istek",
@@ -121,8 +123,16 @@
     "free": "Istekli / nepoznati ugovori",
     "expiring": "Navedeni budući istek",
     "eu": "EU putovnica",
-    "loan": "Spomenuta posudba — još nije posebna lista",
-    "empty": "Nema što primijeniti. Probaj poziciju, filter ugovora ili EU."
+    "loan": "Traži se posudba — katalog ne može potvrditi dostupnost za posudbu",
+    "empty": "Zahtjev nije prepoznat. Trenutačni filteri su sačuvani.",
+    "applied": "Primijenjeni filteri",
+    "unverified": "Katalog ovo ne može provjeriti",
+    "club": "Klub: {club}",
+    "age": "Godine do {age}",
+    "marketValue": "Tržišna vrijednost do {value}",
+    "salary": "Spomenuta plaća — nema je u katalogu",
+    "transfer": "Spomenut transferni budžet — nema ga u katalogu",
+    "freeUnconfirmed": "Traži se slobodan igrač — trenutačni status nije potvrđen"
   },
   "filters": {
     "position": "Pozicija",
@@ -168,6 +178,7 @@
     "weak": "Slab fit",
     "for": "Za {club}",
     "cap": "{market} — tko bi stvarno došao",
+    "levelHint": "Prijedlog razine za {market}: oko {value}. Nije filtar niti razlog isključivanja.",
     "reasons": {
       "position": "Pozicija odgovara brifu",
       "positionClose": "Slična pozicija",

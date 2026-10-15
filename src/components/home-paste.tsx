@@ -4,7 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
-import { PASTE_STORAGE_KEY, parseWhatsAppPaste } from "@/lib/paste-parser";
+import {
+  PASTE_STORAGE_KEY,
+  catalogFiltersFromPaste,
+  parseWhatsAppPaste,
+  pasteHasRecognizedNeeds,
+} from "@/lib/paste-parser";
 
 type Props = {
   lang: Locale;
@@ -20,10 +25,17 @@ export function HomePaste({ lang, dict }: Props) {
     if (text.trim()) {
       sessionStorage.setItem(PASTE_STORAGE_KEY, text.trim());
     }
+    if (!pasteHasRecognizedNeeds(parsed)) {
+      router.push(`/${lang}/search`);
+      return;
+    }
+    const filters = catalogFiltersFromPaste(parsed);
     const query = new URLSearchParams();
-    query.set("status", parsed.availability ?? "free");
-    if (parsed.positions.length) query.set("position", parsed.positions.join(","));
-    if (parsed.euPassport) query.set("eu", "1");
+    query.set("status", filters.status ?? "all");
+    if (filters.positions !== "all") query.set("position", filters.positions.join(","));
+    if (filters.euOnly) query.set("eu", "1");
+    if (filters.maxAge) query.set("maxAge", String(filters.maxAge));
+    if (filters.maxMv !== "any") query.set("maxMv", String(filters.maxMv));
     router.push(`/${lang}/search?${query}`);
   }
 

@@ -99,6 +99,8 @@
     "subtitle": "Search expired or unknown contracts, and listed future expiry dates."
   },
   "status": {
+    "all": "All in catalog",
+    "allNote": "This is not a complete register of every player. It only includes names already in NextBosman, with listed contract dates. Current availability is not confirmed.",
     "free": "Expired / unknown contracts",
     "freeNote": "These players have a listed contract end in the past, or no contract date in the source. Current availability is not confirmed. A missing club is not proof that the player is free.",
     "expiring": "Listed future expiry",
@@ -121,8 +123,16 @@
     "free": "Expired / unknown contracts",
     "expiring": "Listed future expiry",
     "eu": "EU passport",
-    "loan": "Loan mentioned — not a separate list yet",
-    "empty": "Nothing to apply. Try a position, contract filter, or EU."
+    "loan": "Loan requested — the catalog cannot confirm loan availability",
+    "empty": "Request not recognized. Current filters were kept.",
+    "applied": "Applied filters",
+    "unverified": "Cannot check in the catalog",
+    "club": "Club: {club}",
+    "age": "Age up to {age}",
+    "marketValue": "Market value up to {value}",
+    "salary": "Salary mentioned — not in the catalog",
+    "transfer": "Transfer budget mentioned — not in the catalog",
+    "freeUnconfirmed": "Free agent requested — current status is not confirmed"
   },
   "filters": {
     "position": "Position",
@@ -168,6 +178,7 @@
     "weak": "Weak fit",
     "for": "For {club}",
     "cap": "{market} — who would actually go",
+    "levelHint": "Suggested level for {market}: around {value}. Not used as a filter.",
     "reasons": {
       "position": "Position matches the brief",
       "positionClose": "Related position",

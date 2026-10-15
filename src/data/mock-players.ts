@@ -2,6 +2,7 @@ export const positions = ["GK", "CB", "LB", "RB", "DM", "CM", "AM", "LW", "RW", 
 
 export type Position = (typeof positions)[number];
 export type Availability = "free" | "expiring";
+export type CatalogStatus = Availability | "all";
 
 export type Player = {
   id: string;

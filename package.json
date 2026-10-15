@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:parser": "npx tsx scripts/paste-parser.test.ts",
     "index:players": "node scripts/build-player-index.mjs",
     "push:players": "node scripts/push-players-to-supabase.mjs"
   },
