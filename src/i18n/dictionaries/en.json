@@ -55,12 +55,36 @@
   },
   "home": {
     "kicker": "For football agents",
-    "slogan": "From a club request to a player list",
+    "slogan": "The right player.",
+    "sloganAccent": "For the right request.",
     "pasteHeadline": "Paste the club request from WhatsApp",
-    "lead": "Find players who match your club’s requirements.",
-    "exampleCta": "Use an example request",
-    "exampleRequest": "FCSB looking for a ST, max age 27, EU passport",
-    "disclaimer": "Current availability is not confirmed.",
+    "pasteLabel": "What is the club looking for?",
+    "lead": "From a club message to your player list.",
+    "findPlayers": "Find players",
+    "exampleCta": "Try an example",
+    "exampleRequest": "Looking for a striker up to 27, EU passport.",
+    "disclaimer": "Current player availability is not confirmed.",
+    "storyLabel": "Illustrative example",
+    "storyRequestTitle": "Club request",
+    "storyRequestQuote": "Looking for a striker up to 27, EU passport.",
+    "storyChipPosition": "ST",
+    "storyChipAge": "up to 27",
+    "storyChipEu": "EU",
+    "storyPlayerName": "Adnan Kovač",
+    "storyPlayerMeta": "ST · 25 years",
+    "storyMatchPosition": "ST",
+    "storyMatchPassport": "EU passport",
+    "storyMatchFit": "Fits the stated request",
+    "storyMatchNote": "Example of matching stated conditions, not a confirmation of availability.",
+    "storyListTitle": "Club list",
+    "storyList": [
+      { "name": "Adnan Kovač", "meta": "ST · 25" },
+      { "name": "Marko Ilić", "meta": "ST · 26" },
+      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+    ],
+    "moreKicker": "More than search",
+    "moreTitle": "Your next move",
+    "moreTitleAccent": "starts here.",
     "stats": [
       {
         "label": "13,000+ player database"
@@ -74,16 +98,16 @@
     ],
     "how": [
       {
-        "title": "1. Paste",
-        "text": "Add the club request"
+        "title": "Request",
+        "text": "Enter what the club wants, in a few words."
       },
       {
-        "title": "2. Match",
-        "text": "Filter by stated, checkable conditions"
+        "title": "Check conditions",
+        "text": "NextBosman finds players who match that request."
       },
       {
-        "title": "3. Send",
-        "text": "Open a player profile"
+        "title": "Club list",
+        "text": "You get a clear list ready for the next call."
       }
     ],
     "purpose": "NextBosman searches listed contract dates worldwide and matches names to a club request.",

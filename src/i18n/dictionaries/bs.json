@@ -55,12 +55,36 @@
   },
   "home": {
     "kicker": "Za fudbalske agente",
-    "slogan": "Od zahtjeva kluba do liste igrača",
+    "slogan": "Pravi igrač.",
+    "sloganAccent": "Za pravi zahtjev.",
     "pasteHeadline": "Zalijepi zahtjev kluba s WhatsAppa",
-    "lead": "Pronađi igrače koji odgovaraju zahtjevima tvog kluba.",
-    "exampleCta": "Ubaci primjer zahtjeva",
-    "exampleRequest": "FCSB traži ST, najviše 27 godina, EU pasoš",
-    "disclaimer": "Trenutna dostupnost nije potvrđena.",
+    "pasteLabel": "Šta klub traži?",
+    "lead": "Od poruke kluba do tvoje liste igrača.",
+    "findPlayers": "Pronađi igrače",
+    "exampleCta": "Isprobaj primjer",
+    "exampleRequest": "Tražimo napadača do 27 godina, EU pasoš.",
+    "disclaimer": "Trenutna dostupnost igrača nije potvrđena.",
+    "storyLabel": "Ilustrativni primjer",
+    "storyRequestTitle": "Zahtjev kluba",
+    "storyRequestQuote": "Tražimo napadača do 27 godina, EU pasoš.",
+    "storyChipPosition": "ST",
+    "storyChipAge": "do 27 godina",
+    "storyChipEu": "EU",
+    "storyPlayerName": "Adnan Kovač",
+    "storyPlayerMeta": "ST · 25 godina",
+    "storyMatchPosition": "ST",
+    "storyMatchPassport": "EU pasoš",
+    "storyMatchFit": "U skladu sa zahtjevom",
+    "storyMatchNote": "Primjer podudaranja navedenih uslova, ne potvrda dostupnosti.",
+    "storyListTitle": "Lista za klub",
+    "storyList": [
+      { "name": "Adnan Kovač", "meta": "ST · 25" },
+      { "name": "Marko Ilić", "meta": "ST · 26" },
+      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+    ],
+    "moreKicker": "Više od pretrage",
+    "moreTitle": "Tvoj sljedeći potez",
+    "moreTitleAccent": "počinje ovdje.",
     "stats": [
       {
         "label": "13.000+ baza igrača"
@@ -74,16 +98,16 @@
     ],
     "how": [
       {
-        "title": "1. Zalijepi",
-        "text": "Ubaci zahtjev kluba"
+        "title": "Zahtjev",
+        "text": "Unesi šta klub traži, u nekoliko riječi."
       },
       {
-        "title": "2. Upari",
-        "text": "Filtriraj po navedenim, provjerljivim uslovima"
+        "title": "Provjera uslova",
+        "text": "NextBosman pronalazi igrače koji odgovaraju tom zahtjevu."
       },
       {
-        "title": "3. Pošalji",
-        "text": "Otvori profil igrača"
+        "title": "Lista za klub",
+        "text": "Dobijaš preglednu listu spremnu za dalji kontakt."
       }
     ],
     "purpose": "NextBosman pretražuje navedene datume ugovora širom svijeta i uparuje imena sa zahtjevom kluba.",

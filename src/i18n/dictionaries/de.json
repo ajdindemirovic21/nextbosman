@@ -55,9 +55,36 @@
   },
   "home": {
     "kicker": "Für Fußballberater",
-    "slogan": "Vom Klubauftrag zur Spielerliste",
+    "slogan": "Der richtige Spieler.",
+    "sloganAccent": "Für die richtige Anfrage.",
     "pasteHeadline": "Klubanfrage aus WhatsApp einfügen",
-    "lead": "Finde Spieler, die zu den Anforderungen deines Klubs passen.",
+    "pasteLabel": "Was sucht der Klub?",
+    "lead": "Von der Klubnachricht zu deiner Spielerliste.",
+    "findPlayers": "Spieler finden",
+    "exampleCta": "Beispiel ausprobieren",
+    "exampleRequest": "Wir suchen einen ST, max 27, EU-Pass.",
+    "disclaimer": "Die aktuelle Verfügbarkeit der Spieler ist nicht bestätigt.",
+    "storyLabel": "Illustratives Beispiel",
+    "storyRequestTitle": "Klubanfrage",
+    "storyRequestQuote": "Wir suchen einen ST, max 27, EU-Pass.",
+    "storyChipPosition": "ST",
+    "storyChipAge": "bis 27",
+    "storyChipEu": "EU",
+    "storyPlayerName": "Adnan Kovač",
+    "storyPlayerMeta": "ST · 25 Jahre",
+    "storyMatchPosition": "ST",
+    "storyMatchPassport": "EU-Pass",
+    "storyMatchFit": "Passt zur genannten Anfrage",
+    "storyMatchNote": "Beispiel für den Abgleich genannter Bedingungen, keine Bestätigung der Verfügbarkeit.",
+    "storyListTitle": "Liste für den Klub",
+    "storyList": [
+      { "name": "Adnan Kovač", "meta": "ST · 25" },
+      { "name": "Marko Ilić", "meta": "ST · 26" },
+      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+    ],
+    "moreKicker": "Mehr als Suche",
+    "moreTitle": "Dein nächster Zug",
+    "moreTitleAccent": "beginnt hier.",
     "stats": [
       {
         "label": "13.000+ Spielerdatenbank"
@@ -71,16 +98,16 @@
     ],
     "how": [
       {
-        "title": "1. Einfügen",
-        "text": "Klubanfrage einfügen"
+        "title": "Anfrage",
+        "text": "Schreib, was der Klub will, in wenigen Worten."
       },
       {
-        "title": "2. Abgleichen",
-        "text": "Nach genannten, prüfbaren Bedingungen filtern"
+        "title": "Bedingungen prüfen",
+        "text": "NextBosman findet Spieler, die zu dieser Anfrage passen."
       },
       {
-        "title": "3. Senden",
-        "text": "Spielerprofil öffnen"
+        "title": "Liste für den Klub",
+        "text": "Du erhältst eine klare Liste für den nächsten Anruf."
       }
     ],
     "purpose": "NextBosman durchsucht weltweit gelistete Vertragsdaten und ordnet Namen einer Klubanfrage zu.",
@@ -103,10 +130,7 @@
         "title": "Kennzahlen per Klick",
         "text": "Spiele, Tore, Vorlagen, Minuten — genug, um zu wissen, ob der Anruf lohnt."
       }
-    ],
-    "exampleCta": "Beispielauftrag einfügen",
-    "exampleRequest": "FCSB sucht ST, Höchstalter 27, EU-Pass",
-    "disclaimer": "Die aktuelle Verfügbarkeit ist nicht bestätigt."
+    ]
   },
   "search": {
     "title": "Der Schreibtisch",

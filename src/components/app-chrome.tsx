@@ -56,7 +56,7 @@ export function AppChrome({ lang, dict, children }: Props) {
             className="brand min-w-0 shrink-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
           >
             <LogoMark />
-            <span className="wordmark truncate text-[0.95rem] font-semibold tracking-tight text-white md:text-base">
+            <span className="wordmark truncate text-[0.95rem] font-semibold tracking-tight md:text-base">
               {dict.brand.name}
             </span>
           </Link>

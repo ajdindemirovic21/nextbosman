@@ -55,9 +55,36 @@
   },
   "home": {
     "kicker": "Futbol menajerleri için",
-    "slogan": "Kulüp talebinden oyuncu listesine",
+    "slogan": "Doğru oyuncu.",
+    "sloganAccent": "Doğru talep için.",
     "pasteHeadline": "Kulüp talebini WhatsApp’tan yapıştır",
-    "lead": "Kulübünün şartlarına uyan oyuncuları bul.",
+    "pasteLabel": "Kulüp ne arıyor?",
+    "lead": "Kulüp mesajından oyuncu listene.",
+    "findPlayers": "Oyuncu bul",
+    "exampleCta": "Örneği dene",
+    "exampleRequest": "ST arıyoruz, max 27 yaş, AB pasaportu.",
+    "disclaimer": "Oyuncuların güncel müsaitliği doğrulanmamıştır.",
+    "storyLabel": "Örnek gösterim",
+    "storyRequestTitle": "Kulüp talebi",
+    "storyRequestQuote": "ST arıyoruz, max 27 yaş, AB pasaportu.",
+    "storyChipPosition": "ST",
+    "storyChipAge": "27 yaşına kadar",
+    "storyChipEu": "AB",
+    "storyPlayerName": "Adnan Kovač",
+    "storyPlayerMeta": "ST · 25 yaş",
+    "storyMatchPosition": "ST",
+    "storyMatchPassport": "AB pasaportu",
+    "storyMatchFit": "Belirtilen talebe uygun",
+    "storyMatchNote": "Belirtilen koşullara örnek eşleşme; müsaitlik onayı değil.",
+    "storyListTitle": "Kulüp listesi",
+    "storyList": [
+      { "name": "Adnan Kovač", "meta": "ST · 25" },
+      { "name": "Marko Ilić", "meta": "ST · 26" },
+      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+    ],
+    "moreKicker": "Aramadan fazlası",
+    "moreTitle": "Sonraki hamlen",
+    "moreTitleAccent": "burada başlar.",
     "stats": [
       {
         "label": "13.000+ oyuncu veritabanı"
@@ -71,16 +98,16 @@
     ],
     "how": [
       {
-        "title": "1. Yapıştır",
-        "text": "Kulüp talebini ekle"
+        "title": "Talep",
+        "text": "Kulübün ne aradığını birkaç kelimeyle yaz."
       },
       {
-        "title": "2. Eşleştir",
-        "text": "Belirtilen, kontrol edilebilir koşullara göre filtrele"
+        "title": "Koşulları kontrol et",
+        "text": "NextBosman bu talebe uyan oyuncuları bulur."
       },
       {
-        "title": "3. Gönder",
-        "text": "Oyuncu profilini aç"
+        "title": "Kulüp listesi",
+        "text": "Sonraki arama için net bir liste alırsın."
       }
     ],
     "purpose": "NextBosman dünyada listelenen sözleşme tarihlerini arar ve isimleri kulüp talebiyle eşleştirir.",
@@ -103,10 +130,7 @@
         "title": "Tıklayınca istatistik",
         "text": "Maç, gol, asist, dakika — aramanın değip değmediğini anlamak için yeter."
       }
-    ],
-    "exampleCta": "Örnek talep kullan",
-    "exampleRequest": "FCSB ST arıyor, en fazla 27 yaş, AB pasaportu",
-    "disclaimer": "Oyuncunun güncel transfer durumu doğrulanmamıştır."
+    ]
   },
   "search": {
     "title": "Masa",

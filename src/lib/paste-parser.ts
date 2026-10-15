@@ -262,7 +262,10 @@ export function parseWhatsAppPaste(raw: string): PasteParse {
   if (wantsFreeAgent) unverifiable.push("confirmedFree");
 
   const result: PasteParse = {
-    euPassport: /\beu\b|eu pasos|eu passport|eu putovnica|eu drzavl/.test(text),
+    euPassport:
+      /\beu\b|\bue\b|eu pasos|eu passport|eu putovnica|eu drzavl|passeport ue|pasaporte ue|passaporto ue|passaporte ue|ab pasaport|eu-pass/.test(
+        text,
+      ),
     loan,
     positions: found,
     position: found[0],

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { IconSearch } from "@/components/icons";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
 import {
@@ -40,28 +41,34 @@ export function HomePaste({ lang, dict }: Props) {
     router.push(`/${lang}/search?${query}`);
   }
 
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!text.trim()) return;
+    run();
+  }
+
   return (
-    <section
-      className="home-paste box-border w-full min-w-0 max-w-full rounded-2xl bg-[var(--bg-elev)] p-3 md:p-5"
+    <form
+      className="home-paste box-border w-full min-w-0 max-w-full"
       aria-labelledby="home-paste-title"
+      onSubmit={onSubmit}
     >
-      <h2
-        id="home-paste-title"
-        className="text-lg font-semibold tracking-tight break-words text-[var(--text)] sm:text-xl"
-      >
-        {dict.home.pasteHeadline}
-      </h2>
-      <p className="home-paste-lead break-words">{dict.paste.hint}</p>
+      <label id="home-paste-title" htmlFor="home-paste-input" className="home-paste-label">
+        {dict.home.pasteLabel}
+      </label>
       <textarea
-        className="box-border max-w-full min-w-0 w-full rounded-xl bg-[var(--bg)] px-3 py-3 text-base leading-7 text-slate-100 placeholder:text-slate-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 sm:px-4 sm:text-sm sm:leading-6"
+        id="home-paste-input"
+        className="box-border max-w-full min-w-0 w-full rounded-xl bg-transparent px-3 py-2.5 text-base leading-6 text-slate-100 placeholder:text-slate-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 sm:px-4 sm:text-sm"
         value={text}
         onChange={(event) => setText(event.target.value)}
-        placeholder={dict.paste.placeholder}
-        rows={5}
+        placeholder={dict.home.exampleRequest}
+        rows={2}
       />
-      <div className="flex max-w-full flex-wrap items-center gap-3">
-        <button type="button" className="btn-primary max-w-full" onClick={run} disabled={!text.trim()}>
-          {dict.paste.apply}
+      <div className="home-paste-actions flex max-w-full flex-wrap items-center gap-3">
+        <button type="submit" className="btn-primary home-paste-submit max-w-full" disabled={!text.trim()}>
+          <IconSearch className="h-4 w-4" />
+          {dict.home.findPlayers}
+          <span aria-hidden="true">→</span>
         </button>
         <button
           type="button"
@@ -71,6 +78,6 @@ export function HomePaste({ lang, dict }: Props) {
           {dict.home.exampleCta}
         </button>
       </div>
-    </section>
+    </form>
   );
 }

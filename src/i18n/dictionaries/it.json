@@ -55,9 +55,36 @@
   },
   "home": {
     "kicker": "Per agenti di calcio",
-    "slogan": "Dalla richiesta del club alla lista giocatori",
+    "slogan": "Il giocatore giusto.",
+    "sloganAccent": "Per la richiesta giusta.",
     "pasteHeadline": "Incolla la richiesta del club da WhatsApp",
-    "lead": "Trova giocatori che corrispondono alle richieste del tuo club.",
+    "pasteLabel": "Cosa cerca il club?",
+    "lead": "Dal messaggio del club alla tua lista di giocatori.",
+    "findPlayers": "Trova giocatori",
+    "exampleCta": "Prova un esempio",
+    "exampleRequest": "Cerchiamo un ST, max 27 anni, passaporto UE.",
+    "disclaimer": "La disponibilità attuale dei giocatori non è confermata.",
+    "storyLabel": "Esempio illustrativo",
+    "storyRequestTitle": "Richiesta del club",
+    "storyRequestQuote": "Cerchiamo un ST, max 27 anni, passaporto UE.",
+    "storyChipPosition": "ST",
+    "storyChipAge": "fino a 27 anni",
+    "storyChipEu": "UE",
+    "storyPlayerName": "Adnan Kovač",
+    "storyPlayerMeta": "ST · 25 anni",
+    "storyMatchPosition": "ST",
+    "storyMatchPassport": "Passaporto UE",
+    "storyMatchFit": "In linea con la richiesta indicata",
+    "storyMatchNote": "Esempio di corrispondenza con condizioni indicate, non una conferma di disponibilità.",
+    "storyListTitle": "Lista per il club",
+    "storyList": [
+      { "name": "Adnan Kovač", "meta": "ST · 25" },
+      { "name": "Marko Ilić", "meta": "ST · 26" },
+      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+    ],
+    "moreKicker": "Più della ricerca",
+    "moreTitle": "La tua prossima mossa",
+    "moreTitleAccent": "inizia qui.",
     "stats": [
       {
         "label": "13.000+ database giocatori"
@@ -71,16 +98,16 @@
     ],
     "how": [
       {
-        "title": "1. Incolla",
-        "text": "Inserisci la richiesta del club"
+        "title": "Richiesta",
+        "text": "Scrivi cosa cerca il club, in poche parole."
       },
       {
-        "title": "2. Abbina",
-        "text": "Filtra per condizioni indicate e verificabili"
+        "title": "Verifica delle condizioni",
+        "text": "NextBosman trova i giocatori che corrispondono a quella richiesta."
       },
       {
-        "title": "3. Invia",
-        "text": "Apri il profilo del giocatore"
+        "title": "Lista per il club",
+        "text": "Ottieni una lista chiara, pronta per il contatto successivo."
       }
     ],
     "purpose": "NextBosman cerca date di contratto elencate nel mondo e abbina i nomi a una richiesta del club.",
@@ -103,10 +130,7 @@
         "title": "Statistiche al clic",
         "text": "Partite, gol, assist e minuti: abbastanza per capire se vale la chiamata."
       }
-    ],
-    "exampleCta": "Usa un esempio di richiesta",
-    "exampleRequest": "FCSB cerca un ST, massimo 27 anni, passaporto UE",
-    "disclaimer": "La disponibilità attuale non è confermata."
+    ]
   },
   "search": {
     "title": "La scrivania",
