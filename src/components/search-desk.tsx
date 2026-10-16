@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { AddToSavedList } from "@/components/add-to-saved-list";
 import { ListFields } from "@/components/list-fields";
 import { HighlightsLink } from "@/components/highlights-link";
+import { TransfermarktLink } from "@/components/transfermarkt-link";
 import { PlayerDrawer } from "@/components/player-drawer";
 import { QuickShare } from "@/components/quick-share";
 import { positions, type CatalogStatus, type Player, type Position } from "@/data/mock-players";
@@ -976,6 +977,7 @@ function PlayerRow({
             {player.name}
           </button>
           <span className={`pos-badge pos-${positionLine(player.position)}`}>{player.position}</span>
+          <TransfermarktLink profileUrl={player.profileUrl} playerId={player.id} dict={dict} compact />
           <HighlightsLink playerName={player.name} dict={dict} compact />
         </span>
         <div className="mt-2">
@@ -1210,6 +1212,10 @@ function PlayerCard({
         ) : null}
       </button>
       <div className="px-4 pb-3">
+        <div className="mb-2 flex min-w-0 flex-wrap items-center gap-2">
+          <TransfermarktLink profileUrl={player.profileUrl} playerId={player.id} dict={dict} compact />
+          <HighlightsLink playerName={player.name} dict={dict} compact />
+        </div>
         <QuickShare
           dict={dict}
           path={sharePath}

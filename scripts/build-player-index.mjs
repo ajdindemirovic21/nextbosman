@@ -39,6 +39,37 @@ const EU = new Set([
   "Sweden",
 ]);
 
+const TRANSFERMARKT_PROFILE_HOST = "www.transfermarkt.co.uk";
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function parseTransfermarktProfileUrl(raw, playerId) {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  const id = String(playerId ?? "").trim();
+  if (!trimmed || !id) return null;
+
+  let parsed;
+  try {
+    parsed = new URL(trimmed);
+  } catch {
+    return null;
+  }
+
+  if (parsed.protocol !== "https:") return null;
+  if (parsed.username || parsed.password) return null;
+  if (parsed.port) return null;
+  if (parsed.hostname !== TRANSFERMARKT_PROFILE_HOST) return null;
+  if (parsed.search || parsed.hash) return null;
+
+  const pathPattern = new RegExp(`^/[A-Za-z0-9_-]+/profil/spieler/${escapeRegExp(id)}$`);
+  if (!pathPattern.test(parsed.pathname)) return null;
+
+  return `https://${TRANSFERMARKT_PROFILE_HOST}${parsed.pathname}`;
+}
+
 const SUB = {
   Goalkeeper: "GK",
   "Centre-Back": "CB",
@@ -181,6 +212,7 @@ function loadPlayers(competitions) {
       internationalCaps: Number(row[col("international_caps")] || 0) || 0,
       internationalGoals: Number(row[col("international_goals")] || 0) || 0,
       marketValueEur: Number(row[col("market_value_in_eur")] || 0) || 0,
+      profileUrl: parseTransfermarktProfileUrl(row[col("url")], id),
     };
 
     players.push(player);

@@ -41,6 +41,7 @@ create table if not exists public.players (
   international_caps integer not null default 0,
   international_goals integer not null default 0,
   market_value_eur bigint not null default 0,
+  profile_url text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

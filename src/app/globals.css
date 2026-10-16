@@ -1527,6 +1527,7 @@ td.player-col {
 
   .drawer .yt-btn,
   .drawer .yt-btn-lg,
+  .drawer .tm-btn,
   .drawer .wa-btn,
   .drawer .share-copy {
     width: 100%;
@@ -1635,10 +1636,45 @@ td.player-col {
 }
 
 .yt-btn-compact span {
-  max-width: 14ch;
+  max-width: 20ch;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.tm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 11px 16px;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+}
+
+.tm-btn:hover {
+  border-color: var(--gold);
+  color: #fff;
+}
+
+.tm-link {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.tm-link:hover {
+  color: var(--text);
 }
 
 .share-row {

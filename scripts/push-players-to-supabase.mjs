@@ -63,6 +63,7 @@ const rows = players.map((player) => ({
   international_caps: player.internationalCaps,
   international_goals: player.internationalGoals,
   market_value_eur: player.marketValueEur,
+  profile_url: player.profileUrl ?? null,
 }));
 
 const supabase = createClient(url, key, {

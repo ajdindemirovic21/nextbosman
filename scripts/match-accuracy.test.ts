@@ -31,6 +31,7 @@ function player(over: Partial<Player>): Player {
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 1_000_000,
     ...over,
   };

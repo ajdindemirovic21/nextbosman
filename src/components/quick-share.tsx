@@ -27,7 +27,7 @@ export function QuickShare({ dict, path, text, accent }: Props) {
 
   useEffect(() => {
     const url = resolveUrl(path);
-    const message = text ? `${text}\n${url}` : url;
+    const message = !text ? url : text.includes(url) ? text : `${text}\n${url}`;
     setWaHref(`https://wa.me/?text=${encodeURIComponent(message)}`);
   }, [path, text]);
 

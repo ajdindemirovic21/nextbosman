@@ -27,6 +27,7 @@ export type Player = {
   internationalCaps: number;
   internationalGoals: number;
   marketValueEur: number;
+  profileUrl: string | null;
 };
 
 export const mockPlayers: Player[] = [
@@ -52,6 +53,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 1800000,
   },
   {
@@ -76,6 +78,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 650000,
   },
   {
@@ -100,6 +103,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 1200000,
   },
   {
@@ -124,6 +128,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 900000,
   },
   {
@@ -148,6 +153,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 750000,
   },
   {
@@ -172,6 +178,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 2100000,
   },
   {
@@ -196,6 +203,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 1100000,
   },
   {
@@ -220,6 +228,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 400000,
   },
   {
@@ -244,6 +253,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 3500000,
   },
   {
@@ -268,6 +278,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 800000,
   },
   {
@@ -292,6 +303,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 1600000,
   },
   {
@@ -316,6 +328,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 4200000,
   },
   {
@@ -340,6 +353,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 2800000,
   },
   {
@@ -364,6 +378,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 1900000,
   },
   {
@@ -388,6 +403,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 2500000,
   },
   {
@@ -412,6 +428,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 3100000,
   },
   {
@@ -436,6 +453,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 1500000,
   },
   {
@@ -460,6 +478,7 @@ export const mockPlayers: Player[] = [
     minutesPlayed: 0,
     internationalCaps: 0,
     internationalGoals: 0,
+    profileUrl: null,
     marketValueEur: 950000,
   },
 ];

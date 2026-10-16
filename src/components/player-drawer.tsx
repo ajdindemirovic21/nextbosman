@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { AddToSavedList } from "@/components/add-to-saved-list";
 import { HighlightsLink } from "@/components/highlights-link";
+import { TransfermarktLink } from "@/components/transfermarkt-link";
 import { QuickShare } from "@/components/quick-share";
 import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
@@ -84,6 +85,7 @@ export function PlayerDrawer({
         <p className="drawer-club">{club}</p>
 
         <div className="drawer-media">
+          <TransfermarktLink profileUrl={player.profileUrl} playerId={player.id} dict={dict} />
           <HighlightsLink playerName={player.name} dict={dict} />
           <QuickShare
             dict={dict}

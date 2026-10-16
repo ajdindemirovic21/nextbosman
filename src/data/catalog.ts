@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { CatalogStatus, Player, Position } from "@/data/mock-players";
 import { uniquePlayerIds } from "@/lib/player-ids";
+import { parseTransfermarktProfileUrl } from "@/lib/profile-url";
 import { PAGE_SIZE, catalogIdKey, compareMarketValueThenId, pageOffset } from "@/lib/player-page";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { mapPlayerRow } from "@/lib/supabase/map-player";
@@ -70,6 +71,7 @@ export function loadCatalog(): Player[] {
     id: catalogIdKey(player.id),
     marketValueEur: Number(player.marketValueEur) || 0,
     hasSeasonStats: player.hasSeasonStats === true,
+    profileUrl: parseTransfermarktProfileUrl(player.profileUrl, catalogIdKey(player.id)),
   }));
   cacheMtime = mtime;
   return cache;

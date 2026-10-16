@@ -1,9 +1,11 @@
 import type { Player } from "@/data/mock-players";
+import { parseTransfermarktProfileUrl } from "@/lib/profile-url";
 import type { PlayerRow } from "@/lib/supabase/types";
 
 export function mapPlayerRow(row: PlayerRow): Player {
+  const id = String(row.id);
   return {
-    id: String(row.id),
+    id,
     name: row.name,
     age: row.age,
     dateOfBirth: row.date_of_birth ?? "",
@@ -25,6 +27,7 @@ export function mapPlayerRow(row: PlayerRow): Player {
     internationalCaps: row.international_caps,
     internationalGoals: row.international_goals,
     marketValueEur: Number(row.market_value_eur) || 0,
+    profileUrl: parseTransfermarktProfileUrl(row.profile_url, id),
   };
 }
 
@@ -52,5 +55,6 @@ export function toPlayerRow(player: Player): PlayerRow {
     international_caps: player.internationalCaps,
     international_goals: player.internationalGoals,
     market_value_eur: player.marketValueEur,
+    profile_url: parseTransfermarktProfileUrl(player.profileUrl, player.id),
   };
 }

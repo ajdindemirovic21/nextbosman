@@ -57,6 +57,7 @@ export type PlayerRow = {
   international_caps: number;
   international_goals: number;
   market_value_eur: number;
+  profile_url?: string | null;
 };
 
 export type SavedListRow = {

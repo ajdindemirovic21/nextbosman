@@ -17,7 +17,7 @@ export function HighlightsLink({ playerName, dict, compact }: Props) {
       rel="noopener noreferrer"
     >
       <IconPlay className={compact ? "h-3.5 w-3.5" : "h-[18px] w-[18px]"} />
-      <span>{dict.profile.watchVideo}</span>
+      <span>{dict.profile.youtubeSearch}</span>
     </a>
   );
 }
