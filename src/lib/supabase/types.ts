@@ -58,6 +58,18 @@ export type PlayerRow = {
   international_goals: number;
   market_value_eur: number;
   profile_url?: string | null;
+  review_active?: boolean | null;
+  check_status?: string | null;
+  club_mode?: string | null;
+  club_value?: string | null;
+  contract_mode?: string | null;
+  contract_value?: string | null;
+  source_url?: string | null;
+  checked_at?: string | null;
+  event_at?: string | null;
+  public_note?: string | null;
+  filter_bucket?: string | null;
+  head_revision_id?: string | null;
 };
 
 export type SavedListRow = {

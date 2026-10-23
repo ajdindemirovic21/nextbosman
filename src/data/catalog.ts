@@ -2,10 +2,12 @@ import fs from "fs";
 import path from "path";
 import type { CatalogStatus, Player, Position } from "@/data/mock-players";
 import { uniquePlayerIds } from "@/lib/player-ids";
-import { parseTransfermarktProfileUrl } from "@/lib/profile-url";
+import { applyManualReview, matchesCatalogStatus } from "@/lib/player-review";
 import { PAGE_SIZE, catalogIdKey, compareMarketValueThenId, pageOffset } from "@/lib/player-page";
+import { parseTransfermarktProfileUrl } from "@/lib/profile-url";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { mapPlayerRow } from "@/lib/supabase/map-player";
+import { PLAYERS_EFFECTIVE_COLUMNS, PLAYERS_TABLE_COLUMNS } from "@/lib/supabase/player-columns";
 import { createPublicSupabase } from "@/lib/supabase/public";
 import type { PlayerRow } from "@/lib/supabase/types";
 
@@ -20,10 +22,14 @@ export type PlayerQuery = {
   page?: number;
 };
 
-function applyCatalogFilters(query: any, filters: PlayerQuery) {
+function applyCatalogFilters(query: any, filters: PlayerQuery, bucketColumn: "filter_bucket" | "availability") {
   let next = query;
-  if (filters.status !== "all") {
-    next = next.eq("availability", filters.status);
+  if (filters.status === "no_club") {
+    next = next.eq(bucketColumn, "no_club");
+  } else if (filters.status === "free") {
+    next = next.eq(bucketColumn, "free");
+  } else if (filters.status === "expiring") {
+    next = next.eq(bucketColumn, "expiring");
   }
   const wanted = positionList(filters.position);
   if (wanted?.length === 1) {
@@ -55,6 +61,7 @@ export type PlayerQueryResult = {
   page: number;
   pageSize: number;
   nationalities: string[];
+  catalogLimited: boolean;
 };
 
 let cache: Player[] | null = null;
@@ -66,13 +73,17 @@ export function loadCatalog(): Player[] {
   const mtime = fs.statSync(file).mtimeMs;
   if (cache && cacheMtime === mtime) return cache;
   const parsed = JSON.parse(fs.readFileSync(file, "utf8")) as Player[];
-  cache = parsed.map((player) => ({
-    ...player,
-    id: catalogIdKey(player.id),
-    marketValueEur: Number(player.marketValueEur) || 0,
-    hasSeasonStats: player.hasSeasonStats === true,
-    profileUrl: parseTransfermarktProfileUrl(player.profileUrl, catalogIdKey(player.id)),
-  }));
+  cache = parsed.map((player) => {
+    const base: Player = {
+      ...player,
+      id: catalogIdKey(player.id),
+      marketValueEur: Number(player.marketValueEur) || 0,
+      hasSeasonStats: player.hasSeasonStats === true,
+      profileUrl: parseTransfermarktProfileUrl(player.profileUrl, catalogIdKey(player.id)),
+      manualReview: null,
+    };
+    return applyManualReview(base, null);
+  });
   cacheMtime = mtime;
   return cache;
 }
@@ -85,13 +96,10 @@ function withLocalSeasonStats(player: Player, row: PlayerRow): Player {
   return { ...player, hasSeasonStats: local?.hasSeasonStats === true };
 }
 
-export function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
-  const catalog = loadCatalog();
-  const nationalities = [...new Set(catalog.map((p) => p.nationality).filter(Boolean))].sort();
-  let rows =
-    filters.status === "all"
-      ? [...catalog]
-      : catalog.filter((player) => player.availability === filters.status);
+function filterJsonRows(catalog: Player[], filters: PlayerQuery): Player[] {
+  let rows = catalog.filter((player) =>
+    matchesCatalogStatus(player.filterBucket ?? player.availability, filters.status),
+  );
   const wanted = positionList(filters.position);
   if (wanted) {
     rows = rows.filter((player) => wanted.includes(player.position));
@@ -107,6 +115,13 @@ export function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
     rows = rows.filter((player) => player.marketValueEur <= maxMv);
   }
   rows.sort(compareMarketValueThenId);
+  return rows;
+}
+
+export function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
+  const catalog = loadCatalog();
+  const nationalities = [...new Set(catalog.map((p) => p.nationality).filter(Boolean))].sort();
+  const rows = filterJsonRows(catalog, filters);
   const total = rows.length;
   const page = Math.max(1, filters.page ?? 1);
   const offset = pageOffset(page, PAGE_SIZE);
@@ -116,51 +131,99 @@ export function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
     page,
     pageSize: PAGE_SIZE,
     nationalities,
+    catalogLimited: true,
   };
 }
 
-export async function queryPlayersFromSupabase(filters: PlayerQuery): Promise<PlayerQueryResult> {
+function isMissingEffectiveView(error: { code?: string; message?: string } | null) {
+  if (!error) return false;
+  if (error.code === "PGRST205" || error.code === "42P01") return true;
+  return /players_effective/i.test(error.message ?? "");
+}
+
+async function queryEffectiveTable(filters: PlayerQuery, table: "players_effective" | "players") {
   const supabase = createPublicSupabase();
   const page = Math.max(1, filters.page ?? 1);
   const offset = pageOffset(page, PAGE_SIZE);
   const to = offset + PAGE_SIZE - 1;
-
+  const bucketColumn = table === "players_effective" ? "filter_bucket" : "availability";
+  const columns = table === "players_effective" ? PLAYERS_EFFECTIVE_COLUMNS : PLAYERS_TABLE_COLUMNS;
   const nationsPromise = supabase.rpc("player_nationalities");
   let query = applyCatalogFilters(
     supabase
-      .from("players")
-      .select("*", { count: "exact" })
+      .from(table)
+      .select(columns, { count: "exact" })
       .order("market_value_eur", { ascending: false })
       .order("id", { ascending: true })
       .range(offset, to),
     filters,
+    bucketColumn,
   );
 
   const [{ data, error, count }, nations] = await Promise.all([query, nationsPromise]);
   const nationalities = Array.isArray(nations.data) ? (nations.data as string[]) : [];
-
-  if (error?.code === "PGRST103") {
-    const counted = await applyCatalogFilters(
-      supabase.from("players").select("id", { count: "exact", head: true }),
-      filters,
-    );
-    return {
-      players: [],
-      total: counted.count ?? 0,
-      page,
-      pageSize: PAGE_SIZE,
-      nationalities,
-    };
-  }
-
-  if (error) throw error;
-
   return {
-    players: ((data ?? []) as PlayerRow[]).map((row) => withLocalSeasonStats(mapPlayerRow(row), row)),
-    total: count ?? 0,
+    data,
+    error,
+    count,
+    nationalities,
+    page,
+    table,
+    bucketColumn: bucketColumn as "filter_bucket" | "availability",
+  };
+}
+
+async function emptyPageCount(
+  filters: PlayerQuery,
+  table: "players_effective" | "players",
+  bucketColumn: "filter_bucket" | "availability",
+  nationalities: string[],
+  page: number,
+  catalogLimited: boolean,
+): Promise<PlayerQueryResult> {
+  const counted = await applyCatalogFilters(
+    createPublicSupabase().from(table).select("id", { count: "exact", head: true }),
+    filters,
+    bucketColumn,
+  );
+  return {
+    players: [],
+    total: counted.count ?? 0,
     page,
     pageSize: PAGE_SIZE,
     nationalities,
+    catalogLimited,
+  };
+}
+
+export async function queryPlayersFromSupabase(filters: PlayerQuery): Promise<PlayerQueryResult> {
+  let result = await queryEffectiveTable(filters, "players_effective");
+  let catalogLimited = false;
+
+  if (result.error && isMissingEffectiveView(result.error)) {
+    result = await queryEffectiveTable(filters, "players");
+    catalogLimited = true;
+  }
+
+  if (result.error?.code === "PGRST103") {
+    return emptyPageCount(
+      filters,
+      result.table,
+      result.bucketColumn,
+      result.nationalities,
+      result.page,
+      catalogLimited,
+    );
+  }
+  if (result.error) throw result.error;
+
+  return {
+    players: ((result.data ?? []) as PlayerRow[]).map((row) => withLocalSeasonStats(mapPlayerRow(row), row)),
+    total: result.count ?? 0,
+    page: result.page,
+    pageSize: PAGE_SIZE,
+    nationalities: result.nationalities,
+    catalogLimited,
   };
 }
 
@@ -192,7 +255,13 @@ export async function getPlayersByIds(ids: string[]): Promise<Player[]> {
   if (!wanted.length) return [];
 
   if (isSupabaseConfigured()) {
-    const { data, error } = await createPublicSupabase().from("players").select("*").in("id", wanted);
+    const supabase = createPublicSupabase();
+    const effective = await supabase.from("players_effective").select(PLAYERS_EFFECTIVE_COLUMNS).in("id", wanted);
+    if (!effective.error && effective.data) {
+      const mapped = (effective.data as PlayerRow[]).map((row) => withLocalSeasonStats(mapPlayerRow(row), row));
+      return orderPlayers(wanted, mapped);
+    }
+    const { data, error } = await supabase.from("players").select(PLAYERS_TABLE_COLUMNS).in("id", wanted);
     if (!error && data) {
       const mapped = (data as PlayerRow[]).map((row) => withLocalSeasonStats(mapPlayerRow(row), row));
       return orderPlayers(wanted, mapped);

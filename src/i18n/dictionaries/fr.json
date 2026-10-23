@@ -13,7 +13,9 @@
     "listsTitle": "Listes enregistrées",
     "listsDescription": "Connecte-toi en agent pour voir et partager les listes courtes de club.",
     "sharedListTitle": "Liste partagée",
-    "sharedListDescription": "Une shortlist club partagée par un agent. La disponibilité actuelle n’est pas confirmée."
+    "sharedListDescription": "Une shortlist club partagée par un agent. La disponibilité actuelle n’est pas confirmée.",
+    "reviewTitle": "Vérification manuelle d’un joueur",
+    "reviewDescription": "Bureau privé pour vérifier et mettre à jour un joueur. La date de vérification n’est pas une confirmation durable."
   },
   "brand": {
     "name": "NextBosman",
@@ -28,7 +30,8 @@
     "parser": "WhatsApp",
     "profile": "Profil",
     "signIn": "Connexion",
-    "language": "Langue"
+    "language": "Langue",
+    "review": "Vérification manuelle"
   },
   "footer": {
     "free": "Le bureau reste gratuit.",
@@ -78,9 +81,18 @@
     "storyMatchNote": "Exemple d’adéquation aux conditions indiquées, pas une confirmation de disponibilité.",
     "storyListTitle": "Liste pour le club",
     "storyList": [
-      { "name": "Adnan Kovač", "meta": "ST · 25" },
-      { "name": "Marko Ilić", "meta": "ST · 26" },
-      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+      {
+        "name": "Adnan Kovač",
+        "meta": "ST · 25"
+      },
+      {
+        "name": "Marko Ilić",
+        "meta": "ST · 26"
+      },
+      {
+        "name": "Denis Rahmanović",
+        "meta": "ST · 24"
+      }
     ],
     "moreKicker": "Plus qu’une recherche",
     "moreTitle": "Ton prochain geste",
@@ -155,7 +167,15 @@
     "statusUnconfirmed": "Statut actuel non confirmé",
     "contractUnknown": "Données de contrat indisponibles",
     "listedUntil": "Contrat listé jusqu’au {date}",
-    "listedClub": "Club listé dans la source"
+    "listedClub": "Club listé dans la source",
+    "noClub": "Vérifiés manuellement sans club",
+    "noClubNote": "Ces joueurs ont été vérifiés manuellement comme sans club actuel. Ce n’est pas la même catégorie que les contrats listés expirés ou inconnus. La date est celle de la dernière revue, pas une confirmation durable.",
+    "noClubLabel": "Sans club",
+    "clubUnknown": "Club actuel inconnu",
+    "checkedOn": "Statut vérifié le {date}",
+    "source": "Source : {host}",
+    "catalogLimited": "Cette copie du catalogue n’applique pas les révisions manuelles. Les filtres n’utilisent que les catégories listées de la source.",
+    "manualCheckBadge": "Vérifié manuellement {date}"
   },
   "paste": {
     "title": "Collage WhatsApp rapide",
@@ -365,5 +385,44 @@
     "shareAnyone": "Toute personne avec ce lien peut ouvrir la liste.",
     "shareFailed": "Impossible de mettre à jour le partage. Réessayez.",
     "confirm": "Si l’inscription demande un mail, désactivez Confirm email dans Supabase Auth (local)."
+  },
+  "review": {
+    "kicker": "Admin",
+    "title": "Vérifier un joueur",
+    "lead": "Superposer les données listées par une vérification manuelle. La date n’est pas une confirmation durable.",
+    "unconfigured": "Supabase n’est pas configuré.",
+    "needSignIn": "Connectez-vous d’abord. Google n’accorde pas l’accès administrateur.",
+    "forbidden": "Ce bureau est réservé aux administrateurs accordés en SQL.",
+    "playerId": "ID du joueur",
+    "load": "Charger le joueur",
+    "loadFailed": "Impossible de charger ce joueur.",
+    "catalogHint": "Les valeurs listées du catalogue restent dans la ligne source. La correction ne les efface pas.",
+    "checkStatus": "Statut vérifié",
+    "status_no_club": "Sans club",
+    "status_under_contract": "Sous contrat",
+    "status_unknown": "Inconnu",
+    "noClubForcesNone": "Sans club retire le club actuel. Le dernier club listé n’est pas affiché comme actuel.",
+    "clubMode": "Champ club",
+    "contractMode": "Champ contrat",
+    "mode_keep": "Garder la valeur listée",
+    "mode_set": "Définir une nouvelle valeur",
+    "mode_unknown": "Inconnu",
+    "clubValue": "Nom du club",
+    "sourceUrl": "URL HTTPS publique de la source",
+    "eventAt": "Date de l’événement (optionnel)",
+    "publicNote": "Note publique (texte brut)",
+    "privateNote": "Note privée (historique seulement)",
+    "save": "Enregistrer la vérification",
+    "deactivate": "Désactiver la correction",
+    "history": "Historique",
+    "rollback": "Revenir à cette révision",
+    "active": "Actif",
+    "inactive": "Inactif",
+    "saved": "Vérification enregistrée.",
+    "deactivated": "Correction désactivée.",
+    "rolledBack": "Rétabli.",
+    "conflict": "Quelqu’un d’autre a enregistré d’abord. Rechargez et réessayez.",
+    "saveFailed": "Enregistrement impossible.",
+    "invalid": "Remplissez les champs requis. Vide n’est pas garder. Utilisez une URL HTTPS publique."
   }
 }

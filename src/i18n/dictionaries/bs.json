@@ -13,7 +13,9 @@
     "listsTitle": "Sačuvane liste",
     "listsDescription": "Prijavi se kao agent da vidiš i dijeliš sačuvane klupske kratke liste.",
     "sharedListTitle": "Podijeljeni shortlist",
-    "sharedListDescription": "Klupski shortlist koji je podijelio agent. Trenutna dostupnost nije potvrđena."
+    "sharedListDescription": "Klupski shortlist koji je podijelio agent. Trenutna dostupnost nije potvrđena.",
+    "reviewTitle": "Ručna provjera igrača",
+    "reviewDescription": "Privatni sto za provjeru i ispravku jednog igrača. Datum provjere nije trajna potvrda statusa."
   },
   "brand": {
     "name": "NextBosman",
@@ -28,7 +30,8 @@
     "signIn": "Prijavi se",
     "parser": "WhatsApp",
     "profile": "Profil",
-    "language": "Jezik"
+    "language": "Jezik",
+    "review": "Ručna provjera"
   },
   "footer": {
     "free": "Sto ostaje besplatan.",
@@ -78,9 +81,18 @@
     "storyMatchNote": "Primjer podudaranja navedenih uslova, ne potvrda dostupnosti.",
     "storyListTitle": "Lista za klub",
     "storyList": [
-      { "name": "Adnan Kovač", "meta": "ST · 25" },
-      { "name": "Marko Ilić", "meta": "ST · 26" },
-      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+      {
+        "name": "Adnan Kovač",
+        "meta": "ST · 25"
+      },
+      {
+        "name": "Marko Ilić",
+        "meta": "ST · 26"
+      },
+      {
+        "name": "Denis Rahmanović",
+        "meta": "ST · 24"
+      }
     ],
     "moreKicker": "Više od pretrage",
     "moreTitle": "Tvoj sljedeći potez",
@@ -155,7 +167,15 @@
     "listedUntil": "Ugovor naveden do {date}",
     "listedClub": "Klub naveden u izvoru",
     "until": "Do",
-    "ended": "Završio"
+    "ended": "Završio",
+    "noClub": "Ručno provjereni bez kluba",
+    "noClubNote": "Ovi igrači su ručno provjereni kao bez trenutnog kluba. To nije ista kategorija kao istekli ili nepoznati navedeni ugovori. Datum provjere je kada je status zadnji pregledan, ne trajna potvrda.",
+    "noClubLabel": "Bez kluba",
+    "clubUnknown": "Trenutni klub nepoznat",
+    "checkedOn": "Status provjeren {date}",
+    "source": "Izvor: {host}",
+    "catalogLimited": "U ovoj kopiji kataloga nema ručne ispravke. Filteri koriste samo navedene kategorije iz izvora.",
+    "manualCheckBadge": "Ručno provjereno {date}"
   },
   "paste": {
     "title": "Brzi WhatsApp unos",
@@ -365,5 +385,44 @@
     "shareAnyone": "Svako ko ima ovaj link može otvoriti listu.",
     "shareFailed": "Dijeljenje se nije moglo ažurirati. Pokušaj ponovo.",
     "confirm": "Ako signup traži potvrdu maila, u Supabase Auth isključi Confirm email (lokalno)."
+  },
+  "review": {
+    "kicker": "Administrator",
+    "title": "Provjeri jednog igrača",
+    "lead": "Nadoveži navedene podatke kataloga ručnom provjerom. Datum provjere nije trajna potvrda.",
+    "unconfigured": "Supabase nije podešen.",
+    "needSignIn": "Prvo se prijavite. Google prijava nije administratorski pristup.",
+    "forbidden": "Ovaj sto je samo za administratore dodijeljene SQL-om.",
+    "playerId": "ID igrača",
+    "load": "Učitaj igrača",
+    "loadFailed": "Igrač se nije mogao učitati.",
+    "catalogHint": "Navedene vrijednosti kataloga ostaju u izvornom redu. Ispravka ih ne briše.",
+    "checkStatus": "Provjereni status",
+    "status_no_club": "Bez kluba",
+    "status_under_contract": "Pod ugovorom",
+    "status_unknown": "Nepoznato",
+    "noClubForcesNone": "Bez kluba uklanja trenutni klub. Posljednji klub iz popisa se ne prikazuje kao trenutni.",
+    "clubMode": "Polje kluba",
+    "contractMode": "Polje ugovora",
+    "mode_keep": "Zadrži navedenu vrijednost",
+    "mode_set": "Postavi novu vrijednost",
+    "mode_unknown": "Nepoznato",
+    "clubValue": "Naziv kluba",
+    "sourceUrl": "Javni HTTPS URL izvora",
+    "eventAt": "Datum događaja (opcionalno)",
+    "publicNote": "Javna bilješka (običan tekst)",
+    "privateNote": "Privatna bilješka (samo historija)",
+    "save": "Sačuvaj provjeru",
+    "deactivate": "Deaktiviraj ispravku",
+    "history": "Historija",
+    "rollback": "Vrati na ovu reviziju",
+    "active": "Aktivno",
+    "inactive": "Neaktivno",
+    "saved": "Provjera sačuvana.",
+    "deactivated": "Ispravka deaktivirana.",
+    "rolledBack": "Vraćeno.",
+    "conflict": "Neko drugi je prvi sačuvao. Učitaj ponovo i pokušaj.",
+    "saveFailed": "Nije sačuvano.",
+    "invalid": "Popunite obavezna polja. Prazno nije zadrži. Koristite javni HTTPS URL."
   }
 }

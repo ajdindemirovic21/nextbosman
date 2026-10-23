@@ -29,7 +29,13 @@ export function searchPathFromFilters(locale: string, filters: SavedListFilters)
   const params = new URLSearchParams();
   params.set(
     "status",
-    filters.status === "expiring" ? "expiring" : filters.status === "all" ? "all" : "free",
+    filters.status === "expiring"
+      ? "expiring"
+      : filters.status === "all"
+        ? "all"
+        : filters.status === "no_club"
+          ? "no_club"
+          : "free",
   );
   const position = filters.position && (positions as readonly string[]).includes(filters.position)
     ? filters.position

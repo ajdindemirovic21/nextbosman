@@ -13,7 +13,9 @@
     "listsTitle": "Saved lists",
     "listsDescription": "Sign in as an agent to view and share saved club shortlists.",
     "sharedListTitle": "Shared shortlist",
-    "sharedListDescription": "A club shortlist shared by an agent. Current availability is not confirmed."
+    "sharedListDescription": "A club shortlist shared by an agent. Current availability is not confirmed.",
+    "reviewTitle": "Manual player check",
+    "reviewDescription": "Private desk to check and update one player. Not a lasting confirmation of status."
   },
   "brand": {
     "name": "NextBosman",
@@ -28,7 +30,8 @@
     "signIn": "Sign in",
     "parser": "WhatsApp",
     "profile": "Profile",
-    "language": "Language"
+    "language": "Language",
+    "review": "Manual check"
   },
   "footer": {
     "free": "The desk stays free.",
@@ -78,9 +81,18 @@
     "storyMatchNote": "Example of matching stated conditions, not a confirmation of availability.",
     "storyListTitle": "Club list",
     "storyList": [
-      { "name": "Adnan Kovač", "meta": "ST · 25" },
-      { "name": "Marko Ilić", "meta": "ST · 26" },
-      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+      {
+        "name": "Adnan Kovač",
+        "meta": "ST · 25"
+      },
+      {
+        "name": "Marko Ilić",
+        "meta": "ST · 26"
+      },
+      {
+        "name": "Denis Rahmanović",
+        "meta": "ST · 24"
+      }
     ],
     "moreKicker": "More than search",
     "moreTitle": "Your next move",
@@ -155,7 +167,15 @@
     "listedUntil": "Contract listed until {date}",
     "listedClub": "Club listed in source",
     "until": "Until",
-    "ended": "Ended"
+    "ended": "Ended",
+    "noClub": "Manually checked without a club",
+    "noClubNote": "These players were manually checked as having no current club. This is separate from expired or unknown listed contracts. The check date is when status was last reviewed, not a lasting confirmation.",
+    "noClubLabel": "No club",
+    "clubUnknown": "Current club unknown",
+    "checkedOn": "Status checked on {date}",
+    "source": "Source: {host}",
+    "catalogLimited": "Manual reviews are not applied in this catalog copy. Filters use listed source categories only.",
+    "manualCheckBadge": "Manually checked {date}"
   },
   "paste": {
     "title": "Quick WhatsApp paste",
@@ -365,5 +385,44 @@
     "shareAnyone": "Anyone with this link can open this list.",
     "shareFailed": "Could not update sharing. Try again.",
     "confirm": "If sign-up asks for email confirm, turn Confirm email off in Supabase Auth (local)."
+  },
+  "review": {
+    "kicker": "Admin",
+    "title": "Check one player",
+    "lead": "Overlay listed catalog data with a manual check. The check date is not a lasting confirmation.",
+    "unconfigured": "Supabase is not configured.",
+    "needSignIn": "Sign in first. Google sign-in is not admin access.",
+    "forbidden": "This desk is only for administrators granted in SQL.",
+    "playerId": "Player ID",
+    "load": "Load player",
+    "loadFailed": "Could not load that player.",
+    "catalogHint": "Listed catalog values stay in the source row. The overlay does not wipe them.",
+    "checkStatus": "Checked status",
+    "status_no_club": "No club",
+    "status_under_contract": "Under contract",
+    "status_unknown": "Unknown",
+    "noClubForcesNone": "No club clears the current club. Last club from the listing is not shown as current.",
+    "clubMode": "Club field",
+    "contractMode": "Contract field",
+    "mode_keep": "Keep listed value",
+    "mode_set": "Set a new value",
+    "mode_unknown": "Unknown",
+    "clubValue": "Club name",
+    "sourceUrl": "Public HTTPS source URL",
+    "eventAt": "Event date (optional)",
+    "publicNote": "Public note (plain text)",
+    "privateNote": "Private note (history only)",
+    "save": "Save check",
+    "deactivate": "Deactivate overlay",
+    "history": "History",
+    "rollback": "Roll back to this revision",
+    "active": "Active",
+    "inactive": "Inactive",
+    "saved": "Check saved.",
+    "deactivated": "Overlay deactivated.",
+    "rolledBack": "Rolled back.",
+    "conflict": "Someone else saved first. Reload and try again.",
+    "saveFailed": "Could not save.",
+    "invalid": "Fill the required fields. Empty is not keep. Use a public HTTPS URL."
   }
 }

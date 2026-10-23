@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Source_Sans_3 } from "next/font/google";
 import { notFound } from "next/navigation";
 import { AppChrome } from "@/components/app-chrome";
+import { TestEnvBanner } from "@/components/test-env-banner";
 import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { buildPageMetadata } from "@/lib/site-metadata";
@@ -62,6 +63,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} className={`${sans.className} ${sans.variable} h-full antialiased`}>
       <body className="min-h-full bg-[var(--bg)] text-slate-100">
+        <TestEnvBanner />
         <AppChrome lang={lang} dict={dict}>
           {children}
           <footer className="site-foot">

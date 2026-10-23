@@ -1,0 +1,8 @@
+-- OPTIONAL, for review only. Not applied.
+-- apply_player_review / deactivate / rollback take FOR UPDATE and have no
+-- lock_timeout or statement_timeout. A disconnected client can leave the
+-- backend waiting forever; the next apply waits on that lock.
+-- If you adopt this, add near the start of each mutating RPC body:
+--   perform set_config('lock_timeout', '3s', true);
+--   perform set_config('statement_timeout', '8s', true);
+-- Then lock waits raise 55P03 instead of hanging until the HTTP client aborts.

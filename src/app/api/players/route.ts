@@ -1,6 +1,7 @@
 import { getPlayersByIds, queryPlayers } from "@/data/catalog";
-import { positions, type CatalogStatus, type Position } from "@/data/mock-players";
+import { positions, type Position } from "@/data/mock-players";
 import { isPlayerId, uniquePlayerIds } from "@/lib/player-ids";
+import { isCatalogQueryStatus, publicPlayerPayload } from "@/lib/player-review";
 import { PAGE_SIZE, parsePageParam } from "@/lib/player-page";
 import { NextRequest } from "next/server";
 
@@ -19,13 +20,14 @@ export async function GET(request: NextRequest) {
   if (idsRaw != null && idsRaw.trim()) {
     const ids = uniquePlayerIds(idsRaw.split(",").filter(isPlayerId)).slice(0, MAX_IDS);
     const players = await getPlayersByIds(ids);
-    return Response.json({ players });
+    return Response.json({ players: players.map(publicPlayerPayload) });
   }
 
-  const status = (searchParams.get("status") || "free") as CatalogStatus;
-  if (status !== "free" && status !== "expiring" && status !== "all") {
+  const statusRaw = searchParams.get("status") || "free";
+  if (!isCatalogQueryStatus(statusRaw)) {
     return Response.json({ error: "Invalid status" }, { status: 400 });
   }
+  const status = statusRaw;
 
   const maxMvRaw = searchParams.get("maxMv");
   const positionRaw = searchParams.get("position") || "all";
@@ -53,6 +55,7 @@ export async function GET(request: NextRequest) {
 
   return Response.json({
     ...result,
+    players: result.players.map(publicPlayerPayload),
     page: result.page,
     pageSize: PAGE_SIZE,
   });

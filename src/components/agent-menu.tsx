@@ -128,10 +128,15 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
           </span>
         </span>
         {embedded ? (
-          <Link className="btn-text" href={`/${lang}/lists`}>
-            {dict.nav.lists}
-          </Link>
-        ) : null}
+          <>
+            <Link className="btn-text" href={`/${lang}/lists`}>
+              {dict.nav.lists}
+            </Link>
+            <AdminReviewLink lang={lang} dict={dict} />
+          </>
+        ) : (
+          <AdminReviewLink lang={lang} dict={dict} />
+        )}
         <button type="button" className="btn-secondary shrink-0" onClick={() => void signOut()}>
           {dict.account.signOut}
         </button>
@@ -227,5 +232,27 @@ export function AgentMenu({ lang, dict, embedded }: Props) {
         </form>
       ) : null}
     </div>
+  );
+}
+
+function AdminReviewLink({ lang, dict }: { lang: Locale; dict: Dictionary }) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/admin/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((body) => {
+        if (!cancelled && body?.admin === true) setShow(true);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  if (!show) return null;
+  return (
+    <Link className="btn-text" href={`/${lang}/review`}>
+      {dict.nav.review}
+    </Link>
   );
 }

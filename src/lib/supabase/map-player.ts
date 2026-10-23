@@ -1,10 +1,11 @@
 import type { Player } from "@/data/mock-players";
+import { applyManualReview, parseManualReviewRow } from "@/lib/player-review";
 import { parseTransfermarktProfileUrl } from "@/lib/profile-url";
 import type { PlayerRow } from "@/lib/supabase/types";
 
 export function mapPlayerRow(row: PlayerRow): Player {
   const id = String(row.id);
-  return {
+  const base: Player = {
     id,
     name: row.name,
     age: row.age,
@@ -28,7 +29,22 @@ export function mapPlayerRow(row: PlayerRow): Player {
     internationalGoals: row.international_goals,
     marketValueEur: Number(row.market_value_eur) || 0,
     profileUrl: parseTransfermarktProfileUrl(row.profile_url, id),
+    manualReview: null,
+    filterBucket: row.availability,
   };
+  const review = parseManualReviewRow({
+    active: row.review_active,
+    check_status: row.check_status,
+    club_mode: row.club_mode,
+    club_value: row.club_value,
+    contract_mode: row.contract_mode,
+    contract_value: row.contract_value,
+    source_url: row.source_url,
+    checked_at: row.checked_at,
+    event_at: row.event_at,
+    public_note: row.public_note,
+  });
+  return applyManualReview(base, review);
 }
 
 export function toPlayerRow(player: Player): PlayerRow {

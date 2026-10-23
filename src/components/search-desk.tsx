@@ -10,7 +10,8 @@ import { PlayerDrawer } from "@/components/player-drawer";
 import { QuickShare } from "@/components/quick-share";
 import { positions, type CatalogStatus, type Player, type Position } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
+import { contractNote, contractPrimary, formatListedClub, manualCheckLines } from "@/lib/contract-display";
+import { isCatalogQueryStatus } from "@/lib/player-review";
 import { formatMarketValue } from "@/lib/format";
 import { positionLine } from "@/lib/player-ui";
 import { briefFromWhatsApp, parseBrief, scorePlayer, type ClubBrief, type MatchResult } from "@/lib/match-brief";
@@ -48,7 +49,7 @@ function parseAgeState(raw: string | null): number | null {
 }
 
 function statusFromSearch(raw: string | null, fallback: CatalogStatus): CatalogStatus {
-  if (raw === "free" || raw === "expiring" || raw === "all") return raw;
+  if (isCatalogQueryStatus(raw)) return raw;
   return fallback;
 }
 
@@ -85,6 +86,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
   const [nationalities, setNationalities] = useState<string[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [catalogLimited, setCatalogLimited] = useState(false);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "auth" | "title" | "error">(
     "idle",
   );
@@ -295,6 +297,7 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         setPlayers(data.players ?? []);
         setNationalities(data.nationalities ?? []);
         setTotal(data.total ?? 0);
+        setCatalogLimited(data.catalogLimited === true);
       })
       .catch(() => {
         if (!cancelled) {
@@ -550,13 +553,29 @@ export function SearchDesk({ dict, locale, initialAvailability = "free" }: Props
         >
           {dict.status.expiring}
         </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={availability === "no_club"}
+          className={availability === "no_club" ? "is-active" : undefined}
+          onClick={() => setAvailability("no_club")}
+        >
+          {dict.status.noClub}
+        </button>
       </div>
+      {catalogLimited ? (
+        <p className="mb-3 max-w-3xl break-words rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
+          {dict.status.catalogLimited}
+        </p>
+      ) : null}
       <p className="mb-3 max-w-3xl break-words text-sm text-slate-400">
         {availability === "all"
           ? dict.status.allNote
           : availability === "free"
             ? dict.status.freeNote
-            : dict.status.expiringNote}
+            : availability === "no_club"
+              ? dict.status.noClubNote
+              : dict.status.expiringNote}
       </p>
 
       <button
@@ -1009,6 +1028,11 @@ function PlayerRow({
         <span className="contract-cell">
           <span className="pill">{contractPrimary(player, dict, locale)}</span>
           {contractNote(player, dict) ? <span className="pill">{contractNote(player, dict)}</span> : null}
+          {manualCheckLines(player, dict, locale).map((line) => (
+            <span className="pill" key={line}>
+              {line}
+            </span>
+          ))}
         </span>
       </td>
       <td className="num">{formatSeasonCount(player, player.appearances)}</td>

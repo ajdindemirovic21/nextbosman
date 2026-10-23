@@ -208,3 +208,7 @@ $$;
 
 revoke all on function public.get_shared_list(text) from public;
 grant execute on function public.get_shared_list(text) to anon, authenticated;
+
+-- Manual reviews overlay (admins, player_reviews, players_effective, RPCs):
+-- apply supabase/migrations/add_player_reviews.sql separately in the SQL editor.
+-- Grant admin with supabase/sql/grant-admin.example.sql. Do not run those from the app.

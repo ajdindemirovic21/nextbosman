@@ -9,7 +9,7 @@ import type { Player } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { SavedList, SavedListFilters } from "@/lib/supabase/types";
 import { nationalityFlagSrc } from "@/lib/flags";
-import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
+import { contractNote, contractPrimary, formatListedClub, manualCheckLines } from "@/lib/contract-display";
 import { formatDate, formatMarketValue } from "@/lib/format";
 import type { MatchResult } from "@/lib/match-brief";
 import { formatMatchFact } from "@/lib/match-display";
@@ -159,6 +159,11 @@ export function PlayerDrawer({
             <dd className={accentClass}>
               <span>{contract}</span>
               {contractExtra ? <span className="block text-xs font-medium text-slate-400">{contractExtra}</span> : null}
+              {manualCheckLines(player, dict, locale).map((line) => (
+                <span className="block text-xs font-medium text-slate-400" key={line}>
+                  {line}
+                </span>
+              ))}
             </dd>
           </div>
         </dl>

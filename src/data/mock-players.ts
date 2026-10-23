@@ -2,7 +2,7 @@ export const positions = ["GK", "CB", "LB", "RB", "DM", "CM", "AM", "LW", "RW", 
 
 export type Position = (typeof positions)[number];
 export type Availability = "free" | "expiring";
-export type CatalogStatus = Availability | "all";
+export type CatalogStatus = Availability | "all" | "no_club";
 
 export type Player = {
   id: string;
@@ -28,6 +28,18 @@ export type Player = {
   internationalGoals: number;
   marketValueEur: number;
   profileUrl: string | null;
+  filterBucket?: Availability | "no_club" | "other";
+  manualReview?: {
+    checkStatus: "no_club" | "under_contract" | "unknown";
+    clubMode: "keep" | "set" | "unknown" | "none";
+    clubValue: string | null;
+    contractMode: "keep" | "set" | "unknown";
+    contractValue: string | null;
+    sourceUrl: string;
+    checkedAt: string;
+    eventAt: string | null;
+    publicNote: string;
+  } | null;
 };
 
 export const mockPlayers: Player[] = [

@@ -13,7 +13,9 @@
     "listsTitle": "Kayıtlı listeler",
     "listsDescription": "Kayıtlı kulüp kısa listelerini görmek ve paylaşmak için menajer olarak giriş yap.",
     "sharedListTitle": "Paylaşılan kısa liste",
-    "sharedListDescription": "Bir menajerin paylaştığı kulüp kısa listesi. Güncel müsaitlik doğrulanmamıştır."
+    "sharedListDescription": "Bir menajerin paylaştığı kulüp kısa listesi. Güncel müsaitlik doğrulanmamıştır.",
+    "reviewTitle": "Manuel oyuncu kontrolü",
+    "reviewDescription": "Tek oyuncuyu kontrol etmek ve güncellemek için özel masa. Kontrol tarihi kalıcı durum onayı değildir."
   },
   "brand": {
     "name": "NextBosman",
@@ -28,7 +30,8 @@
     "signIn": "Giriş yap",
     "parser": "WhatsApp",
     "profile": "Profil",
-    "language": "Dil"
+    "language": "Dil",
+    "review": "Manuel kontrol"
   },
   "footer": {
     "free": "Masa ücretsiz kalır.",
@@ -78,9 +81,18 @@
     "storyMatchNote": "Belirtilen koşullara örnek eşleşme; müsaitlik onayı değil.",
     "storyListTitle": "Kulüp listesi",
     "storyList": [
-      { "name": "Adnan Kovač", "meta": "ST · 25" },
-      { "name": "Marko Ilić", "meta": "ST · 26" },
-      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+      {
+        "name": "Adnan Kovač",
+        "meta": "ST · 25"
+      },
+      {
+        "name": "Marko Ilić",
+        "meta": "ST · 26"
+      },
+      {
+        "name": "Denis Rahmanović",
+        "meta": "ST · 24"
+      }
     ],
     "moreKicker": "Aramadan fazlası",
     "moreTitle": "Sonraki hamlen",
@@ -155,7 +167,15 @@
     "statusUnconfirmed": "Güncel durum doğrulanmadı",
     "contractUnknown": "Sözleşme verisi yok",
     "listedUntil": "Sözleşme {date} tarihine kadar listelenmiş",
-    "listedClub": "Kaynakta listelenen kulüp"
+    "listedClub": "Kaynakta listelenen kulüp",
+    "noClub": "Kulüpsüz elle doğrulananlar",
+    "noClubNote": "Bu oyuncular elle mevcut kulüpsüz olarak kontrol edildi. Bu, süresi dolmuş veya bilinmeyen listelenmiş sözleşmelerle aynı kategori değildir. Tarih, durumun son incelendiği gündür; kalıcı onay değildir.",
+    "noClubLabel": "Kulüp yok",
+    "clubUnknown": "Mevcut kulüp bilinmiyor",
+    "checkedOn": "Durum {date} tarihinde kontrol edildi",
+    "source": "Kaynak: {host}",
+    "catalogLimited": "Bu katalog kopyasında manuel düzeltme yok. Filtreler yalnızca kaynaktaki listelenmiş kategorileri kullanır.",
+    "manualCheckBadge": "Elle kontrol edildi {date}"
   },
   "paste": {
     "title": "Hızlı WhatsApp yapıştır",
@@ -365,5 +385,44 @@
     "shareAnyone": "Bu bağlantıya sahip herkes listeyi açabilir.",
     "shareFailed": "Paylaşım güncellenemedi. Yeniden deneyin.",
     "confirm": "Kayıt e-posta onayı isterse Supabase Auth’ta Confirm email’i kapatın (yerel)."
+  },
+  "review": {
+    "kicker": "Yönetici",
+    "title": "Bir oyuncuyu kontrol et",
+    "lead": "Listelenmiş katalog verisinin üzerine manuel kontrol koy. Kontrol tarihi kalıcı onay değildir.",
+    "unconfigured": "Supabase yapılandırılmamış.",
+    "needSignIn": "Önce oturum açın. Google girişi yönetici erişimi vermez.",
+    "forbidden": "Bu masa yalnızca SQL ile verilen yöneticiler içindir.",
+    "playerId": "Oyuncu kimliği",
+    "load": "Oyuncuyu yükle",
+    "loadFailed": "Oyuncu yüklenemedi.",
+    "catalogHint": "Listelenmiş katalog değerleri kaynak satırında kalır. Düzeltme onları silmez.",
+    "checkStatus": "Kontrol edilen durum",
+    "status_no_club": "Kulüp yok",
+    "status_under_contract": "Sözleşmeli",
+    "status_unknown": "Bilinmiyor",
+    "noClubForcesNone": "Kulüp yok mevcut kulübü kaldırır. Listedeki son kulüp mevcut olarak gösterilmez.",
+    "clubMode": "Kulüp alanı",
+    "contractMode": "Sözleşme alanı",
+    "mode_keep": "Listelenen değeri tut",
+    "mode_set": "Yeni değer ata",
+    "mode_unknown": "Bilinmiyor",
+    "clubValue": "Kulüp adı",
+    "sourceUrl": "Herkese açık HTTPS kaynak URL’si",
+    "eventAt": "Olay tarihi (isteğe bağlı)",
+    "publicNote": "Herkese açık not (düz metin)",
+    "privateNote": "Özel not (yalnızca geçmiş)",
+    "save": "Kontrolü kaydet",
+    "deactivate": "Düzeltmeyi kapat",
+    "history": "Geçmiş",
+    "rollback": "Bu sürüme dön",
+    "active": "Etkin",
+    "inactive": "Kapalı",
+    "saved": "Kontrol kaydedildi.",
+    "deactivated": "Düzeltme kapatıldı.",
+    "rolledBack": "Geri alındı.",
+    "conflict": "Başka biri önce kaydetti. Yeniden yükleyip deneyin.",
+    "saveFailed": "Kaydedilemedi.",
+    "invalid": "Zorunlu alanları doldurun. Boş, tut demek değildir. Herkese açık HTTPS URL kullanın."
   }
 }

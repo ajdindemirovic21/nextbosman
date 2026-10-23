@@ -13,7 +13,9 @@
     "listsTitle": "Gespeicherte Listen",
     "listsDescription": "Als Berater anmelden, um gespeicherte Klub-Listen zu sehen und zu teilen.",
     "sharedListTitle": "Geteilte Shortlist",
-    "sharedListDescription": "Eine vom Berater geteilte Klub-Shortlist. Die aktuelle Verfügbarkeit ist nicht bestätigt."
+    "sharedListDescription": "Eine vom Berater geteilte Klub-Shortlist. Die aktuelle Verfügbarkeit ist nicht bestätigt.",
+    "reviewTitle": "Manuelle Spielerprüfung",
+    "reviewDescription": "Privater Schreibtisch zur Prüfung eines Spielers. Das Prüfdatum ist keine dauerhafte Statusbestätigung."
   },
   "brand": {
     "name": "NextBosman",
@@ -28,7 +30,8 @@
     "signIn": "Anmelden",
     "parser": "WhatsApp",
     "profile": "Profil",
-    "language": "Sprache"
+    "language": "Sprache",
+    "review": "Manuelle Prüfung"
   },
   "footer": {
     "free": "Der Schreibtisch bleibt kostenlos.",
@@ -78,9 +81,18 @@
     "storyMatchNote": "Beispiel für den Abgleich genannter Bedingungen, keine Bestätigung der Verfügbarkeit.",
     "storyListTitle": "Liste für den Klub",
     "storyList": [
-      { "name": "Adnan Kovač", "meta": "ST · 25" },
-      { "name": "Marko Ilić", "meta": "ST · 26" },
-      { "name": "Denis Rahmanović", "meta": "ST · 24" }
+      {
+        "name": "Adnan Kovač",
+        "meta": "ST · 25"
+      },
+      {
+        "name": "Marko Ilić",
+        "meta": "ST · 26"
+      },
+      {
+        "name": "Denis Rahmanović",
+        "meta": "ST · 24"
+      }
     ],
     "moreKicker": "Mehr als Suche",
     "moreTitle": "Dein nächster Zug",
@@ -155,7 +167,15 @@
     "statusUnconfirmed": "Aktueller Status nicht bestätigt",
     "contractUnknown": "Vertragsdaten nicht verfügbar",
     "listedUntil": "Vertrag gelistet bis {date}",
-    "listedClub": "Verein in der Quelle gelistet"
+    "listedClub": "Verein in der Quelle gelistet",
+    "noClub": "Manuell geprüft ohne Verein",
+    "noClubNote": "Diese Spieler wurden manuell als ohne aktuellen Verein geprüft. Das ist nicht dieselbe Kategorie wie abgelaufene oder unbekannte gelistete Verträge. Das Datum ist der letzte Prüfzeitpunkt, keine dauerhafte Bestätigung.",
+    "noClubLabel": "Kein Verein",
+    "clubUnknown": "Aktueller Verein unbekannt",
+    "checkedOn": "Status geprüft am {date}",
+    "source": "Quelle: {host}",
+    "catalogLimited": "In dieser Katalogkopie gibt es keine manuellen Korrekturen. Filter nutzen nur gelistete Quellenkategorien.",
+    "manualCheckBadge": "Manuell geprüft {date}"
   },
   "paste": {
     "title": "Schneller WhatsApp-Paste",
@@ -365,5 +385,44 @@
     "shareAnyone": "Jeder mit diesem Link kann die Liste öffnen.",
     "shareFailed": "Teilen konnte nicht aktualisiert werden. Bitte erneut versuchen.",
     "confirm": "Wenn die Registrierung eine Mail-Bestätigung will: Confirm email in Supabase Auth aus (lokal)."
+  },
+  "review": {
+    "kicker": "Admin",
+    "title": "Einen Spieler prüfen",
+    "lead": "Gelistete Katalogdaten mit einer manuellen Prüfung überlagern. Das Prüfdatum ist keine dauerhafte Bestätigung.",
+    "unconfigured": "Supabase ist nicht konfiguriert.",
+    "needSignIn": "Zuerst anmelden. Google-Anmeldung ist kein Adminzugang.",
+    "forbidden": "Dieser Schreibtisch ist nur für in SQL gewährte Administratoren.",
+    "playerId": "Spieler-ID",
+    "load": "Spieler laden",
+    "loadFailed": "Spieler konnte nicht geladen werden.",
+    "catalogHint": "Gelistete Katalogwerte bleiben in der Quellzeile. Die Korrektur löscht sie nicht.",
+    "checkStatus": "Geprüfter Status",
+    "status_no_club": "Kein Verein",
+    "status_under_contract": "Unter Vertrag",
+    "status_unknown": "Unbekannt",
+    "noClubForcesNone": "Kein Verein entfernt den aktuellen Verein. Der letzte gelistete Verein wird nicht als aktuell gezeigt.",
+    "clubMode": "Vereinsfeld",
+    "contractMode": "Vertragsfeld",
+    "mode_keep": "Gelisteten Wert behalten",
+    "mode_set": "Neuen Wert setzen",
+    "mode_unknown": "Unbekannt",
+    "clubValue": "Vereinsname",
+    "sourceUrl": "Öffentliche HTTPS-Quell-URL",
+    "eventAt": "Ereignisdatum (optional)",
+    "publicNote": "Öffentliche Notiz (Klartext)",
+    "privateNote": "Private Notiz (nur Verlauf)",
+    "save": "Prüfung speichern",
+    "deactivate": "Korrektur deaktivieren",
+    "history": "Verlauf",
+    "rollback": "Auf diese Revision zurücksetzen",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "saved": "Prüfung gespeichert.",
+    "deactivated": "Korrektur deaktiviert.",
+    "rolledBack": "Zurückgesetzt.",
+    "conflict": "Jemand anderes hat zuerst gespeichert. Neu laden und erneut versuchen.",
+    "saveFailed": "Speichern fehlgeschlagen.",
+    "invalid": "Pflichtfelder ausfüllen. Leer ist nicht behalten. Eine öffentliche HTTPS-URL verwenden."
   }
 }
