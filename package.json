@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:parser": "npx tsx scripts/paste-parser.test.ts && npx tsx scripts/match-accuracy.test.ts && npx tsx scripts/pagination.test.ts && npx tsx scripts/list-title.test.ts && npx tsx scripts/list-nav.test.ts && npx tsx scripts/profile-url.test.ts && npx tsx scripts/calendar-months.test.ts && npx tsx scripts/player-review.test.ts && npx tsx scripts/review-privacy.test.ts && npx tsx scripts/catalog-search.test.ts && npx tsx scripts/auto-refresh.test.ts && npx tsx scripts/auto-refresh-privacy.test.ts && npx tsx scripts/auto-refresh-columns.test.ts && npx tsx scripts/auto-refresh-adapter.test.ts",
+    "test:parser": "npx tsx scripts/paste-parser.test.ts && npx tsx scripts/match-accuracy.test.ts && npx tsx scripts/pagination.test.ts && npx tsx scripts/list-title.test.ts && npx tsx scripts/list-nav.test.ts && npx tsx scripts/profile-url.test.ts && npx tsx scripts/calendar-months.test.ts && npx tsx scripts/player-review.test.ts && npx tsx scripts/review-privacy.test.ts && npx tsx scripts/catalog-search.test.ts && npx tsx scripts/auto-refresh.test.ts && npx tsx scripts/auto-refresh-privacy.test.ts && npx tsx scripts/auto-refresh-columns.test.ts && npx tsx scripts/auto-refresh-adapter.test.ts && npx tsx scripts/auto-refresh-prod.test.ts",
     "index:players": "node scripts/build-player-index.mjs",
     "push:players": "node scripts/push-players-to-supabase.mjs"
   },

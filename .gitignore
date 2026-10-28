@@ -41,7 +41,11 @@ yarn-error.log*
 
 # Live listing snapshots from local fetch tests (not synthetic fixtures)
 /scripts/fixtures/auto-refresh/saved/
+/scripts/fixtures/auto-refresh/prod-saved/
 /scripts/fixtures/auto-refresh/203496-assembled-simulated.json
+
+# Production listing-refresh secrets (never .env.local)
+.env.prod-refresh.local
 
 # vercel
 .vercel
