@@ -1,5 +1,6 @@
 import type { Player } from "@/data/mock-players";
-import { applyManualReview, parseManualReviewRow } from "@/lib/player-review";
+import { parseAutoSnapshotRow } from "@/lib/auto-refresh";
+import { applyPlayerLayers, parseManualReviewRow } from "@/lib/player-review";
 import { parseTransfermarktProfileUrl } from "@/lib/profile-url";
 import type { PlayerRow } from "@/lib/supabase/types";
 
@@ -30,6 +31,7 @@ export function mapPlayerRow(row: PlayerRow): Player {
     marketValueEur: Number(row.market_value_eur) || 0,
     profileUrl: parseTransfermarktProfileUrl(row.profile_url, id),
     manualReview: null,
+    autoRefresh: null,
     filterBucket: row.availability,
   };
   const review = parseManualReviewRow({
@@ -44,7 +46,15 @@ export function mapPlayerRow(row: PlayerRow): Player {
     event_at: row.event_at,
     public_note: row.public_note,
   });
-  return applyManualReview(base, review);
+  const auto = parseAutoSnapshotRow({
+    auto_fetched_at: row.auto_fetched_at,
+    auto_club_id: row.auto_club_id,
+    auto_club_name: row.auto_club_name,
+    auto_contract_expires: row.auto_contract_expires,
+    auto_is_retired: row.auto_is_retired,
+    auto_joined: row.auto_joined,
+  });
+  return applyPlayerLayers(base, review, auto);
 }
 
 export function toPlayerRow(player: Player): PlayerRow {

@@ -39,6 +39,10 @@ yarn-error.log*
 *.csv
 /data/derived/
 
+# Live listing snapshots from local fetch tests (not synthetic fixtures)
+/scripts/fixtures/auto-refresh/saved/
+/scripts/fixtures/auto-refresh/203496-assembled-simulated.json
+
 # vercel
 .vercel
 

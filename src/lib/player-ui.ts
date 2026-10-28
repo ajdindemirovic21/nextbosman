@@ -15,6 +15,7 @@ export type ContractAccent = "free" | "soon" | null;
 export function contractAccent(player: Player, now = new Date()): ContractAccent {
   if (player.filterBucket === "no_club" || player.filterBucket === "other") return null;
   if (player.filterBucket === "expiring") return "soon";
+  if (player.autoRefresh && !player.manualReview) return null;
   if (player.contractUntil) {
     const until = Date.parse(`${player.contractUntil}T00:00:00Z`);
     if (!Number.isNaN(until)) {

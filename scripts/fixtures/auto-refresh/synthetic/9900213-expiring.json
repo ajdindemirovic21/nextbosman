@@ -1,0 +1,20 @@
+{
+  "simulated": true,
+  "syntheticId": "9900213",
+  "copiedFrom": "synthetic overlay fixture",
+  "csv": {
+    "availability": "expiring",
+    "club": "Manchester United",
+    "lastClub": "Manchester United",
+    "freeSince": null,
+    "contractUntil": "2027-06-30"
+  },
+  "listing": {
+    "club_id": "985",
+    "club_name": "Manchester United",
+    "contractExpires": "2027-06-30",
+    "joined": "2021-07-02",
+    "isRetired": false,
+    "fetched_at_utc": "2026-10-27T09:21:49.865333Z"
+  }
+}

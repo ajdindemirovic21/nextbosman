@@ -1,0 +1,20 @@
+{
+  "simulated": true,
+  "syntheticId": "9900215",
+  "copiedFrom": "synthetic overlay fixture",
+  "csv": {
+    "availability": "free",
+    "club": null,
+    "lastClub": "Ipswich Town",
+    "freeSince": "2026-07-01",
+    "contractUntil": null
+  },
+  "listing": {
+    "club_id": "123",
+    "club_name": "Retired",
+    "contractExpires": null,
+    "joined": "2026-07-01",
+    "isRetired": true,
+    "fetched_at_utc": "2026-10-27T09:21:49.930462Z"
+  }
+}

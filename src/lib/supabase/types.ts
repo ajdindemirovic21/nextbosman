@@ -68,6 +68,12 @@ export type PlayerRow = {
   checked_at?: string | null;
   event_at?: string | null;
   public_note?: string | null;
+  auto_club_id?: string | null;
+  auto_club_name?: string | null;
+  auto_contract_expires?: string | null;
+  auto_is_retired?: boolean | null;
+  auto_joined?: string | null;
+  auto_fetched_at?: string | null;
   filter_bucket?: string | null;
   head_revision_id?: string | null;
 };

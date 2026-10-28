@@ -1,0 +1,20 @@
+{
+  "simulated": true,
+  "syntheticId": "9900214",
+  "copiedFrom": "synthetic overlay fixture",
+  "csv": {
+    "availability": "free",
+    "club": null,
+    "lastClub": "Ajax Amsterdam",
+    "freeSince": "2026-07-01",
+    "contractUntil": null
+  },
+  "listing": {
+    "club_id": "515",
+    "club_name": "Without Club",
+    "contractExpires": null,
+    "joined": "2026-07-01",
+    "isRetired": false,
+    "fetched_at_utc": "2026-10-27T09:39:42.498368Z"
+  }
+}

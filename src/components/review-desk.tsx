@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import type { Player } from "@/data/mock-players";
+import type { CatalogSearchHit } from "@/lib/catalog-search";
 import type { Dictionary } from "@/i18n/get-dictionary";
+import { catalogSearchReady, normalizeCatalogSearch, playerFromSearchHit } from "@/lib/catalog-search";
 import { formatListedClub, contractPrimary } from "@/lib/contract-display";
+import { isPlayerId } from "@/lib/player-ids";
 import {
   validateReviewDraft,
   type CheckStatus,
@@ -55,6 +58,9 @@ const emptyDraft: ReviewDraft = {
 };
 
 export function ReviewDesk({ dict, locale }: Props) {
+  const [query, setQuery] = useState("");
+  const [hits, setHits] = useState<CatalogSearchHit[]>([]);
+  const [searched, setSearched] = useState(false);
   const [playerId, setPlayerId] = useState("");
   const [player, setPlayer] = useState<Player | null>(null);
   const [review, setReview] = useState<ReviewRow | null>(null);
@@ -63,17 +69,41 @@ export function ReviewDesk({ dict, locale }: Props) {
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
 
-  async function load() {
+  function loadErrorMessage(status: number, error: string | undefined) {
+    if (status === 403 || error === "Forbidden") return dict.review.forbidden;
+    if (status === 401) return dict.review.needSignIn;
+    if (status === 400 || error === "Invalid player") return dict.review.invalidPlayerId;
+    if (status === 404 || error === "Not found") return dict.review.notInCatalog;
+    return dict.review.loadFailed;
+  }
+
+  async function load(id = playerId) {
+    const nextId = id.trim();
+    if (!isPlayerId(nextId)) {
+      setMessage(dict.review.invalidPlayerId);
+      return;
+    }
     setBusy(true);
     setMessage("");
-    const res = await fetch(`/api/admin/player-reviews?playerId=${encodeURIComponent(playerId.trim())}`);
-    const body = await res.json();
+    setPlayerId(nextId);
+    let res: Response;
+    try {
+      res = await fetch(`/api/admin/player-reviews?playerId=${encodeURIComponent(nextId)}`);
+    } catch {
+      setBusy(false);
+      setPlayer(null);
+      setReview(null);
+      setHistory([]);
+      setMessage(dict.review.loadFailed);
+      return;
+    }
+    const body = await res.json().catch(() => ({}));
     setBusy(false);
     if (!res.ok) {
       setPlayer(null);
       setReview(null);
       setHistory([]);
-      setMessage(body.error === "Forbidden" ? dict.review.forbidden : dict.review.loadFailed);
+      setMessage(loadErrorMessage(res.status, body.error));
       return;
     }
     const nextPlayer = body.player as Player;
@@ -129,8 +159,42 @@ export function ReviewDesk({ dict, locale }: Props) {
       return;
     }
     setMessage(dict.review.saved);
-    void load();
+    void load(player.id);
     return body;
+  }
+
+  async function searchCatalog() {
+    const value = normalizeCatalogSearch(query);
+    if (!catalogSearchReady(value)) {
+      setHits([]);
+      setSearched(false);
+      setMessage(dict.review.searchTooShort);
+      return;
+    }
+    setBusy(true);
+    setMessage("");
+    setSearched(true);
+    let res: Response;
+    try {
+      res = await fetch(`/api/admin/player-reviews/search?q=${encodeURIComponent(value)}`);
+    } catch {
+      setBusy(false);
+      setHits([]);
+      setMessage(dict.review.searchFailed);
+      return;
+    }
+    const body = await res.json().catch(() => ({}));
+    setBusy(false);
+    if (!res.ok) {
+      setHits([]);
+      if (res.status === 403 || body.error === "Forbidden") setMessage(dict.review.forbidden);
+      else if (res.status === 401) setMessage(dict.review.needSignIn);
+      else setMessage(dict.review.searchFailed);
+      return;
+    }
+    const nextHits = (body.players ?? []) as CatalogSearchHit[];
+    setHits(nextHits);
+    if (!nextHits.length) setMessage(dict.review.noMatches);
   }
 
   async function deactivate() {
@@ -155,7 +219,7 @@ export function ReviewDesk({ dict, locale }: Props) {
       return;
     }
     setMessage(dict.review.deactivated);
-    void load();
+    void load(player.id);
   }
 
   async function rollback(revisionId: string) {
@@ -180,7 +244,7 @@ export function ReviewDesk({ dict, locale }: Props) {
       return;
     }
     setMessage(dict.review.rolledBack);
-    void load();
+    void load(player.id);
   }
 
   const clubLocked = draft.checkStatus === "no_club";
@@ -191,21 +255,57 @@ export function ReviewDesk({ dict, locale }: Props) {
         className="grid gap-3 rounded-2xl border border-slate-800/80 bg-slate-900/70 p-4"
         onSubmit={(event) => {
           event.preventDefault();
-          void load();
+          void searchCatalog();
         }}
       >
         <label className="grid gap-1 text-sm">
-          {dict.review.playerId}
+          {dict.review.searchLabel}
           <input
-            className="rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2 text-slate-100"
-            value={playerId}
-            onChange={(event) => setPlayerId(event.target.value)}
-            required
+            className="min-h-11 w-full rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2 text-slate-100"
+            value={query}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setSearched(false);
+            }}
+            autoComplete="off"
+            enterKeyHint="search"
           />
         </label>
-        <button type="submit" className="btn-primary w-fit" disabled={busy}>
-          {dict.review.load}
-        </button>
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+          <button type="submit" className="btn-primary min-h-11 w-full sm:w-fit" disabled={busy}>
+            {dict.review.search}
+          </button>
+          <button
+            type="button"
+            className="btn-secondary min-h-11 w-full sm:w-fit"
+            disabled={busy}
+            onClick={() => void load(normalizeCatalogSearch(query))}
+          >
+            {dict.review.load}
+          </button>
+        </div>
+        {searched && hits.length ? (
+          <ul className="grid list-none gap-2 p-0" aria-label={dict.review.results}>
+            {hits.map((hit) => (
+              <li key={hit.id}>
+                <button
+                  type="button"
+                  className="grid min-h-11 w-full gap-0.5 rounded-xl border border-slate-800 bg-slate-950/80 px-3 py-2 text-left"
+                  disabled={busy}
+                  onClick={() => {
+                    setQuery(hit.id);
+                    void load(hit.id);
+                  }}
+                >
+                  <span className="font-semibold text-white">{hit.name}</span>
+                  <span className="text-sm text-slate-400">
+                    {hit.position} · {formatListedClub(playerFromSearchHit(hit), dict)} · {hit.id}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </form>
 
       {player ? (

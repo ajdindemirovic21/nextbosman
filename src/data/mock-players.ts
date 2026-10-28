@@ -29,6 +29,14 @@ export type Player = {
   marketValueEur: number;
   profileUrl: string | null;
   filterBucket?: Availability | "no_club" | "other";
+  autoRefresh?: {
+    fetchedAt: string;
+    clubId: string | null;
+    clubName: string | null;
+    contractExpires: string | null;
+    isRetired: boolean;
+    joined: string | null;
+  } | null;
   manualReview?: {
     checkStatus: "no_club" | "under_contract" | "unknown";
     clubMode: "keep" | "set" | "unknown" | "none";

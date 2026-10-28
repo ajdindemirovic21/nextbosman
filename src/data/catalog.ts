@@ -1,13 +1,28 @@
 import fs from "fs";
 import path from "path";
 import type { CatalogStatus, Player, Position } from "@/data/mock-players";
-import { uniquePlayerIds } from "@/lib/player-ids";
-import { applyManualReview, matchesCatalogStatus } from "@/lib/player-review";
+import {
+  CATALOG_SEARCH_LIMIT,
+  type CatalogSearchHit,
+  catalogSearchReady,
+  escapeIlikePattern,
+  normalizeCatalogSearch,
+  playerMatchesCatalogSearch,
+  rankCatalogSearchHits,
+  searchHitFromPlayer,
+} from "@/lib/catalog-search";
+import { isPlayerId, uniquePlayerIds } from "@/lib/player-ids";
+import { applyPlayerLayers, matchesCatalogStatus } from "@/lib/player-review";
 import { PAGE_SIZE, catalogIdKey, compareMarketValueThenId, pageOffset } from "@/lib/player-page";
 import { parseTransfermarktProfileUrl } from "@/lib/profile-url";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { mapPlayerRow } from "@/lib/supabase/map-player";
-import { PLAYERS_EFFECTIVE_COLUMNS, PLAYERS_TABLE_COLUMNS } from "@/lib/supabase/player-columns";
+import {
+  PLAYERS_EFFECTIVE_COLUMNS,
+  PLAYERS_EFFECTIVE_REVIEW_COLUMNS,
+  PLAYERS_TABLE_COLUMNS,
+  isMissingAutoColumns,
+} from "@/lib/supabase/player-columns";
 import { createPublicSupabase } from "@/lib/supabase/public";
 import type { PlayerRow } from "@/lib/supabase/types";
 
@@ -81,8 +96,9 @@ export function loadCatalog(): Player[] {
       hasSeasonStats: player.hasSeasonStats === true,
       profileUrl: parseTransfermarktProfileUrl(player.profileUrl, catalogIdKey(player.id)),
       manualReview: null,
+      autoRefresh: null,
     };
-    return applyManualReview(base, null);
+    return applyPlayerLayers(base, null, null);
   });
   cacheMtime = mtime;
   return cache;
@@ -118,8 +134,7 @@ function filterJsonRows(catalog: Player[], filters: PlayerQuery): Player[] {
   return rows;
 }
 
-export function queryPlayersFromJson(filters: PlayerQuery): PlayerQueryResult {
-  const catalog = loadCatalog();
+export function queryPlayersFromJson(filters: PlayerQuery, catalog = loadCatalog()): PlayerQueryResult {
   const nationalities = [...new Set(catalog.map((p) => p.nationality).filter(Boolean))].sort();
   const rows = filterJsonRows(catalog, filters);
   const total = rows.length;
@@ -141,13 +156,23 @@ function isMissingEffectiveView(error: { code?: string; message?: string } | nul
   return /players_effective/i.test(error.message ?? "");
 }
 
+let playersEffectiveSelect = PLAYERS_EFFECTIVE_COLUMNS;
+
+function effectiveSelectColumns(table: "players_effective" | "players") {
+  return table === "players_effective" ? playersEffectiveSelect : PLAYERS_TABLE_COLUMNS;
+}
+
+function rememberMissingAutoColumns() {
+  playersEffectiveSelect = PLAYERS_EFFECTIVE_REVIEW_COLUMNS;
+}
+
 async function queryEffectiveTable(filters: PlayerQuery, table: "players_effective" | "players") {
   const supabase = createPublicSupabase();
   const page = Math.max(1, filters.page ?? 1);
   const offset = pageOffset(page, PAGE_SIZE);
   const to = offset + PAGE_SIZE - 1;
   const bucketColumn = table === "players_effective" ? "filter_bucket" : "availability";
-  const columns = table === "players_effective" ? PLAYERS_EFFECTIVE_COLUMNS : PLAYERS_TABLE_COLUMNS;
+  const columns = effectiveSelectColumns(table);
   const nationsPromise = supabase.rpc("player_nationalities");
   let query = applyCatalogFilters(
     supabase
@@ -160,7 +185,24 @@ async function queryEffectiveTable(filters: PlayerQuery, table: "players_effecti
     bucketColumn,
   );
 
-  const [{ data, error, count }, nations] = await Promise.all([query, nationsPromise]);
+  let [{ data, error, count }, nations] = await Promise.all([query, nationsPromise]);
+  if (table === "players_effective" && isMissingAutoColumns(error)) {
+    rememberMissingAutoColumns();
+    query = applyCatalogFilters(
+      supabase
+        .from(table)
+        .select(PLAYERS_EFFECTIVE_REVIEW_COLUMNS, { count: "exact" })
+        .order("market_value_eur", { ascending: false })
+        .order("id", { ascending: true })
+        .range(offset, to),
+      filters,
+      bucketColumn,
+    );
+    const retried = await query;
+    data = retried.data;
+    error = retried.error;
+    count = retried.count;
+  }
   const nationalities = Array.isArray(nations.data) ? (nations.data as string[]) : [];
   return {
     data,
@@ -250,15 +292,94 @@ function orderPlayers(ids: string[], found: Player[]): Player[] {
   });
 }
 
+export function searchCatalogFromJson(query: string): CatalogSearchHit[] {
+  const value = normalizeCatalogSearch(query);
+  if (!catalogSearchReady(value)) return [];
+  const hits = loadCatalog().filter((player) => playerMatchesCatalogSearch(player, value));
+  return rankCatalogSearchHits(hits, value).map(toSearchHit);
+}
+
+function toSearchHit(player: Player): CatalogSearchHit {
+  return searchHitFromPlayer(player);
+}
+
+async function searchCatalogRows(query: string): Promise<PlayerRow[]> {
+  const supabase = createPublicSupabase();
+  const value = normalizeCatalogSearch(query);
+  const pattern = `%${escapeIlikePattern(value)}%`;
+  const orFilter = `name.ilike."${pattern}",id.ilike."${pattern}"`;
+
+  async function fetchRows(table: "players_effective" | "players", columns: string) {
+    const found = await supabase
+      .from(table)
+      .select(columns)
+      .or(orFilter)
+      .order("name", { ascending: true })
+      .order("id", { ascending: true })
+      .limit(CATALOG_SEARCH_LIMIT);
+    if (found.error) return { rows: [] as PlayerRow[], error: found.error };
+    const rows = ((found.data ?? []) as unknown as PlayerRow[]).map((row) => ({
+      ...row,
+      id: String(row.id),
+    }));
+    if (isPlayerId(value) && !rows.some((row) => row.id === value)) {
+      const byId = await supabase.from(table).select(columns).eq("id", value).maybeSingle();
+      if (byId.error) return { rows, error: byId.error };
+      if (byId.data) {
+        const extra = byId.data as unknown as PlayerRow;
+        rows.push({ ...extra, id: String(extra.id) });
+      }
+    }
+    return { rows, error: null };
+  }
+
+  let result = await fetchRows("players_effective", playersEffectiveSelect);
+  if (result.error && isMissingAutoColumns(result.error)) {
+    rememberMissingAutoColumns();
+    result = await fetchRows("players_effective", PLAYERS_EFFECTIVE_REVIEW_COLUMNS);
+  }
+  if (result.error && isMissingEffectiveView(result.error)) {
+    result = await fetchRows("players", PLAYERS_TABLE_COLUMNS);
+  }
+  if (result.error) throw result.error;
+  return result.rows;
+}
+
+export async function searchCatalogPlayers(query: string): Promise<CatalogSearchHit[]> {
+  const value = normalizeCatalogSearch(query);
+  if (!catalogSearchReady(value)) return [];
+
+  if (isSupabaseConfigured()) {
+    const mapped = (await searchCatalogRows(value)).map((row) => mapPlayerRow(row));
+    const matched = mapped.filter((player) => playerMatchesCatalogSearch(player, value));
+    return rankCatalogSearchHits(matched, value).map(toSearchHit);
+  }
+
+  return searchCatalogFromJson(value);
+}
+
 export async function getPlayersByIds(ids: string[]): Promise<Player[]> {
   const wanted = uniquePlayerIds(ids);
   if (!wanted.length) return [];
 
   if (isSupabaseConfigured()) {
     const supabase = createPublicSupabase();
-    const effective = await supabase.from("players_effective").select(PLAYERS_EFFECTIVE_COLUMNS).in("id", wanted);
-    if (!effective.error && effective.data) {
-      const mapped = (effective.data as PlayerRow[]).map((row) => withLocalSeasonStats(mapPlayerRow(row), row));
+    const withAuto = await supabase.from("players_effective").select(playersEffectiveSelect).in("id", wanted);
+    let effectiveRows: PlayerRow[] | null = null;
+    if (!withAuto.error && withAuto.data) {
+      effectiveRows = withAuto.data as unknown as PlayerRow[];
+    } else if (isMissingAutoColumns(withAuto.error)) {
+      rememberMissingAutoColumns();
+      const withoutAuto = await supabase
+        .from("players_effective")
+        .select(PLAYERS_EFFECTIVE_REVIEW_COLUMNS)
+        .in("id", wanted);
+      if (!withoutAuto.error && withoutAuto.data) {
+        effectiveRows = withoutAuto.data as unknown as PlayerRow[];
+      }
+    }
+    if (effectiveRows) {
+      const mapped = effectiveRows.map((row) => withLocalSeasonStats(mapPlayerRow(row), row));
       return orderPlayers(wanted, mapped);
     }
     const { data, error } = await supabase.from("players").select(PLAYERS_TABLE_COLUMNS).in("id", wanted);

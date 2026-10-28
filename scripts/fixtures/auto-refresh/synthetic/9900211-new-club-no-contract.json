@@ -1,0 +1,20 @@
+{
+  "simulated": true,
+  "syntheticId": "9900211",
+  "copiedFrom": "synthetic overlay fixture",
+  "csv": {
+    "availability": "free",
+    "club": null,
+    "lastClub": "Real Betis Balompié",
+    "freeSince": "2026-06-30",
+    "contractUntil": null
+  },
+  "listing": {
+    "club_id": "40039",
+    "club_name": "Abha Club",
+    "contractExpires": null,
+    "joined": "2026-08-06",
+    "isRetired": false,
+    "fetched_at_utc": "2026-10-27T09:06:51.895690Z"
+  }
+}

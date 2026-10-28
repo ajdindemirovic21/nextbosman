@@ -1,0 +1,14 @@
+{
+  "simulated": true,
+  "id": "14086",
+  "name": "Synthetic RW",
+  "isRetired": true,
+  "fetched_at_utc": "2026-10-27T09:21:49.930462",
+  "club": {
+    "id": "123",
+    "name": "Retired",
+    "joined": "2026-07-01",
+    "contractExpires": null
+  },
+  "origin": "Synthetic overlay fixture. Not a Transfermarkt response."
+}

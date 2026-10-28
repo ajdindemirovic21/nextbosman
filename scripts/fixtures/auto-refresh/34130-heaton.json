@@ -1,0 +1,12 @@
+{
+  "simulated": true,
+  "id": "34130",
+  "name": "Synthetic GK",
+  "isRetired": false,
+  "fetched_at_utc": "2026-10-27T09:21:49.865333",
+  "club_id": "985",
+  "club_name": "Manchester United",
+  "contractExpires": "2027-06-30",
+  "joined": "2021-07-02",
+  "origin": "Synthetic overlay fixture. Not a Transfermarkt response."
+}

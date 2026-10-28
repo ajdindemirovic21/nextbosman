@@ -1,0 +1,14 @@
+{
+  "simulated": true,
+  "id": "203853",
+  "name": "Synthetic LB",
+  "isRetired": false,
+  "fetched_at_utc": "2026-10-27T09:39:42.498368",
+  "club": {
+    "id": "515",
+    "name": "Without Club",
+    "joined": "2026-07-01",
+    "contractExpires": null
+  },
+  "origin": "Synthetic overlay fixture. Not a Transfermarkt response."
+}

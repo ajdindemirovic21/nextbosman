@@ -1,0 +1,20 @@
+{
+  "simulated": true,
+  "syntheticId": "9900212",
+  "copiedFrom": "synthetic overlay fixture",
+  "csv": {
+    "availability": "free",
+    "club": null,
+    "lastClub": "UD Las Palmas",
+    "freeSince": "2026-06-30",
+    "contractUntil": null
+  },
+  "listing": {
+    "club_id": "234",
+    "club_name": "Feyenoord Rotterdam",
+    "contractExpires": "2030-06-30",
+    "joined": "2026-07-01",
+    "isRetired": false,
+    "fetched_at_utc": "2026-10-27T09:06:51.952791Z"
+  }
+}
