@@ -35,7 +35,7 @@
   },
   "footer": {
     "free": "Der Schreibtisch bleibt kostenlos.",
-    "live": "Spieler kommen aus der Live-Datenbank."
+    "live": "Spieler stammen aus einem gelisteten Katalog, nicht aus einem regelmäßig aktualisierten Live-Feed."
   },
   "support": {
     "kicker": "NextBosman unterstützen",
@@ -179,8 +179,10 @@
     "retiredLabel": "Karriere beendet",
     "withoutClubListed": "Ohne Verein gelistet",
     "withoutClubNotFree": "Ohne Verein gelistet ist keine Bestätigung, dass der Spieler verfügbar ist",
-    "autoFetchedOn": "Automatische Liste abgerufen {date}",
+    "autoFetchedOn": "Abgerufen {date}",
     "autoSource": "Automatische Listen-Ebene",
+    "autoFetchedNote": "Das ist der Abrufzeitpunkt der Liste, nicht das letzte Änderungsdatum der Quelle und keine Verfügbarkeitsbestätigung.",
+    "catalogSourceUnknown": "Das Aktualisierungsdatum der Quelle ist unbekannt. Ein Upload- oder Build-Datum wird nicht als Datenfrische gezeigt.",
     "autoContractUnknown": "Vertragsende bei diesem Verein unbekannt"
   },
   "paste": {
@@ -242,7 +244,7 @@
     "rankedAmongLoaded": "Die Reihenfolge gilt nur für diese geladenen Ergebnisse, nicht für den ganzen Katalog.",
     "empty": "Keine Spieler passen zu diesen Filtern.",
     "emptyPage": "Diese Seite liegt außerhalb des Ergebnisbereichs. Gehe zu einer vorherigen Seite.",
-    "sampleNote": "Live-Datenbank. Klick auf einen Namen für Spiele, Tore, Vorlagen und Minuten seit Juli 2025.",
+    "sampleNote": "Klick auf einen Namen für Spiele, Tore, Vorlagen und Minuten seit Juli 2025.",
     "fit": "Fit",
     "loadMore": "Mehr laden"
   },

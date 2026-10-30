@@ -74,26 +74,56 @@ export function contractNote(player: Player, dict: Dictionary): string | null {
   return null;
 }
 
-export function overlayStatusLines(player: Player, dict: Dictionary, locale: string): string[] {
-  const review = player.manualReview;
+export type SourceFreshnessItem = {
+  text: string;
+  href?: string;
+};
+
+function checkedLabel(checkedAt: string, dict: Dictionary, locale: string) {
+  return dict.status.manualCheckBadge.replace("{date}", formatDate(checkedAt.slice(0, 10), locale));
+}
+
+function fetchedLabel(fetchedAt: string, dict: Dictionary, locale: string) {
+  return dict.status.autoFetchedOn.replace("{date}", formatDate(fetchedAt.slice(0, 10), locale));
+}
+
+/** Manual overlay, then auto snapshot, then CSV catalog. Short = date only; detail = profile copy. */
+export function sourceFreshnessItems(
+  player: ReviewablePlayer & { manualReview?: ManualReviewPublic | null },
+  dict: Dictionary,
+  locale: string,
+  detail: boolean,
+): SourceFreshnessItem[] {
+  const review = player.manualReview ?? null;
   if (review) {
-    const checked = dict.status.checkedOn.replace("{date}", formatDate(review.checkedAt.slice(0, 10), locale));
-    const host = sourceUrlHost(review.sourceUrl) || review.sourceUrl;
-    const source = dict.status.source.replace("{host}", host);
-    const lines = [checked, source];
-    if (review.publicNote) lines.push(review.publicNote);
-    return lines;
+    const items: SourceFreshnessItem[] = [{ text: checkedLabel(review.checkedAt, dict, locale) }];
+    if (detail) {
+      const host = sourceUrlHost(review.sourceUrl) || review.sourceUrl;
+      items.push({ text: dict.status.source.replace("{host}", host), href: review.sourceUrl });
+      if (review.publicNote) items.push({ text: review.publicNote });
+    }
+    return items;
   }
   const auto = player.autoRefresh;
-  if (!auto) return [];
-  const fetched = dict.status.autoFetchedOn.replace("{date}", formatDate(auto.fetchedAt.slice(0, 10), locale));
-  const lines = [fetched, dict.status.autoSource];
-  if (isConfirmedWithoutClub(auto)) lines.push(dict.status.withoutClubNotFree);
+  if (auto) {
+    const items: SourceFreshnessItem[] = [{ text: fetchedLabel(auto.fetchedAt, dict, locale) }];
+    if (detail) items.push({ text: dict.status.autoFetchedNote });
+    return items;
+  }
+  if (detail) return [{ text: dict.status.catalogSourceUnknown }];
+  return [];
+}
+
+export function overlayStatusLines(player: Player, dict: Dictionary, locale: string): string[] {
+  const items = sourceFreshnessItems(player, dict, locale, false);
+  const lines = items.map((item) => item.text);
+  const review = player.manualReview;
+  if (review?.sourceUrl) lines.push(review.sourceUrl);
   return lines;
 }
 
 export function manualCheckLines(player: Player, dict: Dictionary, locale: string): string[] {
-  return overlayStatusLines(player, dict, locale);
+  return sourceFreshnessItems(player, dict, locale, false).map((item) => item.text);
 }
 
 export function contractShareLine(player: Player, dict: Dictionary, locale: string): string {

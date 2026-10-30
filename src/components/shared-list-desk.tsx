@@ -2,7 +2,8 @@ import Link from "next/link";
 import { getPlayersByIds } from "@/data/catalog";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { Locale } from "@/i18n/config";
-import { contractNote, contractPrimary, formatListedClub, manualCheckLines } from "@/lib/contract-display";
+import { SourceFreshness } from "@/components/source-freshness";
+import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
 import { formatMarketValue } from "@/lib/format";
 import { uniquePlayerIds } from "@/lib/player-ids";
 import { playerSearchPath } from "@/lib/player-link";
@@ -72,11 +73,7 @@ export async function SharedListDesk({ lang, dict, list }: Props) {
                       {contractPrimary(player, dict, lang)}
                       {note ? ` · ${note}` : ""}
                     </p>
-                    {manualCheckLines(player, dict, lang).map((line) => (
-                      <p className="text-sm text-slate-500" key={line}>
-                        {line}
-                      </p>
-                    ))}
+                    <SourceFreshness player={player} dict={dict} locale={lang} className="block text-sm text-slate-500" />
                     <p className="text-sm text-slate-500">
                       {dict.table.marketValue}: {formatMarketValue(player.marketValueEur, lang)}
                     </p>

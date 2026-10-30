@@ -35,7 +35,7 @@
   },
   "footer": {
     "free": "Le bureau reste gratuit.",
-    "live": "Les joueurs viennent de la base en direct."
+    "live": "Les joueurs viennent d’un catalogue listé, pas d’un flux en direct régulièrement mis à jour."
   },
   "support": {
     "kicker": "Soutenir NextBosman",
@@ -179,8 +179,10 @@
     "retiredLabel": "Retraité",
     "withoutClubListed": "Listé sans club",
     "withoutClubNotFree": "Listé sans club ne confirme pas que le joueur est libre de signer",
-    "autoFetchedOn": "Liste automatique récupérée {date}",
+    "autoFetchedOn": "Récupéré {date}",
     "autoSource": "Couche de liste automatique",
+    "autoFetchedNote": "C’est la date de récupération de la fiche, pas la dernière modification de la source ni une confirmation de disponibilité.",
+    "catalogSourceUnknown": "Date de mise à jour de la source inconnue. Une date d’import ou de build n’est pas affichée comme fraîcheur des données.",
     "autoContractUnknown": "Fin de contrat inconnue dans ce club"
   },
   "paste": {
@@ -242,7 +244,7 @@
     "rankedAmongLoaded": "L’ordre concerne ces résultats chargés, pas tout le catalogue.",
     "empty": "Aucun joueur ne correspond à ces filtres.",
     "emptyPage": "Cette page est hors de la plage de résultats. Revenez à une page précédente.",
-    "sampleNote": "Base en direct. Cliquez un nom pour matchs, buts, passes et minutes depuis juillet 2025.",
+    "sampleNote": "Cliquez un nom pour matchs, buts, passes et minutes depuis juillet 2025.",
     "fit": "Fit",
     "loadMore": "Charger plus"
   },

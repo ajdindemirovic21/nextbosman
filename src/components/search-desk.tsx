@@ -10,7 +10,8 @@ import { PlayerDrawer } from "@/components/player-drawer";
 import { QuickShare } from "@/components/quick-share";
 import { positions, type CatalogStatus, type Player, type Position } from "@/data/mock-players";
 import type { Dictionary } from "@/i18n/get-dictionary";
-import { contractNote, contractPrimary, formatListedClub, manualCheckLines } from "@/lib/contract-display";
+import { SourceFreshness } from "@/components/source-freshness";
+import { contractNote, contractPrimary, formatListedClub } from "@/lib/contract-display";
 import { isCatalogQueryStatus } from "@/lib/player-review";
 import { formatMarketValue } from "@/lib/format";
 import { positionLine } from "@/lib/player-ui";
@@ -1028,11 +1029,7 @@ function PlayerRow({
         <span className="contract-cell">
           <span className="pill">{contractPrimary(player, dict, locale)}</span>
           {contractNote(player, dict) ? <span className="pill">{contractNote(player, dict)}</span> : null}
-          {manualCheckLines(player, dict, locale).map((line) => (
-            <span className="pill" key={line}>
-              {line}
-            </span>
-          ))}
+          <SourceFreshness player={player} dict={dict} locale={locale} className="pill" />
         </span>
       </td>
       <td className="num">{formatSeasonCount(player, player.appearances)}</td>
@@ -1224,6 +1221,7 @@ function PlayerCard({
         <span className="break-words text-sm text-slate-400">
           {formatListedClub(player, dict)} · {player.age} · {formatMarketValue(player.marketValueEur, locale)}
         </span>
+        <SourceFreshness player={player} dict={dict} locale={locale} className="break-words text-xs text-slate-500" />
         {showFit && match ? (
           <>
             <span className={`fit-badge fit-${match.fit} w-fit`}>{dict.match[match.fit]}</span>

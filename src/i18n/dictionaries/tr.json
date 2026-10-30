@@ -35,7 +35,7 @@
   },
   "footer": {
     "free": "Masa ücretsiz kalır.",
-    "live": "Oyuncular canlı veritabanından gelir."
+    "live": "Oyuncular düzenli yenilenen canlı bir akıştan değil, listelenmiş bir katalogdan gelir."
   },
   "support": {
     "kicker": "NextBosman’ı destekle",
@@ -179,8 +179,10 @@
     "retiredLabel": "Emekli",
     "withoutClubListed": "Kulüpsüz listelenmiş",
     "withoutClubNotFree": "Kulüpsüz listelenmek, oyuncunun imzaya açık olduğunu doğrulamaz",
-    "autoFetchedOn": "Otomatik liste {date} tarihinde alındı",
+    "autoFetchedOn": "Alındı {date}",
     "autoSource": "Otomatik liste katmanı",
+    "autoFetchedNote": "Bu, listenin alındığı tarihtir; kaynağın son değişiklik tarihi veya oyuncunun müsait olduğunun onayı değildir.",
+    "catalogSourceUnknown": "Kaynağın güncellenme tarihi bilinmiyor. Yükleme veya derleme tarihi veri tazeliği olarak gösterilmez.",
     "autoContractUnknown": "Bu kulüpte sözleşme bitişi bilinmiyor"
   },
   "paste": {
@@ -242,7 +244,7 @@
     "rankedAmongLoaded": "Sıralama yalnızca bu yüklenen sonuçlar içindir, tüm katalog için değil.",
     "empty": "Bu filtrelere uyan oyuncu yok.",
     "emptyPage": "Bu sayfa sonuç aralığının dışında. Önceki bir sayfaya dönün.",
-    "sampleNote": "Canlı veritabanı. İsme tıklayınca Temmuz 2025’ten beri maç, gol, asist ve dakika görünür.",
+    "sampleNote": "İsme tıklayınca Temmuz 2025’ten beri maç, gol, asist ve dakika görünür.",
     "fit": "Uyum",
     "loadMore": "Daha fazla"
   },

@@ -35,7 +35,7 @@
   },
   "footer": {
     "free": "The desk stays free.",
-    "live": "Players are loaded from the live database."
+    "live": "Players come from a listed catalog, not a regularly refreshed live feed."
   },
   "support": {
     "kicker": "Support NextBosman",
@@ -179,8 +179,10 @@
     "retiredLabel": "Retired",
     "withoutClubListed": "Listed without a club",
     "withoutClubNotFree": "Listed without a club is not confirmation that the player is free to sign",
-    "autoFetchedOn": "Automatic listing fetched {date}",
+    "autoFetchedOn": "Fetched {date}",
     "autoSource": "Automatic listing overlay",
+    "autoFetchedNote": "This is when the listing was fetched, not the source last-change date, and not confirmation that the player is available.",
+    "catalogSourceUnknown": "Source update date unknown. A catalog upload or build date is not shown as data freshness.",
     "autoContractUnknown": "Contract end unknown at this club"
   },
   "paste": {
@@ -242,7 +244,7 @@
     "rankedAmongLoaded": "Order is among these loaded results, not the whole catalog.",
     "empty": "No players match these filters.",
     "emptyPage": "This page is outside the result range. Go to a previous page.",
-    "sampleNote": "Live database. Click a name for matches, goals, assists and minutes since July 2025.",
+    "sampleNote": "Click a name for matches, goals, assists and minutes since July 2025.",
     "fit": "Fit",
     "loadMore": "Load more"
   },

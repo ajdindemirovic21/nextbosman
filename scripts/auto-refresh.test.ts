@@ -17,7 +17,7 @@ import {
 } from "../src/lib/auto-refresh.ts";
 import { AUTO_REFRESH_FETCH_ENABLED } from "../src/lib/auto-refresh-adapter.ts";
 import { playerFromSearchHit, searchHitFromPlayer } from "../src/lib/catalog-search.ts";
-import { contractPrimary, formatListedClub, overlayStatusLines } from "../src/lib/contract-display.ts";
+import { contractNote, contractPrimary, formatListedClub, overlayStatusLines } from "../src/lib/contract-display.ts";
 import { contractAccent } from "../src/lib/player-ui.ts";
 import {
   applyPlayerLayers,
@@ -149,7 +149,10 @@ assert.equal(matchesCatalogStatus(zinchenkoPlayer.filterBucket!, "free"), false)
 assert.equal(matchesCatalogStatus(zinchenkoPlayer.filterBucket!, "no_club"), true);
 assert.equal(formatListedClub(zinchenkoPlayer, en), en.status.withoutClubListed);
 assert.equal(formatListedClub(playerFromSearchHit(searchHitFromPlayer(zinchenkoPlayer)), en), en.status.withoutClubListed);
-assert.ok(overlayStatusLines(zinchenkoPlayer, en, "en").includes(en.status.withoutClubNotFree));
+assert.equal(contractNote(zinchenkoPlayer, en), en.status.withoutClubNotFree);
+assert.ok(overlayStatusLines(zinchenkoPlayer, en, "en").some((line) => line.startsWith("Fetched ")));
+assert.equal(overlayStatusLines(zinchenkoPlayer, en, "en").includes(en.status.withoutClubNotFree), false);
+assert.equal(overlayStatusLines(zinchenkoPlayer, en, "en").includes(en.status.autoSource), false);
 
 assert.equal(isRetiredListing(youngSnap), true);
 assert.equal(autoFilterBucket(youngSnap, TODAY), "other");

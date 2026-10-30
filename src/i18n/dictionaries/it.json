@@ -35,7 +35,7 @@
   },
   "footer": {
     "free": "La scrivania resta gratis.",
-    "live": "I giocatori arrivano dal database live."
+    "live": "I giocatori arrivano da un catalogo elencato, non da un feed aggiornato di routine."
   },
   "support": {
     "kicker": "Sostieni NextBosman",
@@ -179,8 +179,10 @@
     "retiredLabel": "Ritirato",
     "withoutClubListed": "Elencato senza club",
     "withoutClubNotFree": "Elencato senza club non conferma che il giocatore sia libero di firmare",
-    "autoFetchedOn": "Elenco automatico recuperato {date}",
+    "autoFetchedOn": "Recuperato {date}",
     "autoSource": "Livello di elenco automatico",
+    "autoFetchedNote": "È la data di recupero della scheda, non l’ultima modifica della fonte né una conferma di disponibilità.",
+    "catalogSourceUnknown": "Data di aggiornamento della fonte sconosciuta. Una data di caricamento o di build non è mostrata come freschezza dei dati.",
     "autoContractUnknown": "Fine contratto sconosciuta in questo club"
   },
   "paste": {
@@ -242,7 +244,7 @@
     "rankedAmongLoaded": "L’ordine vale per questi risultati caricati, non per tutto il catalogo.",
     "empty": "Nessun giocatore corrisponde a questi filtri.",
     "emptyPage": "Questa pagina è fuori dall’intervallo dei risultati. Torna a una pagina precedente.",
-    "sampleNote": "Database live. Clicca un nome per partite, gol, assist e minuti da luglio 2025.",
+    "sampleNote": "Clicca un nome per partite, gol, assist e minuti da luglio 2025.",
     "fit": "Fit",
     "loadMore": "Carica altri"
   },

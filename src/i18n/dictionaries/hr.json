@@ -35,7 +35,7 @@
   },
   "footer": {
     "free": "Stol ostaje besplatan.",
-    "live": "Igrači se učitavaju iz baze."
+    "live": "Igrači dolaze iz navedenog kataloga, ne iz izvora koji se redovito osvježava."
   },
   "support": {
     "kicker": "Podrži NextBosman",
@@ -179,8 +179,10 @@
     "retiredLabel": "Umirovljen",
     "withoutClubListed": "Navedeno bez kluba",
     "withoutClubNotFree": "Navedeno bez kluba nije potvrda da je igrač slobodan za potpis",
-    "autoFetchedOn": "Automatski popis dohvaćen {date}",
+    "autoFetchedOn": "Dohvaćeno {date}",
     "autoSource": "Automatski sloj popisa",
+    "autoFetchedNote": "To je datum dohvata unosa, ne datum zadnje izmjene izvora niti potvrda da je igrač dostupan.",
+    "catalogSourceUnknown": "Datum ažuriranja izvora nije poznat. Datum uploada ili builda ne prikazuje se kao svježina podataka.",
     "autoContractUnknown": "Kraj ugovora na ovom klubu nije poznat"
   },
   "paste": {
@@ -242,7 +244,7 @@
     "rankedAmongLoaded": "Redoslijed je među ovim učitanim rezultatima, ne cijelim katalogom.",
     "empty": "Nema igrača za ove filtere.",
     "emptyPage": "Ova stranica je izvan raspona rezultata. Vrati se na prethodnu stranicu.",
-    "sampleNote": "Živa baza. Klikni ime za utakmice, golove, asistencije i minute od srpnja 2025.",
+    "sampleNote": "Klikni ime za utakmice, golove, asistencije i minute od srpnja 2025.",
     "fit": "Fit",
     "loadMore": "Učitaj još"
   },
